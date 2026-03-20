@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>PI I · ETE Cícero Dias</title>
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+<link rel="stylesheet" href="base.css"/>
+<link rel="stylesheet" href="index.css"/>
+</head>
+<body>
+
+<div id="prog"></div>
+
+<nav class="nav" id="nav">
+  <div class="nav-logo">ETE <em>Cícero Dias</em></div>
+  <div class="nav-right">
+    <span class="nav-tag">PI I · Mod. 1</span>
+  </div>
+</nav>
+
+<button id="btt" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+  <i data-lucide="arrow-up" style="width:20px;height:20px"></i>
+</button>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="blob blob-1"></div>
+  <div class="blob blob-2"></div>
+  <div class="blob blob-3"></div>
+
+
+  <div class="hero-inner">
+    <div class="hero-badge"><span class="bdot"></span>Projeto Integrador I · Módulo 1 · 2026</div>
+    <h1 class="hero-title">Aulas de <em>PI I</em></h1>
+    <p class="hero-sub">HTML5, CSS3, Metodologia Ágil e Projeto ODS — um site por aula, tudo organizado aqui.</p>
+    <div class="hero-meta">
+      <div class="hm-item"><div class="hm-n" id="totalAulas">1</div><div class="hm-l">Aulas publicadas</div></div>
+      <div class="hm-div"></div>
+      <div class="hm-item"><div class="hm-n">PI I</div><div class="hm-l">Disciplina</div></div>
+      <div class="hm-div"></div>
+      <div class="hm-item"><div class="hm-n">2026</div><div class="hm-l">Semestre</div></div>
+    </div>
+  </div>
+  <div class="hero-scroll"><i data-lucide="chevron-down" style="width:22px;height:22px"></i></div>
+</section>
+
+<!-- AULAS -->
+<section class="section" id="aulas">
+  <div class="section-inner">
+    <div class="section-header reveal">
+      <div class="section-label">Conteúdo</div>
+      <h2 class="section-title">Todas as <em>aulas</em></h2>
+    </div>
+
+    <div class="aulas-grid">
+
+      <!-- AULA 01 — PUBLICADA -->
+      <a href="aula-01/index.html" class="aula-card reveal">
+        <div class="aula-card-top">
+          <div class="aula-num-bg">01</div>
+          <div class="aula-header">
+            <div class="aula-num-badge">01</div>
+            <div class="aula-status status-ok"><span class="status-dot"></span>Publicada</div>
+          </div>
+          <div class="aula-title">Metodologia <em>Ágil</em></div>
+          <div class="aula-desc">Arquitetura de software, ciclo SDLC, modelo cascata, Scrum, Kanban e Product Backlog.</div>
+        </div>
+        <div class="aula-topics">
+          <span class="topic-tag">Arquitetura</span>
+          <span class="topic-tag">Scrum</span>
+          <span class="topic-tag">Kanban</span>
+          <span class="topic-tag">Backlog</span>
+          <span class="topic-tag">Cascata</span>
+        </div>
+        <div class="aula-card-bottom">
+          <div class="aula-meta-row">
+            <div class="aula-meta-item">
+              <i data-lucide="calendar" style="width:13px;height:13px"></i>
+              20 mar 2026
+            </div>
+            <div class="aula-meta-item">
+              <i data-lucide="clock" style="width:13px;height:13px"></i>
+              1h20
+            </div>
+          </div>
+          <div class="aula-arrow"><i data-lucide="arrow-up-right" style="width:18px;height:18px"></i></div>
+        </div>
+      </a>
+
+      <!-- AULA 02 — EM BREVE -->
+      <div class="aula-card em-breve reveal reveal-d1">
+        <div class="aula-card-top">
+          <div class="aula-num-bg">02</div>
+          <div class="aula-header">
+            <div class="aula-num-badge" style="background:linear-gradient(135deg,#9b8abf,#7B6B9B)">02</div>
+            <div class="aula-status status-soon"><span class="status-dot"></span>Em breve</div>
+          </div>
+          <div class="aula-title">Como a <em>Web Funciona</em></div>
+          <div class="aula-desc">HTTP, navegadores, DNS, renderização e o papel do HTML, CSS e JavaScript.</div>
+        </div>
+        <div class="aula-topics">
+          <span class="topic-tag">HTTP</span>
+          <span class="topic-tag">DNS</span>
+          <span class="topic-tag">Browser</span>
+          <span class="topic-tag">HTML</span>
+        </div>
+        <div class="aula-card-bottom">
+          <div class="aula-meta-row">
+            <div class="aula-meta-item">
+              <i data-lucide="calendar" style="width:13px;height:13px"></i>
+              Em breve
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- AULA 03 — EM BREVE -->
+      <div class="aula-card em-breve reveal reveal-d2">
+        <div class="aula-card-top">
+          <div class="aula-num-bg">03</div>
+          <div class="aula-header">
+            <div class="aula-num-badge" style="background:linear-gradient(135deg,#9b8abf,#7B6B9B)">03</div>
+            <div class="aula-status status-soon"><span class="status-dot"></span>Em breve</div>
+          </div>
+          <div class="aula-title">HTML5 <em>Semântico</em></div>
+          <div class="aula-desc">Estrutura básica, tags semânticas, acessibilidade e boas práticas de marcação.</div>
+        </div>
+        <div class="aula-topics">
+          <span class="topic-tag">HTML5</span>
+          <span class="topic-tag">Semântica</span>
+          <span class="topic-tag">Acessibilidade</span>
+        </div>
+        <div class="aula-card-bottom">
+          <div class="aula-meta-row">
+            <div class="aula-meta-item">
+              <i data-lucide="calendar" style="width:13px;height:13px"></i>
+              Em breve
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- AULA 04 — EM BREVE -->
+      <div class="aula-card em-breve reveal reveal-d3">
+        <div class="aula-card-top">
+          <div class="aula-num-bg">04</div>
+          <div class="aula-header">
+            <div class="aula-num-badge" style="background:linear-gradient(135deg,#9b8abf,#7B6B9B)">04</div>
+            <div class="aula-status status-soon"><span class="status-dot"></span>Em breve</div>
+          </div>
+          <div class="aula-title">CSS3 <em>Fundamentos</em></div>
+          <div class="aula-desc">Seletores, box model, tipografia, cores e variáveis CSS.</div>
+        </div>
+        <div class="aula-topics">
+          <span class="topic-tag">CSS3</span>
+          <span class="topic-tag">Box Model</span>
+          <span class="topic-tag">Variáveis</span>
+        </div>
+        <div class="aula-card-bottom">
+          <div class="aula-meta-row">
+            <div class="aula-meta-item">
+              <i data-lucide="calendar" style="width:13px;height:13px"></i>
+              Em breve
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<!-- ══ SOBRE ══ -->
+<section class="section alt-bg">
+  <div class="section-inner">
+    <div class="section-header reveal">
+      <div class="section-label">Quem ensina</div>
+      <h2 class="section-title">Sobre a <em>Professora</em></h2>
+    </div>
+    <div class="sobre-grid reveal">
+      <div style="text-align:center;">
+        <div class="avatar-wrap"><div class="avatar-ring"></div><div class="avatar-img"><img src="assets/avatar-samara.jpg" alt="Samara Sabino"></div></div>
+      </div>
+      <div>
+        <div class="sobre-role">Professora · Desenvolvimento de Sistemas · ETE Cícero Dias</div>
+        <p class="sobre-bio">Samara Silvia Sabino é professora de Desenvolvimento de Sistemas no ETE Cícero Dias, em Recife. Atua nas disciplinas de Programação Web, Design de Interfaces Mobile, DCU, Design Thinking e Projeto Integrador — com foco em unir teoria e prática de forma criativa e centrada no aluno.</p>
+        <div class="sobre-tags">
+          <span class="stag">HTML5 & CSS3</span>
+          <span class="stag">React</span>
+          <span class="stag">Design Thinking</span>
+          <span class="stag">UX / DCU</span>
+          <span class="stag">Metodologias Ágeis</span>
+          <span class="stag">Figma</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div>
+    <div class="footer-logo">ETE <em>Cícero Dias</em></div>
+    <div class="footer-sub">Desenvolvimento de Sistemas · Módulo 1 · 2026</div>
+  </div>
+  <div class="footer-right">Projeto Integrador I · Prof.ª Samara Sabino</div>
+</footer>
+
+<script>
+lucide.createIcons();
+const prog = document.getElementById('prog');
+window.addEventListener('scroll',()=>{
+  prog.style.width=(window.scrollY/(document.body.scrollHeight-window.innerHeight)*100)+'%';
+  document.getElementById('nav').classList.toggle('scrolled',window.scrollY>60);
+  document.getElementById('btt').classList.toggle('show',window.scrollY>400);
+});
+const revObs=new IntersectionObserver(e=>e.forEach(x=>{if(x.isIntersecting)x.target.classList.add('vis');}),{threshold:.1});
+document.querySelectorAll('.reveal').forEach(el=>revObs.observe(el));
+</script>
+</body>
+</html>

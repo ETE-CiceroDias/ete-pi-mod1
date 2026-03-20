@@ -1,0 +1,812 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Aula 01 · Metodologia Ágil · ETE Cícero Dias</title>
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+<link rel="stylesheet" href="../base.css"/>
+<link rel="stylesheet" href="style.css"/>
+
+</head>
+<body>
+
+<div id="prog"></div>
+
+<!-- RICH TEXT TOOLBAR -->
+<div id="toolbar">
+  <button class="tb-btn" id="tb-b"><b>B</b></button>
+  <button class="tb-btn" id="tb-i"><i>I</i></button>
+  <button class="tb-btn" id="tb-u"><u>U</u></button>
+  <div class="tb-sep"></div>
+  <div class="tb-color" style="background:#7c4ae0" data-color="#7c4ae0"></div>
+  <div class="tb-color" style="background:#c14dd8" data-color="#c14dd8"></div>
+  <div class="tb-color" style="background:#090B20" data-color="#090B20"></div>
+  <div class="tb-color" style="background:#10b981" data-color="#10b981"></div>
+  <div class="tb-sep"></div>
+  <button class="tb-btn" id="tb-clr" style="font-size:.7rem">✕</button>
+</div>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu">
+  <button class="mobile-close" onclick="toggleMobile()"><i data-lucide="x" style="width:28px;height:28px;color:var(--text)"></i></button>
+  <a href="#disciplina" onclick="toggleMobile()">Disciplina</a>
+  <a href="#arquitetura" onclick="toggleMobile()">Arquitetura</a>
+  <a href="#agil" onclick="toggleMobile()">Ágil</a>
+  <a href="#ciclo" onclick="toggleMobile()">Ciclo</a>
+  <a href="#cascata" onclick="toggleMobile()">Cascata</a>
+  <a href="#agil" onclick="toggleMobile()">Ágil</a>
+  <a href="#scrum" onclick="toggleMobile()">Scrum</a>
+  <a href="#kanban" onclick="toggleMobile()">Kanban</a>
+  <a href="#backlog" onclick="toggleMobile()">Backlog</a>
+</div>
+
+<!-- NAV -->
+<nav class="nav" id="nav">
+  <a href="../index.html" class="nav-back">
+    <i data-lucide="arrow-left" style="width:15px;height:15px"></i>
+    Todas as aulas
+  </a>
+  <div class="nav-links">
+    <a href="#disciplina" data-section="disciplina">Disciplina</a>
+    <a href="#arquitetura" data-section="arquitetura">Arquitetura</a>
+    <a href="#agil" data-section="agil">Ágil</a>
+    <a href="#ciclo" data-section="ciclo">Ciclo</a>
+    <a href="#cascata" data-section="cascata">Cascata</a>
+    <a href="#agil" data-section="agil">Ágil</a>
+    <a href="#scrum" data-section="scrum">Scrum</a>
+    <a href="#kanban" data-section="kanban">Kanban</a>
+    <a href="#backlog" data-section="backlog">Backlog</a>
+  </div>
+  <span class="nav-aula-info">Aula 01 · 20 mar 2026</span>
+  <button class="nav-hamburger" onclick="toggleMobile()">
+    <i data-lucide="menu" style="width:24px;height:24px"></i>
+  </button>
+</nav>
+
+<!-- BACK TO TOP -->
+<button id="btt" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+  <i data-lucide="arrow-up" style="width:20px;height:20px"></i>
+</button>
+
+<!-- ══ HERO ══ -->
+<section class="hero" id="hero">
+  <div class="blob blob-1"></div>
+  <div class="blob blob-2"></div>
+  <div class="blob blob-3"></div>
+
+  <div class="hero-inner">
+    <div class="hero-badge"><span class="badge-dot"></span>Aula 01 · 20 mar 2026 · 1h20</div>
+    <h1 class="hero-title">Como times de <em>tecnologia</em> realmente trabalham</h1>
+    <p class="hero-sub">Arquitetura de software, ciclo SDLC, modelo cascata, Scrum, Kanban e Product Backlog — antes da primeira linha de código.</p>
+    <div class="hero-stats">
+      <div class="stat"><div class="stat-n">9</div><div class="stat-l">Tópicos</div></div>
+      <div class="stat-div"></div>
+      <div class="stat"><div class="stat-n">1h20</div><div class="stat-l">Duração</div></div>
+      <div class="stat-div"></div>
+      <div class="stat"><div class="stat-n">PI I</div><div class="stat-l">Mod. 1</div></div>
+    </div>
+  </div>
+  <div class="hero-scroll"><i data-lucide="chevron-down" style="width:24px;height:24px"></i></div>
+</section>
+
+<!-- ══ DISCIPLINA ══ -->
+<section class="section" id="disciplina">
+  <div class="section-inner">
+    <div class="section-header reveal">
+      <div class="section-label">00 · A Disciplina</div>
+      <h2 class="section-title">Projeto <em>Integrador I</em></h2>
+      <p class="section-sub" contenteditable="true">O componente curricular Projeto Integrador I integra o primeiro módulo do curso Técnico em Desenvolvimento de Sistemas. Com carga horária total de 80 horas, a disciplina une a introdução ao desenvolvimento web com HTML5 e CSS3 ao desenvolvimento de um projeto real baseado nos Objetivos de Desenvolvimento Sustentável da ONU.</p>
+    </div>
+
+    <div class="reveal" style="margin-bottom:3.5rem;">
+      <div class="section-label" style="margin-bottom:1.2rem;">Objetivos de aprendizagem</div>
+      <div class="obj-scatter">
+        <div class="obj-bg-title">objetivos de PI</div>
+        <div class="obj-card" style="top:6%;left:4%;transform:rotate(-1.5deg)">Entender como a <span>Web</span> funciona</div>
+        <div class="obj-card" style="top:4%;left:55%;transform:rotate(1.2deg)">Aplicar conceitos de <span>metodologia ágil</span> para organização do projeto</div>
+        <div class="obj-card" style="top:26%;left:22%;transform:rotate(-0.8deg)">Saber qual o <span>papel</span> do HTML, CSS e JavaScript</div>
+        <div class="obj-card" style="top:24%;left:60%;transform:rotate(1.8deg)">Estilizar interfaces com <span>CSS3</span>: cores, tipografia, layout e responsividade</div>
+        <div class="obj-card" style="top:50%;left:3%;transform:rotate(1.2deg)">Estruturar páginas com <span>HTML5 semântico</span> e boas práticas</div>
+        <div class="obj-card" style="top:48%;left:35%;transform:rotate(-1.5deg)">Desenvolver em grupo uma solução digital conectada a um <span class="rose">ODS da ONU</span></div>
+        <div class="obj-card" style="top:74%;left:4%;transform:rotate(2deg)">Apresentar o projeto com <span>clareza</span></div>
+        <div class="obj-card" style="top:72%;left:33%;transform:rotate(-1.8deg)">Publicar projetos web via <span class="rose">GitHub Pages</span></div>
+        <div class="obj-card" style="top:70%;left:63%;transform:rotate(1.2deg)"><span>Documentar</span> o processo de desenvolvimento</div>
+      </div>
+    </div>
+
+    <div class="concept-grid reveal">
+      <div>
+        <div class="section-label" style="margin-bottom:1.2rem;">Competências</div>
+        <div class="comp-list">
+          <div class="comp-item"><div class="comp-dot"></div><div class="comp-text" contenteditable="true">Reconhecer os fundamentos da Web e do desenvolvimento front-end.</div></div>
+          <div class="comp-item"><div class="comp-dot"></div><div class="comp-text" contenteditable="true">Desenvolver páginas web utilizando HTML5 semântico e CSS3.</div></div>
+          <div class="comp-item"><div class="comp-dot"></div><div class="comp-text" contenteditable="true">Aplicar metodologias ágeis e ferramentas de gestão de projeto.</div></div>
+          <div class="comp-item"><div class="comp-dot"></div><div class="comp-text" contenteditable="true">Prototipar e apresentar soluções inovadoras voltadas ao desenvolvimento sustentável.</div></div>
+        </div>
+      </div>
+      <div>
+        <div class="section-label" style="margin-bottom:1.2rem;">Avaliações</div>
+        <div style="display:flex;flex-direction:column;gap:1rem;">
+          <div class="aval-card">
+            <div class="aval-top">
+              <div class="ic"><i data-lucide="monitor" style="width:20px;height:20px;color:#fff"></i></div>
+              <div class="aval-top-text"><div class="label">Entrega individual</div><div class="name">Site Portfólio + Mini-projeto</div></div>
+              <div class="aval-pts">2pts</div>
+            </div>
+            <div class="aval-body"><p contenteditable="true">Portfólio publicado no GitHub Pages com foto, nome e habilidades. Mini-projeto HTML/CSS funcional. HTML semântico, CSS com variáveis e responsividade obrigatórios.</p></div>
+          </div>
+          <div class="aval-card">
+            <div class="aval-top">
+              <div class="ic"><i data-lucide="rocket" style="width:20px;height:20px;color:#fff"></i></div>
+              <div class="aval-top-text"><div class="label">Entrega em grupo</div><div class="name">Projeto Final ODS</div></div>
+              <div class="aval-pts">8pts</div>
+            </div>
+            <div class="aval-body">
+              <p contenteditable="true">Solução digital conectada a um ODS da ONU. Avaliado pelo processo ágil no Trello, apresentação oral de 7 min no Figma, documentos e protótipo de alta fidelidade.</p>
+              <a class="aval-link" href="https://ete-cicerodias.github.io/app-plano-mod1/" target="_blank">
+                Ver plano completo <i data-lucide="external-link" style="width:13px;height:13px"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ ARQUITETURA ══ -->
+<section class="section alt-bg" id="arquitetura">
+  <div class="section-inner">
+    <div class="concept-grid">
+      <div class="reveal">
+        <div class="section-label">01 · Fundamentos</div>
+        <h2 class="section-title">Arquitetura de <em>Software</em></h2>
+        <div class="prose">
+          <p contenteditable="true">Antes de escrever uma linha de código, existe uma etapa que muitos iniciantes pulam — e que faz toda a diferença no resultado final: a arquitetura de software. Assim como um arquiteto projeta uma construção inteira antes de qualquer tijolo ser colocado, a arquitetura de software é o conjunto de decisões estruturais que define como um sistema vai ser organizado.</p>
+          <p contenteditable="true">Ela determina quais são os componentes do sistema, como eles se comunicam entre si, quais são as responsabilidades de cada parte e como o sistema vai se comportar. A arquitetura <span class="highlight">não é o código</span> — é o raciocínio que vem antes dele.</p>
+          <p contenteditable="true">Um sistema sem arquitetura definida vira rapidamente aquilo que os desenvolvedores chamam de <span class="highlight">código espaguete</span> — tudo misturado, ninguém sabe onde mexer, qualquer mudança quebra outra coisa.</p>
+        </div>
+      </div>
+      <div class="stack-wrap reveal reveal-d2">
+        <div class="stack">
+          <div class="stack-card"><div class="stack-bkg-w">arq</div><div class="kw">arquitetura de software</div><div class="ct">É o conjunto de <span>decisões estruturais</span> que define como um <span class="rose">sistema vai ser organizado</span>, quais são seus componentes, como eles se comunicam e como o sistema vai se comportar.</div><div class="sig">Arquitetura...</div></div>
+          <div class="stack-card"></div>
+          <div class="stack-card"></div>
+        </div>
+      </div>
+    </div>
+    <div class="reveal" style="margin-top:3rem;">
+      <div class="img-ph" style="min-height:380px;">
+        <img src="https://res.cloudinary.com/dvib5lqwd/image/upload/v1774035888/arquitetura-software-tipos_daz3jy.png" alt="Tipos de Arquitetura de Software" class="img-section">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ MODELO ══ -->
+<section class="section" id="modelo">
+  <div class="section-inner">
+    <div class="concept-grid">
+      <div class="stack-wrap reveal">
+        <div class="stack">
+          <div class="stack-card"><div class="stack-bkg-w">mod</div><div class="kw">modelo de software</div><div class="ct">É a forma como uma equipe decide <span>organizar e conduzir</span> o processo de desenvolvimento — em qual ordem as coisas vão ser feitas e como o time lida com <span class="rose">mudanças ao longo do caminho</span>.</div><div class="sig">Modelo...</div></div>
+          <div class="stack-card"></div>
+          <div class="stack-card"></div>
+        </div>
+      </div>
+      <div class="reveal reveal-d2">
+        <div class="section-label">02 · Organização</div>
+        <h2 class="section-title">Modelo de <em>Software</em></h2>
+        <div class="prose">
+          <p contenteditable="true">Quando um grupo de pessoas vai construir algo juntas, a primeira pergunta que surge é: por onde a gente começa? Quem faz o quê? No desenvolvimento de software, essa pergunta não é diferente.</p>
+          <p contenteditable="true">Antes de escrever qualquer código, o time precisa decidir como vai trabalhar. Os modelos existem porque, sem um acordo sobre como o trabalho vai fluir, cada pessoa puxa para um lado, os prazos estouram e o produto final não corresponde ao que o cliente esperava.</p>
+          <p contenteditable="true"><span class="highlight">Não existe um modelo perfeito</span> para todos os casos — o que existe é o modelo certo para o contexto certo.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ METODOLOGIA ÁGIL ══ -->
+<section class="section" id="agil">
+  <div class="section-inner">
+    <div class="section-header reveal">
+      <div class="section-label">02b · Contexto</div>
+      <h2 class="section-title">Metodologia <em>Ágil</em></h2>
+      <p class="section-sub" contenteditable="true">Um conjunto de valores e princípios — não uma ferramenta, não um processo. Uma forma diferente de pensar o desenvolvimento de software.</p>
+    </div>
+    <div class="concept-grid reveal" style="margin-bottom:3.5rem;">
+      <div class="prose">
+        <p contenteditable="true">No final dos anos 90, o desenvolvimento de software vivia uma crise. Projetos grandes, planejados anos antes, chegavam ao final completamente fora do prazo, do orçamento e — pior — sem atender às necessidades reais dos usuários.</p>
+        <p contenteditable="true">Em fevereiro de 2001, dezessete desenvolvedores se reuniram numa estação de esqui em Utah, EUA, e escreveram o <span class="highlight">Manifesto Ágil</span> — um documento curto que mudou a indústria de software para sempre.</p>
+        <p contenteditable="true">A ideia central é simples: <span class="highlight">entregar valor cedo e com frequência</span>, colaborar com o cliente, responder a mudanças em vez de seguir um plano rígido.</p>
+      </div>
+      <div class="stack-wrap">
+        <div class="stack">
+          <div class="stack-card">
+            <div class="stack-bkg-w">ágil</div>
+            <div class="kw">metodologia ágil</div>
+            <div class="ct">Não é uma metodologia única — é uma <span>filosofia</span> com valores e princípios. Ferramentas como Scrum e Kanban são <span class="rose">implementações dessa filosofia</span>.</div>
+            <div class="sig">Ágil...</div>
+          </div>
+          <div class="stack-card"></div>
+          <div class="stack-card"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 4 VALORES DO MANIFESTO -->
+    <div class="reveal" style="margin-bottom:1.5rem;">
+      <div class="section-label">Os 4 Valores do Manifesto</div>
+      <p style="font-size:.82rem;color:var(--text-3);margin-top:.3rem;">O que o time valoriza <em>mais</em> — sem descartar o que está à direita</p>
+    </div>
+    <div class="manifesto-grid reveal" style="margin-bottom:3.5rem;">
+      <div class="manifesto-item">
+        <div class="manifesto-left" contenteditable="true">Indivíduos e interações</div>
+        <div class="manifesto-vs">→</div>
+        <div class="manifesto-right" contenteditable="true">processos e ferramentas</div>
+      </div>
+      <div class="manifesto-item">
+        <div class="manifesto-left" contenteditable="true">Software funcionando</div>
+        <div class="manifesto-vs">→</div>
+        <div class="manifesto-right" contenteditable="true">documentação abrangente</div>
+      </div>
+      <div class="manifesto-item">
+        <div class="manifesto-left" contenteditable="true">Colaboração com o cliente</div>
+        <div class="manifesto-vs">→</div>
+        <div class="manifesto-right" contenteditable="true">negociação de contratos</div>
+      </div>
+      <div class="manifesto-item">
+        <div class="manifesto-left" contenteditable="true">Responder a mudanças</div>
+        <div class="manifesto-vs">→</div>
+        <div class="manifesto-right" contenteditable="true">seguir um plano</div>
+      </div>
+    </div>
+
+    <!-- QUEM FEZ -->
+    <!-- <div class="reveal" style="margin-bottom:1.5rem;">
+      <div class="section-label">Quem escreveu</div>
+      <p style="font-size:.82rem;color:var(--text-3);margin-top:.3rem;">17 desenvolvedores reunidos em Snowbird, Utah · Fevereiro de 2001</p>
+    </div>
+    <div class="agil-autores reveal">
+      <div class="autor-item"><div class="autor-avatar">KS</div><div class="autor-nome">Kent Beck</div><div class="autor-ref">XP</div></div>
+      <div class="autor-item"><div class="autor-avatar">JG</div><div class="autor-nome">James Grenning</div><div class="autor-ref">XP</div></div>
+      <div class="autor-item"><div class="autor-avatar">RMO</div><div class="autor-nome">Robert Martin</div><div class="autor-ref">Clean Code</div></div>
+      <div class="autor-item"><div class="autor-avatar">MS</div><div class="autor-nome">Mike Schwaber</div><div class="autor-ref">Scrum</div></div>
+      <div class="autor-item"><div class="autor-avatar">JS</div><div class="autor-nome">Jeff Sutherland</div><div class="autor-ref">Scrum</div></div>
+      <div class="autor-item"><div class="autor-avatar">WC</div><div class="autor-nome">Ward Cunningham</div><div class="autor-ref">Wiki</div></div>
+      <div class="autor-item"><div class="autor-avatar">MB</div><div class="autor-nome">Mike Beedle</div><div class="autor-ref">Scrum</div></div>
+      <div class="autor-item"><div class="autor-avatar">AH</div><div class="autor-nome">Arie van Bennekum</div><div class="autor-ref">DSDM</div></div>
+      <div class="autor-item autor-mais"><div class="autor-avatar">+9</div><div class="autor-nome">outros</div><div class="autor-ref">signatários</div></div>
+    </div> -->
+  </div>
+</section>
+
+<!-- ══ CICLO SDLC ══ -->
+<section class="section alt-bg" id="ciclo">
+  <div class="section-inner">
+    <div class="section-header reveal">
+      <div class="section-label">03 · Ciclo</div>
+      <h2 class="section-title">Ciclo de Desenvolvimento<br>de <em>Software</em></h2>
+      <p class="section-sub" contenteditable="true">Todo software tem uma história — nasce de uma necessidade, é planejado, construído, testado, entregue e um dia deixa de ser usado. Esse caminho completo é o ciclo SDLC.</p>
+    </div>
+    <div class="reveal" style="margin-bottom:3rem;">
+      <div class="img-ph" style="min-height:420px;">
+        <img src="https://res.cloudinary.com/dvib5lqwd/image/upload/v1774035888/sdlc_mt8wnl.png" alt="Ciclo SDLC" class="img-section img-contain">
+      </div>
+    </div>
+    <!-- ACCORDION FASES -->
+    <div class="sdlc-accordion reveal" id="sdlcAccordion">
+      <div class="sdlc-item active" data-idx="0">
+        <div class="sdlc-head" onclick="toggleFase(this)">
+          <div class="sdlc-head-left">
+            <div class="sdlc-icon"><i data-lucide="lightbulb" style="width:16px;height:16px"></i></div>
+            <span class="sdlc-num">01</span>
+            <span class="sdlc-name">Planejamento</span>
+          </div>
+          <i data-lucide="chevron-down" class="sdlc-chevron" style="width:16px;height:16px"></i>
+        </div>
+        <div class="sdlc-body">
+          <p contenteditable="true">Tudo começa aqui. O time levanta a viabilidade do projeto, define objetivos, estima custos, prazos e recursos. É a fase das grandes perguntas: <strong>vale fazer isso?</strong> Como vai funcionar? Quem vai fazer?</p>
+        </div>
+      </div>
+      <div class="sdlc-item" data-idx="1">
+        <div class="sdlc-head" onclick="toggleFase(this)">
+          <div class="sdlc-head-left">
+            <div class="sdlc-icon"><i data-lucide="clipboard-list" style="width:16px;height:16px"></i></div>
+            <span class="sdlc-num">02</span>
+            <span class="sdlc-name">Requisitos</span>
+          </div>
+          <i data-lucide="chevron-down" class="sdlc-chevron" style="width:16px;height:16px"></i>
+        </div>
+        <div class="sdlc-body">
+          <p contenteditable="true">Levantamento detalhado de tudo que o sistema precisa fazer. Inclui reuniões com o cliente, análise de necessidades e documentação funcional. A pergunta central: <strong>o que o software precisa fazer?</strong></p>
+        </div>
+      </div>
+      <div class="sdlc-item" data-idx="2">
+        <div class="sdlc-head" onclick="toggleFase(this)">
+          <div class="sdlc-head-left">
+            <div class="sdlc-icon"><i data-lucide="pencil-ruler" style="width:16px;height:16px"></i></div>
+            <span class="sdlc-num">03</span>
+            <span class="sdlc-name">Design</span>
+          </div>
+          <i data-lucide="chevron-down" class="sdlc-chevron" style="width:16px;height:16px"></i>
+        </div>
+        <div class="sdlc-body">
+          <p contenteditable="true">Com os requisitos em mãos, o time projeta a arquitetura do sistema: banco de dados, interfaces, fluxos, componentes. É o momento de criar o <strong>blueprint</strong> antes de construir qualquer coisa.</p>
+        </div>
+      </div>
+      <div class="sdlc-item" data-idx="3">
+        <div class="sdlc-head" onclick="toggleFase(this)">
+          <div class="sdlc-head-left">
+            <div class="sdlc-icon"><i data-lucide="code-2" style="width:16px;height:16px"></i></div>
+            <span class="sdlc-num">04</span>
+            <span class="sdlc-name">Desenvolvimento</span>
+          </div>
+          <i data-lucide="chevron-down" class="sdlc-chevron" style="width:16px;height:16px"></i>
+        </div>
+        <div class="sdlc-body">
+          <p contenteditable="true">O código é escrito. Programadores implementam tudo o que foi planejado nas fases anteriores. É a fase mais longa e visível do ciclo — mas sem as anteriores, ela vira caos.</p>
+        </div>
+      </div>
+      <div class="sdlc-item" data-idx="4">
+        <div class="sdlc-head" onclick="toggleFase(this)">
+          <div class="sdlc-head-left">
+            <div class="sdlc-icon"><i data-lucide="flask-conical" style="width:16px;height:16px"></i></div>
+            <span class="sdlc-num">05</span>
+            <span class="sdlc-name">Testes</span>
+          </div>
+          <i data-lucide="chevron-down" class="sdlc-chevron" style="width:16px;height:16px"></i>
+        </div>
+        <div class="sdlc-body">
+          <p contenteditable="true">O sistema é verificado contra os requisitos originais. Bugs são encontrados e corrigidos. Testes funcionais, de performance, de segurança. Quanto mais tarde um bug é descoberto, <strong>mais caro fica corrigi-lo</strong>.</p>
+        </div>
+      </div>
+      <div class="sdlc-item" data-idx="5">
+        <div class="sdlc-head" onclick="toggleFase(this)">
+          <div class="sdlc-head-left">
+            <div class="sdlc-icon"><i data-lucide="rocket" style="width:16px;height:16px"></i></div>
+            <span class="sdlc-num">06</span>
+            <span class="sdlc-name">Implantação</span>
+          </div>
+          <i data-lucide="chevron-down" class="sdlc-chevron" style="width:16px;height:16px"></i>
+        </div>
+        <div class="sdlc-body">
+          <p contenteditable="true">O produto vai para produção — disponível para os usuários reais. Pode envolver migração de dados, treinamentos, configurações de servidor. É o momento de <strong>colocar no ar</strong>.</p>
+        </div>
+      </div>
+      <div class="sdlc-item" data-idx="6">
+        <div class="sdlc-head" onclick="toggleFase(this)">
+          <div class="sdlc-head-left">
+            <div class="sdlc-icon"><i data-lucide="wrench" style="width:16px;height:16px"></i></div>
+            <span class="sdlc-num">07</span>
+            <span class="sdlc-name">Manutenção</span>
+          </div>
+          <i data-lucide="chevron-down" class="sdlc-chevron" style="width:16px;height:16px"></i>
+        </div>
+        <div class="sdlc-body">
+          <p contenteditable="true">O software vivo precisa de cuidado constante: correção de bugs que só aparecem em produção, atualizações de segurança, melhorias de performance, novas funcionalidades. <strong>O ciclo nunca acaba</strong> — ele se reinicia.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ CASCATA ══ -->
+<section class="section alt-bg" id="cascata">
+  <div class="section-inner">
+    <div class="section-header reveal">
+      <div class="section-label">04 · Modelo</div>
+      <h2 class="section-title">Modelo em <em>Cascata</em></h2>
+    </div>
+    <div class="concept-grid">
+      <div class="reveal">
+        <div class="img-ph">
+          <img src="https://res.cloudinary.com/dvib5lqwd/image/upload/v1774035888/modelo-cascata_r8xlcm.png" alt="Modelo Cascata" class="img-section">
+        </div>
+      </div>
+      <div class="reveal reveal-d2">
+        <div class="prose">
+          <p contenteditable="true">O Modelo Cascata surgiu na década de 1970. Nele, o desenvolvimento acontece de forma linear e sequencial: primeiro levantam-se todos os requisitos, depois faz-se o design, em seguida o desenvolvimento, depois os testes, e por fim a entrega.</p>
+          <p contenteditable="true">Cada fase só começa quando a anterior está concluída — como uma cascata que só corre para baixo, sem voltar. O problema é que o modelo assume que tudo pode ser previsto no início, o que raramente acontece na prática.</p>
+          <p contenteditable="true">Se o cliente mudar de ideia ou um erro for descoberto tarde, o custo é alto. Foi exatamente por isso que o mercado foi buscando alternativas mais flexíveis — e nasceu o pensamento ágil.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ INCREMENTAL ══ -->
+<section class="section" id="incremental" style="padding-top:2rem;">
+  <div class="section-inner">
+    <div class="section-header reveal">
+      <div class="section-label">04b · Modelo</div>
+      <h2 class="section-title">Modelo <em>Incremental</em></h2>
+    </div>
+    <div class="concept-grid">
+      <div class="reveal reveal-d2">
+        <div class="prose">
+          <p contenteditable="true">No modelo incremental, o sistema é desenvolvido e entregue em partes — cada parte é um <span class="highlight">incremento</span> funcional do produto final. O cliente usa versões parciais do sistema desde cedo e fornece feedback real.</p>
+          <p contenteditable="true">Diferente da cascata, o incremental admite que nem tudo pode ser previsto no início. Cada ciclo refina o entendimento do problema e ajusta o que vem a seguir. É a transição natural <span class="highlight">entre a cascata e o pensamento ágil</span>.</p>
+          <p contenteditable="true">Cada incremento passa por todas as fases do SDLC — planejamento, design, desenvolvimento, testes e entrega — mas aplicado a uma fatia menor e gerenciável do produto.</p>
+        </div>
+      </div>
+      <div class="reveal">
+        <div class="img-ph">
+          <img src="https://res.cloudinary.com/dvib5lqwd/image/upload/v1774035888/modelo-incremental_ehbhmx.png" alt="Modelo Incremental" class="img-section">
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ METODOLOGIA ÁGIL ══ -->
+<section class="section alt-bg" id="agil">
+  <div class="section-inner">
+    <div class="section-header reveal">
+      <div class="section-label">04c · Metodologia</div>
+      <h2 class="section-title">Metodologia <em>Ágil</em></h2>
+      <p class="section-sub" contenteditable="true">Em 2001, 17 desenvolvedores insatisfeitos com os modelos rígidos se reuniram e escreveram o Manifesto Ágil — um conjunto de valores que mudou a forma como o mundo desenvolve software.</p>
+    </div>
+    <div class="concept-grid reveal" style="margin-bottom:3rem;">
+      <div class="prose">
+        <p contenteditable="true">A metodologia ágil não é um método único — é uma <span class="highlight">filosofia de trabalho</span> que valoriza entregas rápidas, colaboração com o cliente e adaptação constante à mudança. Em vez de planejar tudo antes de começar, o time aprende enquanto constrói.</p>
+        <p contenteditable="true">O Manifesto Ágil estabelece 4 valores fundamentais: <span class="highlight">indivíduos e interações</span> acima de processos e ferramentas; <span class="highlight">software funcionando</span> acima de documentação extensa; <span class="highlight">colaboração com o cliente</span> acima de negociação de contratos; <span class="highlight">responder a mudanças</span> acima de seguir um plano.</p>
+        <p contenteditable="true">Scrum e Kanban são as principais implementações práticas dessa filosofia — frameworks que traduzem esses valores em cerimônias, papéis e fluxos de trabalho concretos.</p>
+      </div>
+      <div class="stack-wrap reveal reveal-d2">
+        <div class="stack">
+          <div class="stack-card"><div class="stack-bkg-w">ágil</div><div class="kw">manifesto ágil · 2001</div><div class="ct">Indivíduos acima de processos. Software funcionando acima de documentação. <span>Colaboração acima de contratos</span>. Responder a <span class="rose">mudanças acima de planos</span>.</div><div class="sig">Manifesto...</div></div>
+          <div class="stack-card"></div>
+          <div class="stack-card"></div>
+        </div>
+      </div>
+    </div>
+    <!-- 4 VALORES EM CARDS -->
+    <div class="cards-grid-4 reveal">
+      <div class="comp-card">
+        <div class="comp-card-top">
+          <div class="comp-card-icon"><i data-lucide="users" style="width:20px;height:20px"></i></div>
+          <div class="comp-card-badge">Valor 01</div>
+          <div class="comp-card-title"><em>Pessoas</em> acima de processos</div>
+        </div>
+        <div class="comp-card-body"><p contenteditable="true">Indivíduos e interações valem mais do que ferramentas e procedimentos rígidos.</p></div>
+      </div>
+      <div class="comp-card">
+        <div class="comp-card-top">
+          <div class="comp-card-icon"><i data-lucide="code-2" style="width:20px;height:20px"></i></div>
+          <div class="comp-card-badge">Valor 02</div>
+          <div class="comp-card-title"><em>Software</em> funcionando</div>
+        </div>
+        <div class="comp-card-body"><p contenteditable="true">Entregar algo que funciona é mais valioso do que uma documentação extensa e perfeita.</p></div>
+      </div>
+      <div class="comp-card">
+        <div class="comp-card-top">
+          <div class="comp-card-icon"><i data-lucide="handshake" style="width:20px;height:20px"></i></div>
+          <div class="comp-card-badge">Valor 03</div>
+          <div class="comp-card-title"><em>Colaboração</em> com cliente</div>
+        </div>
+        <div class="comp-card-body"><p contenteditable="true">Trabalhar junto ao cliente durante o processo vale mais do que negociar contratos fechados.</p></div>
+      </div>
+      <div class="comp-card">
+        <div class="comp-card-top">
+          <div class="comp-card-icon"><i data-lucide="refresh-cw" style="width:20px;height:20px"></i></div>
+          <div class="comp-card-badge">Valor 04</div>
+          <div class="comp-card-title">Responder a <em>mudanças</em></div>
+        </div>
+        <div class="comp-card-body"><p contenteditable="true">Adaptar-se à realidade é mais inteligente do que seguir cegamente um plano desatualizado.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ SCRUM ══ -->
+<section class="section" id="scrum">
+  <div class="section-inner">
+    <div class="section-header reveal">
+      <div class="section-label">05 · Framework</div>
+      <h2 class="section-title">O que é <em>Scrum?</em></h2>
+    </div>
+    <div class="concept-grid reveal" style="margin-bottom:3rem;">
+      <div class="prose">
+        <p contenteditable="true">A ideia central do Scrum é simples: em vez de planejar tudo de uma vez e entregar no final, o time trabalha em ciclos curtos entregando partes funcionais com frequência. Isso permite identificar erros cedo, o cliente acompanha o progresso e o time melhora a cada ciclo.</p>
+        <p contenteditable="true">O Scrum não é uma metodologia rígida — é um <span class="highlight">framework</span>, uma estrutura flexível que o time adapta à sua realidade.</p>
+      </div>
+      <div class="stack-wrap">
+        <div class="stack">
+          <div class="stack-card"><div class="stack-bkg-w">scrum</div><div class="kw">scrum · framework ágil</div><div class="ct">Ciclos curtos chamados <span>Sprints</span>. Entregas funcionais com frequência. O time <span class="rose">aprende e melhora</span> a cada ciclo.</div><div class="sig">Scrum...</div></div>
+          <div class="stack-card"></div>
+          <div class="stack-card"></div>
+        </div>
+      </div>
+    </div>
+    <div class="reveal" style="margin-top:10rem;margin-bottom:10rem;">
+      <div class="img-ph">
+        <img src="https://res.cloudinary.com/dvib5lqwd/image/upload/v1774037029/scrum-ciclo_tot9ht.png" alt="Ciclo do Scrum" class="img-section img-contain">
+      </div>
+    </div>
+    <div class="reveal" style="margin-bottom:1.5rem;"><div class="section-label">Pessoas no Scrum</div><p style="font-size:.8rem;color:var(--text-3);margin-top:.3rem;">Clique em cada papel para expandir</p></div>
+    <div class="people-scene reveal" style="margin-bottom:3.5rem;">
+      <div class="person-panel pp-1 active" onclick="activatePerson(this)">
+        <div class="person-bg"></div><div class="person-num">01</div>
+        <div class="person-icon"><i data-lucide="target" style="width:22px;height:22px;color:#fff"></i></div>
+        <div class="person-content">
+          <div class="person-role">Papel 01</div><div class="person-name">Product Owner</div>
+          <div class="person-desc" contenteditable="true">Representa os interesses do cliente e dos usuários. Decide o que o produto precisa ter e em qual ordem. Responsável pelo Product Backlog e por garantir que o time trabalhe no que gera mais valor.</div>
+          <div class="person-hint"><i data-lucide="mouse-pointer-click" style="width:12px;height:12px"></i> Clique para ver mais</div>
+        </div>
+      </div>
+      <div class="person-panel pp-2" onclick="activatePerson(this)">
+        <div class="person-bg"></div><div class="person-num">02</div>
+        <div class="person-icon"><i data-lucide="shield" style="width:22px;height:22px;color:#fff"></i></div>
+        <div class="person-content">
+          <div class="person-role">Papel 02</div><div class="person-name">Scrum Master</div>
+          <div class="person-desc" contenteditable="true">Facilita o processo, garante que o time siga os princípios do Scrum e remove obstáculos. Não é um chefe — é um facilitador que atua como coach.</div>
+          <div class="person-hint"><i data-lucide="mouse-pointer-click" style="width:12px;height:12px"></i> Clique para ver mais</div>
+        </div>
+      </div>
+      <div class="person-panel pp-3" onclick="activatePerson(this)">
+        <div class="person-bg"></div><div class="person-num">03</div>
+        <div class="person-icon"><i data-lucide="code-2" style="width:22px;height:22px;color:#fff"></i></div>
+        <div class="person-content">
+          <div class="person-role">Papel 03</div><div class="person-name">Dev Team</div>
+          <div class="person-desc" contenteditable="true">Composto pelas pessoas que constroem o produto: programadores, designers, analistas. É autogerenciável — decide como o trabalho vai ser feito dentro de cada ciclo.</div>
+          <div class="person-hint"><i data-lucide="mouse-pointer-click" style="width:12px;height:12px"></i> Clique para ver mais</div>
+        </div>
+      </div>
+    </div>
+    <div class="reveal" style="margin-bottom:1.5rem;"><div class="section-label">Artefatos do Scrum</div></div>
+    <div class="cards-grid reveal" style="margin-bottom:3.5rem;">
+      <div class="comp-card"><div class="comp-card-top"><div class="comp-card-icon"><i data-lucide="bookmark" style="width:20px;height:20px"></i></div><div class="comp-card-badge">Artefato 01</div><div class="comp-card-title"><em>Product</em> Backlog</div></div><div class="comp-card-body"><p contenteditable="true">Lista completa e priorizada de tudo que o produto precisa ter. Documento vivo que muda conforme o produto evolui.</p></div></div>
+      <div class="comp-card"><div class="comp-card-top"><div class="comp-card-icon"><i data-lucide="list-checks" style="width:20px;height:20px"></i></div><div class="comp-card-badge">Artefato 02</div><div class="comp-card-title"><em>Sprint</em> Backlog</div></div><div class="comp-card-body"><p contenteditable="true">Seleção de itens do Product Backlog que o time se compromete a entregar na Sprint atual.</p></div></div>
+      <div class="comp-card"><div class="comp-card-top"><div class="comp-card-icon"><i data-lucide="check-circle-2" style="width:20px;height:20px"></i></div><div class="comp-card-badge">Artefato 03</div><div class="comp-card-title"><em>Incremento</em></div></div><div class="comp-card-body"><p contenteditable="true">Resultado entregue ao final de cada Sprint — versão funcional do produto apresentável ao cliente para feedback.</p></div></div>
+    </div>
+    <div class="reveal" style="margin-bottom:1.5rem;"><div class="section-label">Eventos do Scrum</div><p style="font-size:.8rem;color:var(--text-3);margin-top:.3rem;">Uma Sprint de 2 semanas — clique nos eventos para saber mais</p></div>
+    <div class="sprint-cal reveal">
+      <!-- Header -->
+      <div class="sprint-cal-header">
+        <div class="sprint-cal-title">
+          <span class="sprint-badge">Sprint 01</span>
+          <span class="sprint-dates">20 mar — 03 abr · 2026</span>
+        </div>
+        <div class="sprint-cal-legend">
+          <span class="leg-item"><span class="leg-dot" style="background:#7c4ae0"></span>Planejamento</span>
+          <span class="leg-item"><span class="leg-dot" style="background:#10b981"></span>Daily</span>
+          <span class="leg-item"><span class="leg-dot" style="background:#f59e0b"></span>Review</span>
+          <span class="leg-item"><span class="leg-dot" style="background:#c14dd8"></span>Retro</span>
+        </div>
+      </div>
+      <!-- Week 1 -->
+      <div class="sprint-week">
+        <div class="sprint-week-label">Semana 1</div>
+        <div class="sprint-days">
+          <div class="sprint-day has-event" onclick="showEvent('planning')">
+            <div class="day-name">Sex</div>
+            <div class="day-num">20</div>
+            <div class="day-event" style="background:#7c4ae0">Sprint Planning</div>
+          </div>
+          <div class="sprint-day weekend"><div class="day-name">Sáb</div><div class="day-num">21</div></div>
+          <div class="sprint-day weekend"><div class="day-name">Dom</div><div class="day-num">22</div></div>
+          <div class="sprint-day has-event" onclick="showEvent('daily')">
+            <div class="day-name">Seg</div>
+            <div class="day-num">23</div>
+            <div class="day-event" style="background:#10b981">Daily</div>
+          </div>
+          <div class="sprint-day has-event" onclick="showEvent('daily')">
+            <div class="day-name">Ter</div>
+            <div class="day-num">24</div>
+            <div class="day-event" style="background:#10b981">Daily</div>
+          </div>
+          <div class="sprint-day has-event" onclick="showEvent('daily')">
+            <div class="day-name">Qua</div>
+            <div class="day-num">25</div>
+            <div class="day-event" style="background:#10b981">Daily</div>
+          </div>
+          <div class="sprint-day has-event" onclick="showEvent('daily')">
+            <div class="day-name">Qui</div>
+            <div class="day-num">26</div>
+            <div class="day-event" style="background:#10b981">Daily</div>
+          </div>
+        </div>
+      </div>
+      <!-- Week 2 -->
+      <div class="sprint-week">
+        <div class="sprint-week-label">Semana 2</div>
+        <div class="sprint-days">
+          <div class="sprint-day has-event" onclick="showEvent('daily')">
+            <div class="day-name">Sex</div>
+            <div class="day-num">27</div>
+            <div class="day-event" style="background:#10b981">Daily</div>
+          </div>
+          <div class="sprint-day weekend"><div class="day-name">Sáb</div><div class="day-num">28</div></div>
+          <div class="sprint-day weekend"><div class="day-name">Dom</div><div class="day-num">29</div></div>
+          <div class="sprint-day has-event" onclick="showEvent('daily')">
+            <div class="day-name">Seg</div>
+            <div class="day-num">30</div>
+            <div class="day-event" style="background:#10b981">Daily</div>
+          </div>
+          <div class="sprint-day has-event" onclick="showEvent('daily')">
+            <div class="day-name">Ter</div>
+            <div class="day-num">31</div>
+            <div class="day-event" style="background:#10b981">Daily</div>
+          </div>
+          <div class="sprint-day has-event" onclick="showEvent('review')">
+            <div class="day-name">Qua</div>
+            <div class="day-num">02</div>
+            <div class="day-event" style="background:#f59e0b">Review</div>
+          </div>
+          <div class="sprint-day has-event" onclick="showEvent('retro')">
+            <div class="day-name">Qui</div>
+            <div class="day-num">03</div>
+            <div class="day-event" style="background:#c14dd8">Retro</div>
+          </div>
+        </div>
+      </div>
+      <!-- Info panel -->
+      <div class="sprint-info-panel" id="sprintInfo">
+        <div class="sip-content" id="sprintInfoContent">
+          <div class="sip-icon" id="sprintInfoIcon"></div>
+          <div>
+            <div class="sip-title" id="sprintInfoTitle"></div>
+            <div class="sip-desc" id="sprintInfoDesc"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ KANBAN ══ -->
+<section class="section" id="kanban">
+  <div class="section-inner">
+    <div class="section-header reveal">
+      <div class="section-label">06 · Método</div>
+      <h2 class="section-title">O que é <em>Kanban?</em></h2>
+      <p class="section-sub" contenteditable="true">Método ágil visual e de fluxo contínuo — surgiu nas fábricas da Toyota e foi adaptado para o desenvolvimento de software. Sem ciclos fixos, sem papéis obrigatórios.</p>
+    </div>
+    <div class="concept-grid reveal" style="margin-bottom:3.5rem;">
+      <div class="stack-wrap">
+        <div class="stack">
+          <div class="stack-card"><div class="stack-bkg-w">kan</div><div class="kw">kanban · fluxo contínuo</div><div class="ct">Trabalho <span>visual e contínuo</span>. Novas tarefas entram à medida que outras são concluídas. Princípio fundamental: <span class="rose">limitar o que está em andamento</span>.</div><div class="sig">Kanban...</div></div>
+          <div class="stack-card"></div><div class="stack-card"></div>
+        </div>
+      </div>
+      <div class="prose reveal-d2">
+        <p contenteditable="true">O Kanban não trabalha com ciclos fixos nem exige papéis definidos — o trabalho flui de forma contínua. Um princípio fundamental é limitar tarefas em andamento ao mesmo tempo, evitando sobrecarga e perda de foco.</p>
+        <p contenteditable="true">Para projetos como o de vocês, o Kanban é o ponto de entrada mais natural pela sua simplicidade visual — é o que vocês vão montar no Trello hoje.</p>
+      </div>
+    </div>
+    <div class="reveal" style="margin-top:6rem;">
+      <div class="section-label" style="margin-bottom:.4rem;">Quadro Kanban</div>
+      <p style="font-size:.76rem;color:var(--text-3);margin-bottom:1.25rem;">Editável · Clique no texto para editar · + para adicionar · × para remover</p>
+      <div class="kanban-wrapper">
+        <div class="kanban-board" id="kanbanBoard">
+          <div class="k-col col-backlog"><div class="k-col-head"><div class="hd-left"><div class="dot"></div>Backlog</div><button class="add-btn" onclick="addTicket('backlog','ODS')"><i data-lucide="plus" style="width:13px;height:13px"></i></button></div><div class="k-cards" id="col-backlog"><div class="k-ticket"><span class="k-ticket-tag tag-p">ODS</span><div class="k-ticket-inner" contenteditable="true">Pesquisa sobre ODS escolhido</div><button class="k-del" onclick="delTicket(this)"><i data-lucide="x" style="width:11px;height:11px"></i></button></div><div class="k-ticket"><span class="k-ticket-tag tag-p">ODS</span><div class="k-ticket-inner" contenteditable="true">Definir persona do projeto</div><button class="k-del" onclick="delTicket(this)"><i data-lucide="x" style="width:11px;height:11px"></i></button></div><div class="k-ticket"><span class="k-ticket-tag tag-p">Web</span><div class="k-ticket-inner" contenteditable="true">Criar estrutura HTML da home</div><button class="k-del" onclick="delTicket(this)"><i data-lucide="x" style="width:11px;height:11px"></i></button></div></div></div>
+          <div class="k-col col-todo"><div class="k-col-head"><div class="hd-left"><div class="dot"></div>A Fazer</div><button class="add-btn" onclick="addTicket('todo','ODS')"><i data-lucide="plus" style="width:13px;height:13px"></i></button></div><div class="k-cards" id="col-todo"><div class="k-ticket"><span class="k-ticket-tag tag-r">ODS</span><div class="k-ticket-inner" contenteditable="true">Entrevista com usuário real</div><button class="k-del" onclick="delTicket(this)"><i data-lucide="x" style="width:11px;height:11px"></i></button></div><div class="k-ticket"><span class="k-ticket-tag tag-r">Web</span><div class="k-ticket-inner" contenteditable="true">Configurar repositório GitHub</div><button class="k-del" onclick="delTicket(this)"><i data-lucide="x" style="width:11px;height:11px"></i></button></div></div></div>
+          <div class="k-col col-doing"><div class="k-col-head"><div class="hd-left"><div class="dot"></div>Em Andamento</div><button class="add-btn" onclick="addTicket('doing','ODS')"><i data-lucide="plus" style="width:13px;height:13px"></i></button></div><div class="k-cards" id="col-doing"><div class="k-ticket"><span class="k-ticket-tag tag-a">ODS</span><div class="k-ticket-inner" contenteditable="true">Mapa de empatia em grupo</div><button class="k-del" onclick="delTicket(this)"><i data-lucide="x" style="width:11px;height:11px"></i></button></div></div></div>
+          <div class="k-col col-done"><div class="k-col-head"><div class="hd-left"><div class="dot"></div>Concluído</div><button class="add-btn" onclick="addTicket('done','ODS')"><i data-lucide="plus" style="width:13px;height:13px"></i></button></div><div class="k-cards" id="col-done"><div class="k-ticket"><span class="k-ticket-tag tag-g">ODS</span><div class="k-ticket-inner" contenteditable="true">Escolha do ODS da equipe ✓</div><button class="k-del" onclick="delTicket(this)"><i data-lucide="x" style="width:11px;height:11px"></i></button></div><div class="k-ticket"><span class="k-ticket-tag tag-g">Web</span><div class="k-ticket-inner" contenteditable="true">Aula de HTML5 semântico ✓</div><button class="k-del" onclick="delTicket(this)"><i data-lucide="x" style="width:11px;height:11px"></i></button></div></div></div>
+        </div>
+      </div>
+    </div>
+    <div class="cards-grid-4 reveal" style="margin-top:2rem;">
+      <div class="comp-card"><div class="comp-card-top"><div class="comp-card-icon"><i data-lucide="inbox" style="width:20px;height:20px"></i></div><div class="comp-card-badge">Coluna 01</div><div class="comp-card-title"><em>Backlog</em></div></div><div class="comp-card-body"><p contenteditable="true">Todas as tarefas identificadas que ainda não foram iniciadas. Lista completa de tudo que precisa ser feito.</p></div></div>
+      <div class="comp-card"><div class="comp-card-top"><div class="comp-card-icon"><i data-lucide="list-todo" style="width:20px;height:20px"></i></div><div class="comp-card-badge">Coluna 02</div><div class="comp-card-title">A <em>Fazer</em></div></div><div class="comp-card-body"><p contenteditable="true">Tarefas priorizadas que o time decidiu trabalhar em breve.</p></div></div>
+      <div class="comp-card"><div class="comp-card-top"><div class="comp-card-icon"><i data-lucide="zap" style="width:20px;height:20px"></i></div><div class="comp-card-badge">Coluna 03</div><div class="comp-card-title">Em <em>Andamento</em></div></div><div class="comp-card-body"><p contenteditable="true">O que está sendo executado agora. Limite a quantidade — concluir antes de começar novas coisas.</p></div></div>
+      <div class="comp-card"><div class="comp-card-top"><div class="comp-card-icon"><i data-lucide="check-circle" style="width:20px;height:20px"></i></div><div class="comp-card-badge">Coluna 04</div><div class="comp-card-title"><em>Concluído</em></div></div><div class="comp-card-body"><p contenteditable="true">Tarefas entregues. Manter visível ajuda o time a enxergar o progresso real do projeto.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ BACKLOG ══ -->
+<section class="section alt-bg" id="backlog">
+  <div class="section-inner">
+    <div class="section-header reveal">
+      <div class="section-label">07 · Organização</div>
+      <h2 class="section-title">Product <em>Backlog</em></h2>
+      <p class="section-sub" contenteditable="true">A espinha dorsal do desenvolvimento ágil. Lista viva e priorizada de tudo que o produto precisa ter.</p>
+    </div>
+    <div class="concept-grid reveal" style="margin-bottom:3.5rem;">
+      <div class="prose">
+        <p contenteditable="true">Quem mantém o backlog é o <span class="highlight">Product Owner</span>, mas o time inteiro contribui para refiná-lo. Diferente de uma lista de tarefas comum, o backlog é priorizado — o item com mais valor para o usuário ou negócio fica sempre no topo.</p>
+        <p contenteditable="true">O backlog nunca está "pronto" — ele <span class="highlight">evolui com o produto</span>. Novos itens entram, outros saem, prioridades mudam conforme o time aprende mais sobre o problema que está resolvendo.</p>
+      </div>
+      <div class="stack-wrap">
+        <div class="stack">
+          <div class="stack-card"><div class="stack-bkg-w">bkl</div><div class="kw">product backlog</div><div class="ct">Lista <span>viva e priorizada</span>. O mais importante fica no topo. <span class="rose">Nunca está pronto</span> — evolui com o produto.</div><div class="sig">Backlog...</div></div>
+          <div class="stack-card"></div><div class="stack-card"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ORDEM DE PRIORIDADE -->
+    <div class="concept-grid reveal" style="margin-top:8rem;margin-bottom:3.5rem;align-items:start;">
+      <div class="bl-priority-list">
+        <div class="bl-priority-header">
+          <span class="bl-priority-label">↑ Topo — maior prioridade</span>
+        </div>
+        <div class="bl-priority-item bl-p1">
+          <div class="bl-p-rank">1º</div>
+          <div class="bl-p-content">
+            <div class="bl-p-tag">🔥 Crítico</div>
+            <div class="bl-p-text" contenteditable="true">Criar fluxo de cadastro de usuário</div>
+          </div>
+        </div>
+        <div class="bl-priority-item bl-p2">
+          <div class="bl-p-rank">2º</div>
+          <div class="bl-p-content">
+            <div class="bl-p-tag">⚡ Alto</div>
+            <div class="bl-p-text" contenteditable="true">Integrar login com autenticação</div>
+          </div>
+        </div>
+        <div class="bl-priority-item bl-p3">
+          <div class="bl-p-rank">3º</div>
+          <div class="bl-p-content">
+            <div class="bl-p-tag">📋 Médio</div>
+            <div class="bl-p-text" contenteditable="true">Página de perfil do usuário</div>
+          </div>
+        </div>
+        <div class="bl-priority-item bl-p4">
+          <div class="bl-p-rank">4º</div>
+          <div class="bl-p-content">
+            <div class="bl-p-tag">📋 Médio</div>
+            <div class="bl-p-text" contenteditable="true">Notificações por e-mail</div>
+          </div>
+        </div>
+        <div class="bl-priority-item bl-p5">
+          <div class="bl-p-rank">5º</div>
+          <div class="bl-p-content">
+            <div class="bl-p-tag">💤 Baixo</div>
+            <div class="bl-p-text" contenteditable="true">Tema escuro na interface</div>
+          </div>
+        </div>
+        <div class="bl-priority-item bl-p5">
+          <div class="bl-p-rank">6º</div>
+          <div class="bl-p-content">
+            <div class="bl-p-tag">💤 Baixo</div>
+            <div class="bl-p-text" contenteditable="true">Exportar relatórios em PDF</div>
+          </div>
+        </div>
+        <div class="bl-priority-footer">
+          <span class="bl-priority-label">↓ Base — pode esperar</span>
+        </div>
+      </div>
+      <div>
+        <div class="section-label" style="margin-bottom:1.2rem;">Ordem de Prioridade</div>
+        <div class="prose">
+          <p contenteditable="true">O backlog não é uma lista aleatória — cada item tem um lugar. O Product Owner ordena tudo de acordo com o <span class="highlight">valor que entrega ao usuário</span>. No topo ficam as coisas mais importantes e urgentes. Lá embaixo, o que pode esperar.</p>
+          <p contenteditable="true">Durante a Sprint Planning, o time pega os itens do <span class="highlight">topo do backlog</span> — os mais prioritários — para trabalhar na Sprint. Por isso manter a ordem certa é fundamental.</p>
+        </div>
+      </div>
+    </div>
+    <div class="reveal" style="margin-bottom:1.5rem;"><div class="section-label">Hierarquia do Backlog</div></div>
+    <div class="bl-tree reveal">
+      <div class="bl-item"><div class="bl-num">01</div><div><div class="bl-subtitle">Nível 1</div><div class="bl-title-t"><em>Épico</em></div><div class="bl-desc-t" contenteditable="true">Grandes funcionalidades ainda pouco detalhadas. Representam partes significativas do produto, amplos demais para caber em uma Sprint.</div><div class="bl-example">Ex: "Sistema de Cadastro" · "Módulo de Relatórios"</div></div></div>
+      <div class="bl-item"><div class="bl-num">02</div><div><div class="bl-subtitle">Nível 2</div><div class="bl-title-t">História de <em>Usuário</em></div><div class="bl-desc-t" contenteditable="true">Descreve uma funcionalidade do ponto de vista de quem vai usar o sistema. Formato: "Como [usuário], eu quero [ação] para [benefício]".</div><div class="bl-example">Ex: "Como visitante, eu quero me cadastrar com e-mail para acessar o sistema"</div></div></div>
+      <div class="bl-item"><div class="bl-num">03</div><div><div class="bl-subtitle">Nível 3</div><div class="bl-title-t"><em>Tarefa</em></div><div class="bl-desc-t" contenteditable="true">Ações concretas e técnicas para implementar cada história. Específicas, atribuídas a pessoas e estimadas em horas ou pontos.</div><div class="bl-example">Ex: "Criar formulário HTML" · "Configurar rota" · "Escrever teste"</div></div></div>
+    </div>
+    <div class="reveal" style="margin-top:4rem;">
+      <div class="cta-box">
+        <div class="section-label" style="justify-content:center;">Prática</div>
+        <h3 style="font-family:var(--font-h);font-size:2.2rem;font-weight:300;letter-spacing:-.02em;margin-bottom:.75rem;">Agora é a sua <em>vez</em></h3>
+        <p style="color:var(--text-2);font-size:1rem;max-width:520px;margin:0 auto 2rem;line-height:1.7;" contenteditable="true">Abra o Trello, crie o quadro do seu grupo com as 4 colunas e liste pelo menos 5 entregas do projeto ODS. Vamos priorizar juntos.</p>
+        <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;">
+          <a href="https://trello.com" target="_blank" class="btn-primary"><i data-lucide="trello" style="width:17px;height:17px"></i>Abrir Trello</a>
+          <a href="https://ete-cicerodias.github.io/app-plano-mod1/" target="_blank" class="btn-ghost"><i data-lucide="external-link" style="width:17px;height:17px"></i>Ver Plano do Módulo</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div>
+    <div class="footer-logo">ETE <em>Cícero Dias</em></div>
+    <div class="footer-sub">Desenvolvimento de Sistemas · Módulo 1 · 2026</div>
+  </div>
+  <div class="footer-text">Projeto Integrador I · Prof.ª Samara Sabino</div>
+</footer>
+
+<script src="main.js"></script>
+</body>
+</html>

@@ -1,0 +1,44 @@
+/* =============================================
+   BASE TOKENS — ETE Cícero Dias · PI Mod 1
+   ============================================= */
+
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
+
+:root {
+  --primary:    #7c4ae0;
+  --primary-h:  #532d9f;
+  --secondary:  #c14dd8;
+  --accent:     #090B20;
+  --bg:         #F8F5FF;
+  --elevated:   rgba(255,255,255,0.92);
+  --glass:      rgba(124,74,224,0.07);
+  --glass-b:    rgba(124,74,224,0.18);
+  --text:       #090B20;
+  --text-2:     #4A3C6B;
+  --text-3:     #7B6B9B;
+  --border:     rgba(124,74,224,0.14);
+  --shadow-sm:  0 1px 3px rgba(112,48,239,0.1);
+  --shadow-md:  0 6px 20px rgba(112,48,239,0.15);
+  --shadow-lg:  0 18px 50px rgba(112,48,239,0.22);
+  --grad:       linear-gradient(135deg,#7c4ae0 0%,#c14dd8 60%,#090B20 100%);
+  --grad-btn:   linear-gradient(135deg,#7c4ae0 0%,#532d9f 100%);
+  --font-h:     'Cormorant Garamond', Georgia, serif;
+  --font-b:     'Plus Jakarta Sans', sans-serif;
+  --t:          220ms cubic-bezier(.4,0,.2,1);
+}
+
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--font-b);
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.65;
+  overflow-x: hidden;
+}
+a { text-decoration: none; color: inherit; }
+img { display: block; max-width: 100%; }
+::selection { background: var(--primary); color: #fff; }
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 99px; }

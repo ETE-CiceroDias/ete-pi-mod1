@@ -1,0 +1,101 @@
+/* =============================================
+   BASE.CSS — tokens compartilhados
+   ETE Cícero Dias · PI Módulo 1
+   ============================================= */
+
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
+
+:root {
+  --primary:   #7c4ae0;
+  --primary-h: #532d9f;
+  --secondary: #c14dd8;
+  --accent:    #090B20;
+  --bg:        #F8F5FF;
+  --elevated:  rgba(255,255,255,0.92);
+  --glass:     rgba(124,74,224,0.07);
+  --glass-b:   rgba(124,74,224,0.18);
+  --text:      #090B20;
+  --text-2:    #4A3C6B;
+  --text-3:    #7B6B9B;
+  --border:    rgba(124,74,224,0.14);
+  --shadow-sm: 0 1px 3px rgba(112,48,239,0.1);
+  --shadow-md: 0 6px 20px rgba(112,48,239,0.15);
+  --shadow-lg: 0 18px 50px rgba(112,48,239,0.22);
+  --grad:      linear-gradient(135deg,#7c4ae0 0%,#c14dd8 60%,#090B20 100%);
+  --grad-btn:  linear-gradient(135deg,#7c4ae0 0%,#532d9f 100%);
+  --font-h:    'Cormorant Garamond', Georgia, serif;
+  --font-b:    'Plus Jakarta Sans', sans-serif;
+  --t:         220ms cubic-bezier(.4,0,.2,1);
+}
+
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--font-b);
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.65;
+  overflow-x: hidden;
+  position: relative;
+}
+a { text-decoration: none; color: inherit; }
+img { display: block; max-width: 100%; }
+::selection { background: var(--primary); color: #fff; }
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 99px; }
+
+/* ── GRAIN — no background, behind everything ── */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='250' height='250'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='250' height='250' filter='url(%23n)' opacity='0.018'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 250px 250px;
+  opacity: 0.5;
+}
+
+/* todos os filhos diretos do body ficam acima do grain */
+/* grain fica atrás de tudo via z-index do ::before */
+
+/* ── PROGRESS BAR ──────────────────────────────── */
+#prog {
+  position: fixed; top: 0; left: 0; height: 3px; z-index: 500;
+  background: var(--grad-btn); width: 0; transition: width .1s;
+}
+
+/* ── BACK TO TOP ───────────────────────────────── */
+#btt {
+  position: fixed; bottom: 2rem; right: 2rem; z-index: 400;
+  width: 48px; height: 48px; border-radius: 50%;
+  background: var(--grad-btn); color: #fff; border: none; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: var(--shadow-lg);
+  opacity: 0; transform: translateY(16px) scale(.85);
+  transition: opacity .3s, transform .3s;
+  pointer-events: none;
+}
+#btt.show { opacity: 1; transform: translateY(0) scale(1); pointer-events: all; }
+#btt:hover { transform: translateY(-3px) scale(1.08); }
+
+/* ── SCROLL REVEAL ─────────────────────────────── */
+.reveal { opacity: 0; transform: translateY(28px); transition: opacity .6s ease, transform .6s ease; }
+.reveal.vis { opacity: 1; transform: translateY(0); }
+.reveal-d1{transition-delay:.1s;} .reveal-d2{transition-delay:.2s;}
+.reveal-d3{transition-delay:.3s;} .reveal-d4{transition-delay:.4s;}
+
+/* ── SOBRE / AVATAR (shared) ─────────────────── */
+.sobre-grid { display: grid; grid-template-columns: 280px 1fr; gap: 4rem; align-items: center; }
+.avatar-wrap { position: relative; width: 220px; height: 220px; margin: 0 auto; }
+.avatar-ring { position: absolute; inset: -5px; border-radius: 50%; background: conic-gradient(from 0deg,#7c4ae0 0%,#fff 40%,#c14dd8 55%,#fff 75%,#7c4ae0 100%); opacity: .6; animation: spin-ring 12s linear infinite; }
+@keyframes spin-ring { to { transform: rotate(360deg); } }
+.avatar-img { position: absolute; inset: 4px; width: calc(100% - 8px); height: calc(100% - 8px); border-radius: 50%; background: var(--grad-btn); display: flex; align-items: center; justify-content: center; font-family: var(--font-h); font-size: 4rem; font-weight: 300; color: #fff; font-style: italic; border: 3px solid var(--bg); z-index: 1; }
+.sobre-role { font-size: .9rem; color: var(--primary); font-weight: 600; margin-bottom: 1rem; }
+.sobre-bio { font-size: 1rem; color: var(--text-2); line-height: 1.8; margin-bottom: 1.5rem; }
+.sobre-tags { display: flex; flex-wrap: wrap; gap: .5rem; }
+.stag { padding: .28rem .75rem; background: var(--glass); border: 1px solid var(--glass-b); border-radius: 99px; font-size: .77rem; font-weight: 600; color: var(--text-2); transition: border-color var(--t), color var(--t); }
+.stag:hover { border-color: var(--primary); color: var(--primary); }
+@media(max-width:900px){ .sobre-grid { grid-template-columns: 1fr; gap: 3rem; } }
