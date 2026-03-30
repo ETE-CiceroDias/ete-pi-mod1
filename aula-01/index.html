@@ -6,35 +6,21 @@
 <title>Aula 01 · Metodologia Ágil · ETE Cícero Dias</title>
 <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
 <link rel="stylesheet" href="../base.css"/>
+<link rel="stylesheet" href="../aula-00/style.css"/>
 <link rel="stylesheet" href="style.css"/>
-
 </head>
-<body>
+<body data-aula-id="01">
 
 <div id="prog"></div>
-
-<!-- RICH TEXT TOOLBAR -->
-<div id="toolbar">
-  <button class="tb-btn" id="tb-b"><b>B</b></button>
-  <button class="tb-btn" id="tb-i"><i>I</i></button>
-  <button class="tb-btn" id="tb-u"><u>U</u></button>
-  <div class="tb-sep"></div>
-  <div class="tb-color" style="background:#7c4ae0" data-color="#7c4ae0"></div>
-  <div class="tb-color" style="background:#c14dd8" data-color="#c14dd8"></div>
-  <div class="tb-color" style="background:#090B20" data-color="#090B20"></div>
-  <div class="tb-color" style="background:#10b981" data-color="#10b981"></div>
-  <div class="tb-sep"></div>
-  <button class="tb-btn" id="tb-clr" style="font-size:.7rem">✕</button>
-</div>
 
 <!-- MOBILE MENU -->
 <div class="mobile-menu" id="mobileMenu">
   <button class="mobile-close" onclick="toggleMobile()"><i data-lucide="x" style="width:28px;height:28px;color:var(--text)"></i></button>
-  <a href="#disciplina" onclick="toggleMobile()">Disciplina</a>
-  <a href="#arquitetura" onclick="toggleMobile()">Arquitetura</a>
-  <a href="#agil" onclick="toggleMobile()">Ágil</a>
-  <a href="#ciclo" onclick="toggleMobile()">Ciclo</a>
+  <a href="#governanca" onclick="toggleMobile()">Governança</a>
+  <a href="#modelo" onclick="toggleMobile()">Modelo</a>
+  <a href="#ciclo" onclick="toggleMobile()">SDLC</a>
   <a href="#cascata" onclick="toggleMobile()">Cascata</a>
+  <a href="#incremental" onclick="toggleMobile()">Incremental</a>
   <a href="#agil" onclick="toggleMobile()">Ágil</a>
   <a href="#scrum" onclick="toggleMobile()">Scrum</a>
   <a href="#kanban" onclick="toggleMobile()">Kanban</a>
@@ -48,17 +34,19 @@
     Todas as aulas
   </a>
   <div class="nav-links">
-    <a href="#disciplina" data-section="disciplina">Disciplina</a>
-    <a href="#arquitetura" data-section="arquitetura">Arquitetura</a>
-    <a href="#agil" data-section="agil">Ágil</a>
-    <a href="#ciclo" data-section="ciclo">Ciclo</a>
+    <a href="#governanca" data-section="governanca">Governança</a>
+    <a href="#modelo" data-section="modelo">Modelo</a>
+    <a href="#ciclo" data-section="ciclo">SDLC</a>
     <a href="#cascata" data-section="cascata">Cascata</a>
+    <a href="#incremental" data-section="incremental">Incremental</a>
     <a href="#agil" data-section="agil">Ágil</a>
     <a href="#scrum" data-section="scrum">Scrum</a>
     <a href="#kanban" data-section="kanban">Kanban</a>
     <a href="#backlog" data-section="backlog">Backlog</a>
   </div>
-  <span class="nav-aula-info">Aula 01 · 20 mar 2026</span>
+  <div class="nav-right">
+    <span class="nav-aula-info">Aula 01 · 27 mar 2026</span>
+  </div>
   <button class="nav-hamburger" onclick="toggleMobile()">
     <i data-lucide="menu" style="width:24px;height:24px"></i>
   </button>
@@ -70,122 +58,128 @@
 </button>
 
 <!-- ══ HERO ══ -->
-<section class="hero" id="hero">
-  <div class="blob blob-1"></div>
-  <div class="blob blob-2"></div>
-  <div class="blob blob-3"></div>
-
-  <div class="hero-inner">
-    <div class="hero-badge"><span class="badge-dot"></span>Aula 01 · 20 mar 2026 · 1h20</div>
-    <h1 class="hero-title">Como times de <em>tecnologia</em> realmente trabalham</h1>
-    <p class="hero-sub">Arquitetura de software, ciclo SDLC, modelo cascata, Scrum, Kanban e Product Backlog — antes da primeira linha de código.</p>
-    <div class="hero-stats">
-      <div class="stat"><div class="stat-n">9</div><div class="stat-l">Tópicos</div></div>
-      <div class="stat-div"></div>
-      <div class="stat"><div class="stat-n">1h20</div><div class="stat-l">Duração</div></div>
-      <div class="stat-div"></div>
-      <div class="stat"><div class="stat-n">PI I</div><div class="stat-l">Mod. 1</div></div>
+<section class="hero hero-cover" id="hero" style="--cover-url:url('https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=1400&q=80')">
+  <div class="hero-cover-overlay"></div>
+  <div class="hero-cover-inner">
+    <div class="hero-cover-meta">
+      <div class="hero-badge hero-badge-dark"><span class="badge-dot"></span>Aula 01</div>
+      <span class="hm-sep-dark">·</span>
+      <span class="hm-tag hm-tag-dark"><i data-lucide="calendar" style="width:13px;height:13px"></i>27 mar 2026</span>
+      <span class="hm-sep-dark">·</span>
+      <span class="hm-tag hm-tag-dark"><i data-lucide="clock" style="width:13px;height:13px"></i>1h20</span>
+    </div>
+    <h1 class="hero-cover-title">Como times de <em>tecnologia</em><br>realmente trabalham</h1>
+    <p class="hero-cover-sub">Governança, modelos de software, ciclo SDLC, cascata, incremental, Manifesto Ágil, Scrum, Kanban e Product Backlog — antes da primeira linha de código.</p>
+    <div class="hero-cover-divider"></div>
+    <div class="hero-cover-author-row">
+      <div class="hero-ed-author">
+        <div class="hero-ed-avatar">S</div>
+        <div>
+          <div class="hero-ed-name" style="color:#fff">Prof. Samara Sabino</div>
+          <div class="hero-ed-role" style="color:rgba(255,255,255,.55)">ETE Cícero Dias · PI I · Módulo 1</div>
+        </div>
+      </div>
+      <a href="#governanca" class="hero-cover-cta">
+        Ler aula <i data-lucide="chevron-down" style="width:16px;height:16px"></i>
+      </a>
     </div>
   </div>
-  <div class="hero-scroll"><i data-lucide="chevron-down" style="width:24px;height:24px"></i></div>
 </section>
 
-<!-- ══ DISCIPLINA ══ -->
-<section class="section" id="disciplina">
+<!-- ══ GOVERNANÇA ══ -->
+<section class="section" id="governanca">
   <div class="section-inner">
     <div class="section-header reveal">
-      <div class="section-label">00 · A Disciplina</div>
-      <h2 class="section-title">Projeto <em>Integrador I</em></h2>
-      <p class="section-sub" contenteditable="true">O componente curricular Projeto Integrador I integra o primeiro módulo do curso Técnico em Desenvolvimento de Sistemas. Com carga horária total de 80 horas, a disciplina une a introdução ao desenvolvimento web com HTML5 e CSS3 ao desenvolvimento de um projeto real baseado nos Objetivos de Desenvolvimento Sustentável da ONU.</p>
+      <div class="section-label">00 · Contexto</div>
+      <h2 class="section-title">Gestão de Projetos e <em>Governança</em></h2>
+      <p class="section-sub" contenteditable="true">Antes de entrar em modelos e frameworks, precisamos entender o campo maior em que tudo isso se insere: a gestão de projetos e a governança.</p>
     </div>
-
-    <div class="reveal" style="margin-bottom:3.5rem;">
-      <div class="section-label" style="margin-bottom:1.2rem;">Objetivos de aprendizagem</div>
-      <div class="obj-scatter">
-        <div class="obj-bg-title">objetivos de PI</div>
-        <div class="obj-card" style="top:6%;left:4%;transform:rotate(-1.5deg)">Entender como a <span>Web</span> funciona</div>
-        <div class="obj-card" style="top:4%;left:55%;transform:rotate(1.2deg)">Aplicar conceitos de <span>metodologia ágil</span> para organização do projeto</div>
-        <div class="obj-card" style="top:26%;left:22%;transform:rotate(-0.8deg)">Saber qual o <span>papel</span> do HTML, CSS e JavaScript</div>
-        <div class="obj-card" style="top:24%;left:60%;transform:rotate(1.8deg)">Estilizar interfaces com <span>CSS3</span>: cores, tipografia, layout e responsividade</div>
-        <div class="obj-card" style="top:50%;left:3%;transform:rotate(1.2deg)">Estruturar páginas com <span>HTML5 semântico</span> e boas práticas</div>
-        <div class="obj-card" style="top:48%;left:35%;transform:rotate(-1.5deg)">Desenvolver em grupo uma solução digital conectada a um <span class="rose">ODS da ONU</span></div>
-        <div class="obj-card" style="top:74%;left:4%;transform:rotate(2deg)">Apresentar o projeto com <span>clareza</span></div>
-        <div class="obj-card" style="top:72%;left:33%;transform:rotate(-1.8deg)">Publicar projetos web via <span class="rose">GitHub Pages</span></div>
-        <div class="obj-card" style="top:70%;left:63%;transform:rotate(1.2deg)"><span>Documentar</span> o processo de desenvolvimento</div>
-      </div>
-    </div>
-
-    <div class="concept-grid reveal">
-      <div>
-        <div class="section-label" style="margin-bottom:1.2rem;">Competências</div>
-        <div class="comp-list">
-          <div class="comp-item"><div class="comp-dot"></div><div class="comp-text" contenteditable="true">Reconhecer os fundamentos da Web e do desenvolvimento front-end.</div></div>
-          <div class="comp-item"><div class="comp-dot"></div><div class="comp-text" contenteditable="true">Desenvolver páginas web utilizando HTML5 semântico e CSS3.</div></div>
-          <div class="comp-item"><div class="comp-dot"></div><div class="comp-text" contenteditable="true">Aplicar metodologias ágeis e ferramentas de gestão de projeto.</div></div>
-          <div class="comp-item"><div class="comp-dot"></div><div class="comp-text" contenteditable="true">Prototipar e apresentar soluções inovadoras voltadas ao desenvolvimento sustentável.</div></div>
-        </div>
-      </div>
-      <div>
-        <div class="section-label" style="margin-bottom:1.2rem;">Avaliações</div>
-        <div style="display:flex;flex-direction:column;gap:1rem;">
-          <div class="aval-card">
-            <div class="aval-top">
-              <div class="ic"><i data-lucide="monitor" style="width:20px;height:20px;color:#fff"></i></div>
-              <div class="aval-top-text"><div class="label">Entrega individual</div><div class="name">Site Portfólio + Mini-projeto</div></div>
-              <div class="aval-pts">2pts</div>
-            </div>
-            <div class="aval-body"><p contenteditable="true">Portfólio publicado no GitHub Pages com foto, nome e habilidades. Mini-projeto HTML/CSS funcional. HTML semântico, CSS com variáveis e responsividade obrigatórios.</p></div>
-          </div>
-          <div class="aval-card">
-            <div class="aval-top">
-              <div class="ic"><i data-lucide="rocket" style="width:20px;height:20px;color:#fff"></i></div>
-              <div class="aval-top-text"><div class="label">Entrega em grupo</div><div class="name">Projeto Final ODS</div></div>
-              <div class="aval-pts">8pts</div>
-            </div>
-            <div class="aval-body">
-              <p contenteditable="true">Solução digital conectada a um ODS da ONU. Avaliado pelo processo ágil no Trello, apresentação oral de 7 min no Figma, documentos e protótipo de alta fidelidade.</p>
-              <a class="aval-link" href="https://ete-cicerodias.github.io/app-plano-mod1/" target="_blank">
-                Ver plano completo <i data-lucide="external-link" style="width:13px;height:13px"></i>
-              </a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ══ ARQUITETURA ══ -->
-<section class="section alt-bg" id="arquitetura">
-  <div class="section-inner">
-    <div class="concept-grid">
-      <div class="reveal">
-        <div class="section-label">01 · Fundamentos</div>
-        <h2 class="section-title">Arquitetura de <em>Software</em></h2>
-        <div class="prose">
-          <p contenteditable="true">Antes de escrever uma linha de código, existe uma etapa que muitos iniciantes pulam — e que faz toda a diferença no resultado final: a arquitetura de software. Assim como um arquiteto projeta uma construção inteira antes de qualquer tijolo ser colocado, a arquitetura de software é o conjunto de decisões estruturais que define como um sistema vai ser organizado.</p>
-          <p contenteditable="true">Ela determina quais são os componentes do sistema, como eles se comunicam entre si, quais são as responsabilidades de cada parte e como o sistema vai se comportar. A arquitetura <span class="highlight">não é o código</span> — é o raciocínio que vem antes dele.</p>
-          <p contenteditable="true">Um sistema sem arquitetura definida vira rapidamente aquilo que os desenvolvedores chamam de <span class="highlight">código espaguete</span> — tudo misturado, ninguém sabe onde mexer, qualquer mudança quebra outra coisa.</p>
-        </div>
+    <div class="concept-grid reveal" style="margin-bottom:3.5rem;">
+      <div class="prose reveal">
+        <p contenteditable="true">Todo projeto — seja construir uma casa, organizar um evento ou desenvolver um software — envolve um conjunto de decisões: quem faz o quê, em qual prazo, com quais recursos e como o progresso será acompanhado. A <span class="highlight">gestão de projetos</span> é a disciplina que responde essas perguntas de forma organizada.</p>
+        <p contenteditable="true">E dentro da gestão de projetos existe um conceito ainda mais amplo: a <span class="highlight">governança</span>. Governança é o conjunto de estruturas, processos e regras que determinam como as decisões são tomadas dentro de um projeto ou organização. Ela responde três perguntas fundamentais:</p>
+        <p contenteditable="true"><strong>Quem tem autoridade para decidir o quê?</strong> No Scrum, por exemplo, é o Product Owner quem decide o que entra no backlog. No Cascata, é o gerente de projeto.<br><br><strong>Como o progresso é medido e comunicado?</strong> Por entregas parciais? Por marcos? Por sprints?<br><br><strong>Quem é responsável pelo resultado?</strong> O indivíduo? O time? A liderança?</p>
+        <p contenteditable="true">Quando uma empresa decide adotar Scrum, ela está fazendo uma <span class="highlight">escolha de governança</span> — definindo como as decisões serão tomadas e como o trabalho será organizado. Tudo que vamos ver hoje — modelos de software, Scrum, Kanban — faz parte desse campo.</p>
       </div>
       <div class="stack-wrap reveal reveal-d2">
         <div class="stack">
-          <div class="stack-card"><div class="stack-bkg-w">arq</div><div class="kw">arquitetura de software</div><div class="ct">É o conjunto de <span>decisões estruturais</span> que define como um <span class="rose">sistema vai ser organizado</span>, quais são seus componentes, como eles se comunicam e como o sistema vai se comportar.</div><div class="sig">Arquitetura...</div></div>
+          <div class="stack-card"><div class="stack-bkg-w">gov</div><div class="kw">governança de projetos</div><div class="ct">Conjunto de <span>estruturas e processos</span> que definem como as decisões são tomadas, como o progresso é medido e <span class="rose">quem é responsável</span> pelos resultados.</div><div class="sig">Governança...</div></div>
           <div class="stack-card"></div>
           <div class="stack-card"></div>
         </div>
       </div>
     </div>
-    <div class="reveal" style="margin-top:3rem;">
-      <div class="img-ph" style="min-height:380px;">
-        <img src="https://res.cloudinary.com/dvib5lqwd/image/upload/v1774035888/arquitetura-software-tipos_daz3jy.png" alt="Tipos de Arquitetura de Software" class="img-section">
+
+    <!-- 3 perguntas da governança -->
+    <div class="reveal" style="margin-bottom:1.5rem;"><div class="section-label">As 3 perguntas da governança</div></div>
+    <div class="cards-grid reveal" style="margin-bottom:3.5rem;">
+      <div class="comp-card">
+        <div class="comp-card-top">
+          <div class="comp-card-icon"><i data-lucide="user-check" style="width:20px;height:20px"></i></div>
+          <div class="comp-card-badge">Pergunta 01</div>
+          <div class="comp-card-title">Quem <em>decide?</em></div>
+        </div>
+        <div class="comp-card-body"><p contenteditable="true">Quem tem autoridade para tomar quais decisões — sobre o produto, sobre o processo, sobre prioridades?</p></div>
+      </div>
+      <div class="comp-card">
+        <div class="comp-card-top">
+          <div class="comp-card-icon"><i data-lucide="bar-chart-2" style="width:20px;height:20px"></i></div>
+          <div class="comp-card-badge">Pergunta 02</div>
+          <div class="comp-card-title">Como <em>medir?</em></div>
+        </div>
+        <div class="comp-card-body"><p contenteditable="true">Como o progresso é monitorado e comunicado? Por entregas funcionais? Por marcos? Por relatórios semanais?</p></div>
+      </div>
+      <div class="comp-card">
+        <div class="comp-card-top">
+          <div class="comp-card-icon"><i data-lucide="shield-check" style="width:20px;height:20px"></i></div>
+          <div class="comp-card-badge">Pergunta 03</div>
+          <div class="comp-card-title">Quem é <em>responsável?</em></div>
+        </div>
+        <div class="comp-card-body"><p contenteditable="true">Quando algo não é entregue, quem presta contas? O indivíduo? O time coletivamente? A liderança?</p></div>
+      </div>
+    </div>
+
+    <!-- Modelos de gestão -->
+    <div class="reveal" style="margin-bottom:1.5rem;"><div class="section-label">Modelos de gestão de projetos</div></div>
+    <div class="cards-grid-4 reveal" style="margin-bottom:1rem;">
+      <div class="comp-card">
+        <div class="comp-card-top">
+          <div class="comp-card-icon"><i data-lucide="arrow-down" style="width:20px;height:20px"></i></div>
+          <div class="comp-card-badge">Modelo 01</div>
+          <div class="comp-card-title">Cascata <em>(Waterfall)</em></div>
+        </div>
+        <div class="comp-card-body"><p contenteditable="true">Etapas sequenciais. Tudo planejado antes de começar. Entrega única no final. Ideal para requisitos fixos e imutáveis.</p></div>
+      </div>
+      <div class="comp-card">
+        <div class="comp-card-top">
+          <div class="comp-card-icon"><i data-lucide="layers" style="width:20px;height:20px"></i></div>
+          <div class="comp-card-badge">Modelo 02</div>
+          <div class="comp-card-title"><em>Incremental</em></div>
+        </div>
+        <div class="comp-card-body"><p contenteditable="true">Desenvolvimento e entrega em partes funcionais. O cliente usa versões parciais e dá feedback desde cedo.</p></div>
+      </div>
+      <div class="comp-card">
+        <div class="comp-card-top">
+          <div class="comp-card-icon"><i data-lucide="refresh-cw" style="width:20px;height:20px"></i></div>
+          <div class="comp-card-badge">Modelo 03</div>
+          <div class="comp-card-title"><em>Ágil</em></div>
+        </div>
+        <div class="comp-card-body"><p contenteditable="true">Ciclos curtos, entregas frequentes, adaptação constante. Scrum e Kanban são as principais implementações.</p></div>
+      </div>
+      <div class="comp-card">
+        <div class="comp-card-top">
+          <div class="comp-card-icon"><i data-lucide="git-merge" style="width:20px;height:20px"></i></div>
+          <div class="comp-card-badge">Modelo 04</div>
+          <div class="comp-card-title"><em>Híbrido</em></div>
+        </div>
+        <div class="comp-card-body"><p contenteditable="true">Planejamento inicial estruturado combinado com execução ágil. Usado em projetos com partes fixas e variáveis.</p></div>
       </div>
     </div>
   </div>
 </section>
 
 <!-- ══ MODELO ══ -->
-<section class="section" id="modelo">
+<section class="section alt-bg" id="modelo">
   <div class="section-inner">
     <div class="concept-grid">
       <div class="stack-wrap reveal">
@@ -196,7 +190,7 @@
         </div>
       </div>
       <div class="reveal reveal-d2">
-        <div class="section-label">02 · Organização</div>
+        <div class="section-label">01 · Organização</div>
         <h2 class="section-title">Modelo de <em>Software</em></h2>
         <div class="prose">
           <p contenteditable="true">Quando um grupo de pessoas vai construir algo juntas, a primeira pergunta que surge é: por onde a gente começa? Quem faz o quê? No desenvolvimento de software, essa pergunta não é diferente.</p>
@@ -208,86 +202,11 @@
   </div>
 </section>
 
-<!-- ══ METODOLOGIA ÁGIL ══ -->
-<section class="section" id="agil">
-  <div class="section-inner">
-    <div class="section-header reveal">
-      <div class="section-label">02b · Contexto</div>
-      <h2 class="section-title">Metodologia <em>Ágil</em></h2>
-      <p class="section-sub" contenteditable="true">Um conjunto de valores e princípios — não uma ferramenta, não um processo. Uma forma diferente de pensar o desenvolvimento de software.</p>
-    </div>
-    <div class="concept-grid reveal" style="margin-bottom:3.5rem;">
-      <div class="prose">
-        <p contenteditable="true">No final dos anos 90, o desenvolvimento de software vivia uma crise. Projetos grandes, planejados anos antes, chegavam ao final completamente fora do prazo, do orçamento e — pior — sem atender às necessidades reais dos usuários.</p>
-        <p contenteditable="true">Em fevereiro de 2001, dezessete desenvolvedores se reuniram numa estação de esqui em Utah, EUA, e escreveram o <span class="highlight">Manifesto Ágil</span> — um documento curto que mudou a indústria de software para sempre.</p>
-        <p contenteditable="true">A ideia central é simples: <span class="highlight">entregar valor cedo e com frequência</span>, colaborar com o cliente, responder a mudanças em vez de seguir um plano rígido.</p>
-      </div>
-      <div class="stack-wrap">
-        <div class="stack">
-          <div class="stack-card">
-            <div class="stack-bkg-w">ágil</div>
-            <div class="kw">metodologia ágil</div>
-            <div class="ct">Não é uma metodologia única — é uma <span>filosofia</span> com valores e princípios. Ferramentas como Scrum e Kanban são <span class="rose">implementações dessa filosofia</span>.</div>
-            <div class="sig">Ágil...</div>
-          </div>
-          <div class="stack-card"></div>
-          <div class="stack-card"></div>
-        </div>
-      </div>
-    </div>
-
-    <!-- 4 VALORES DO MANIFESTO -->
-    <div class="reveal" style="margin-bottom:1.5rem;">
-      <div class="section-label">Os 4 Valores do Manifesto</div>
-      <p style="font-size:.82rem;color:var(--text-3);margin-top:.3rem;">O que o time valoriza <em>mais</em> — sem descartar o que está à direita</p>
-    </div>
-    <div class="manifesto-grid reveal" style="margin-bottom:3.5rem;">
-      <div class="manifesto-item">
-        <div class="manifesto-left" contenteditable="true">Indivíduos e interações</div>
-        <div class="manifesto-vs">→</div>
-        <div class="manifesto-right" contenteditable="true">processos e ferramentas</div>
-      </div>
-      <div class="manifesto-item">
-        <div class="manifesto-left" contenteditable="true">Software funcionando</div>
-        <div class="manifesto-vs">→</div>
-        <div class="manifesto-right" contenteditable="true">documentação abrangente</div>
-      </div>
-      <div class="manifesto-item">
-        <div class="manifesto-left" contenteditable="true">Colaboração com o cliente</div>
-        <div class="manifesto-vs">→</div>
-        <div class="manifesto-right" contenteditable="true">negociação de contratos</div>
-      </div>
-      <div class="manifesto-item">
-        <div class="manifesto-left" contenteditable="true">Responder a mudanças</div>
-        <div class="manifesto-vs">→</div>
-        <div class="manifesto-right" contenteditable="true">seguir um plano</div>
-      </div>
-    </div>
-
-    <!-- QUEM FEZ -->
-    <!-- <div class="reveal" style="margin-bottom:1.5rem;">
-      <div class="section-label">Quem escreveu</div>
-      <p style="font-size:.82rem;color:var(--text-3);margin-top:.3rem;">17 desenvolvedores reunidos em Snowbird, Utah · Fevereiro de 2001</p>
-    </div>
-    <div class="agil-autores reveal">
-      <div class="autor-item"><div class="autor-avatar">KS</div><div class="autor-nome">Kent Beck</div><div class="autor-ref">XP</div></div>
-      <div class="autor-item"><div class="autor-avatar">JG</div><div class="autor-nome">James Grenning</div><div class="autor-ref">XP</div></div>
-      <div class="autor-item"><div class="autor-avatar">RMO</div><div class="autor-nome">Robert Martin</div><div class="autor-ref">Clean Code</div></div>
-      <div class="autor-item"><div class="autor-avatar">MS</div><div class="autor-nome">Mike Schwaber</div><div class="autor-ref">Scrum</div></div>
-      <div class="autor-item"><div class="autor-avatar">JS</div><div class="autor-nome">Jeff Sutherland</div><div class="autor-ref">Scrum</div></div>
-      <div class="autor-item"><div class="autor-avatar">WC</div><div class="autor-nome">Ward Cunningham</div><div class="autor-ref">Wiki</div></div>
-      <div class="autor-item"><div class="autor-avatar">MB</div><div class="autor-nome">Mike Beedle</div><div class="autor-ref">Scrum</div></div>
-      <div class="autor-item"><div class="autor-avatar">AH</div><div class="autor-nome">Arie van Bennekum</div><div class="autor-ref">DSDM</div></div>
-      <div class="autor-item autor-mais"><div class="autor-avatar">+9</div><div class="autor-nome">outros</div><div class="autor-ref">signatários</div></div>
-    </div> -->
-  </div>
-</section>
-
 <!-- ══ CICLO SDLC ══ -->
 <section class="section alt-bg" id="ciclo">
   <div class="section-inner">
     <div class="section-header reveal">
-      <div class="section-label">03 · Ciclo</div>
+      <div class="section-label">02 · Ciclo</div>
       <h2 class="section-title">Ciclo de Desenvolvimento<br>de <em>Software</em></h2>
       <p class="section-sub" contenteditable="true">Todo software tem uma história — nasce de uma necessidade, é planejado, construído, testado, entregue e um dia deixa de ser usado. Esse caminho completo é o ciclo SDLC.</p>
     </div>
@@ -397,7 +316,7 @@
 <section class="section alt-bg" id="cascata">
   <div class="section-inner">
     <div class="section-header reveal">
-      <div class="section-label">04 · Modelo</div>
+      <div class="section-label">03 · Modelo</div>
       <h2 class="section-title">Modelo em <em>Cascata</em></h2>
     </div>
     <div class="concept-grid">
@@ -421,7 +340,7 @@
 <section class="section" id="incremental" style="padding-top:2rem;">
   <div class="section-inner">
     <div class="section-header reveal">
-      <div class="section-label">04b · Modelo</div>
+      <div class="section-label">04 · Modelo</div>
       <h2 class="section-title">Modelo <em>Incremental</em></h2>
     </div>
     <div class="concept-grid">
@@ -445,7 +364,7 @@
 <section class="section alt-bg" id="agil">
   <div class="section-inner">
     <div class="section-header reveal">
-      <div class="section-label">04c · Metodologia</div>
+      <div class="section-label">05 · Manifesto</div>
       <h2 class="section-title">Metodologia <em>Ágil</em></h2>
       <p class="section-sub" contenteditable="true">Em 2001, 17 desenvolvedores insatisfeitos com os modelos rígidos se reuniram e escreveram o Manifesto Ágil — um conjunto de valores que mudou a forma como o mundo desenvolve software.</p>
     </div>
@@ -505,7 +424,7 @@
 <section class="section" id="scrum">
   <div class="section-inner">
     <div class="section-header reveal">
-      <div class="section-label">05 · Framework</div>
+      <div class="section-label">06 · Framework</div>
       <h2 class="section-title">O que é <em>Scrum?</em></h2>
     </div>
     <div class="concept-grid reveal" style="margin-bottom:3rem;">
@@ -661,7 +580,7 @@
 <section class="section" id="kanban">
   <div class="section-inner">
     <div class="section-header reveal">
-      <div class="section-label">06 · Método</div>
+      <div class="section-label">07 · Método</div>
       <h2 class="section-title">O que é <em>Kanban?</em></h2>
       <p class="section-sub" contenteditable="true">Método ágil visual e de fluxo contínuo — surgiu nas fábricas da Toyota e foi adaptado para o desenvolvimento de software. Sem ciclos fixos, sem papéis obrigatórios.</p>
     </div>
@@ -702,7 +621,7 @@
 <section class="section alt-bg" id="backlog">
   <div class="section-inner">
     <div class="section-header reveal">
-      <div class="section-label">07 · Organização</div>
+      <div class="section-label">08 · Organização</div>
       <h2 class="section-title">Product <em>Backlog</em></h2>
       <p class="section-sub" contenteditable="true">A espinha dorsal do desenvolvimento ágil. Lista viva e priorizada de tudo que o produto precisa ter.</p>
     </div>
@@ -807,6 +726,9 @@
   <div class="footer-text">Projeto Integrador I · Prof.ª Samara Sabino</div>
 </footer>
 
+<div id="editor-drop-zone"></div>
+<script src="../auth.js"></script>
+<script src="../editor.js"></script>
 <script src="main.js"></script>
 </body>
 </html>

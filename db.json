@@ -1,0 +1,82 @@
+{
+  "meta": {
+    "disciplina": "Projeto Integrador I",
+    "codigo": "DE_234",
+    "modulo": "Módulo 1",
+    "ano": "2026",
+    "professora": "Samara Sabino",
+    "escola": "ETE Cícero Dias"
+  },
+  "aulas": [
+    {
+      "id": "00",
+      "numero": "00",
+      "titulo": "Apresentação da",
+      "tituloEm": "Disciplina",
+      "descricao": "O que é PI I, objetivos de aprendizagem, competências, avaliações e como o semestre vai funcionar.",
+      "dataA": "20 mar 2026",
+      "dataB": "20 mar 2026",
+      "duracao": "1h20",
+      "status": "publicada",
+      "href": "aula-00/index.html",
+      "coverUrl": "",
+      "topicos": ["PI I", "Avaliações", "ODS", "Semestre"]
+    },
+    {
+      "id": "01",
+      "numero": "01",
+      "titulo": "Metodologia",
+      "tituloEm": "Ágil",
+      "descricao": "Governança, modelos de software, ciclo SDLC, cascata, incremental, Manifesto Ágil, Scrum, Kanban e Product Backlog.",
+      "dataA": "27 mar 2026",
+      "dataB": "27 mar 2026",
+      "duracao": "1h20",
+      "status": "publicada",
+      "href": "aula-01/index.html",
+      "coverUrl": "https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=1400&q=80",
+      "topicos": ["Governança", "Scrum", "Kanban", "Backlog", "Cascata"]
+    },
+    {
+      "id": "02",
+      "numero": "02",
+      "titulo": "Como a",
+      "tituloEm": "Web Funciona",
+      "descricao": "HTTP, navegadores, DNS, renderização e o papel do HTML, CSS e JavaScript.",
+      "dataA": null,
+      "dataB": null,
+      "duracao": "1h20",
+      "status": "em-breve",
+      "href": null,
+      "coverUrl": "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=1400&q=80",
+      "topicos": ["HTTP", "DNS", "Browser", "HTML"]
+    },
+    {
+      "id": "03",
+      "numero": "03",
+      "titulo": "HTML5",
+      "tituloEm": "Semântico",
+      "descricao": "Estrutura básica, tags semânticas, acessibilidade e boas práticas de marcação.",
+      "dataA": null,
+      "dataB": null,
+      "duracao": "1h20",
+      "status": "em-breve",
+      "href": null,
+      "coverUrl": "https://images.unsplash.com/photo-1542831371-29b0f74f9713?w=1400&q=80",
+      "topicos": ["HTML5", "Semântica", "Acessibilidade"]
+    },
+    {
+      "id": "04",
+      "numero": "04",
+      "titulo": "CSS3",
+      "tituloEm": "Fundamentos",
+      "descricao": "Seletores, box model, tipografia, cores e variáveis CSS.",
+      "dataA": null,
+      "dataB": null,
+      "duracao": "1h20",
+      "status": "em-breve",
+      "href": null,
+      "coverUrl": "https://images.unsplash.com/photo-1507721999472-8ed4421c4af2?w=1400&q=80",
+      "topicos": ["CSS3", "Box Model", "Variáveis"]
+    }
+  ]
+}
