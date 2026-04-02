@@ -135,3 +135,54 @@
   .hm-div { width: 40px; height: 1px; }
   .aulas-grid { grid-template-columns: 1fr; }
 }
+
+/* ── Card Nova Aula (admin only) ─────────────────── */
+.aula-card-new {
+  border: 2px dashed rgba(124,74,224,.35) !important;
+  background: rgba(124,74,224,.03) !important;
+  cursor: pointer;
+  transition: border-color .2s, background .2s, transform .2s;
+  min-height: 200px;
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+}
+.aula-card-new:hover {
+  border-color: rgba(124,74,224,.7) !important;
+  background: rgba(124,74,224,.07) !important;
+  transform: translateY(-4px);
+}
+.aula-card-new-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: .75rem;
+  padding: 2rem;
+  text-align: center;
+}
+.aula-new-icon {
+  width: 56px;
+  height: 56px;
+  border-radius: 16px;
+  border: 2px dashed rgba(124,74,224,.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--primary);
+  transition: background .2s;
+}
+.aula-card-new:hover .aula-new-icon {
+  background: rgba(124,74,224,.1);
+}
+.aula-new-label {
+  font-family: var(--font-h);
+  font-size: 1.3rem;
+  font-weight: 300;
+  color: var(--primary);
+  letter-spacing: -.02em;
+}
+.aula-new-hint {
+  font-size: .75rem;
+  color: var(--text-3);
+  font-weight: 500;
+}

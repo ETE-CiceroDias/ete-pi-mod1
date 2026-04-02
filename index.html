@@ -4,9 +4,41 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>PI I · ETE Cícero Dias</title>
+
+<!-- ===== OPEN GRAPH (Compartilhamento em Redes Sociais) ===== -->
+<meta property="og:title" content="Aulas de PI I · ETE Cícero Dias" />
+<meta property="og:description" content="HTML5, CSS3, Metodologia Ágil e Projeto ODS — um site por aula, tudo organizado aqui. Projeto Integrador I, Módulo 1, 2026." />
+<meta property="og:image" content="/imagem-preview-pi.png" />
+<meta property="og:url" content="https://ete-pi-mod1.vercel.app/" />
+<meta property="og:type" content="website" />
+<meta property="og:locale" content="pt_BR" />
+
+<!-- ===== TWITTER CARD (Compartilhamento no Twitter/X) ===== -->
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Aulas de PI I · ETE Cícero Dias" />
+<meta name="twitter:description" content="HTML5, CSS3, Metodologia Ágil e Projeto ODS — um site por aula, tudo organizado aqui." />
+<meta name="twitter:image" content="/imagem-preview-pi.png" />
+<meta name="twitter:site" content="@seuperfil" />
+
+<!-- ===== TAGS ADICIONAIS RECOMENDADAS ===== -->
+<meta name="description" content="Aulas de Projeto Integrador I da ETE Cícero Dias, com tópicos de HTML5, CSS3 e Metodologia Ágil. Professora Samara Sabino." />
+<meta name="keywords" content="PI I, HTML5, CSS3, Web Design, ETE Cícero Dias, Desenvolvimento de Sistemas" />
+<meta name="author" content="Prof.ª Samara Sabino" />
+<meta name="theme-color" content="#1a1a1a" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+<!-- ===== Favicon ===== -->
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
+<link rel="apple-touch-icon" href="assets/apple-icon-180x180.png" />
+
+<!-- ===== LINKS CSS ===== -->
 <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
 <link rel="stylesheet" href="base.css"/>
 <link rel="stylesheet" href="index.css"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,200;1,300;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet"/>
 </head>
 <body>
 
@@ -28,7 +60,6 @@
   <div class="blob blob-1"></div>
   <div class="blob blob-2"></div>
   <div class="blob blob-3"></div>
-
 
   <div class="hero-inner">
     <div class="hero-badge"><span class="bdot"></span>Projeto Integrador I · Módulo 1 · 2026</div>
@@ -53,119 +84,7 @@
       <h2 class="section-title">Todas as <em>aulas</em></h2>
     </div>
 
-    <div class="aulas-grid">
-
-      <!-- AULA 01 — PUBLICADA -->
-      <a href="aula-01/index.html" class="aula-card reveal">
-        <div class="aula-card-top">
-          <div class="aula-num-bg">01</div>
-          <div class="aula-header">
-            <div class="aula-num-badge">01</div>
-            <div class="aula-status status-ok"><span class="status-dot"></span>Publicada</div>
-          </div>
-          <div class="aula-title">Metodologia <em>Ágil</em></div>
-          <div class="aula-desc">Arquitetura de software, ciclo SDLC, modelo cascata, Scrum, Kanban e Product Backlog.</div>
-        </div>
-        <div class="aula-topics">
-          <span class="topic-tag">Arquitetura</span>
-          <span class="topic-tag">Scrum</span>
-          <span class="topic-tag">Kanban</span>
-          <span class="topic-tag">Backlog</span>
-          <span class="topic-tag">Cascata</span>
-        </div>
-        <div class="aula-card-bottom">
-          <div class="aula-meta-row">
-            <div class="aula-meta-item">
-              <i data-lucide="calendar" style="width:13px;height:13px"></i>
-              20 mar 2026
-            </div>
-            <div class="aula-meta-item">
-              <i data-lucide="clock" style="width:13px;height:13px"></i>
-              1h20
-            </div>
-          </div>
-          <div class="aula-arrow"><i data-lucide="arrow-up-right" style="width:18px;height:18px"></i></div>
-        </div>
-      </a>
-
-      <!-- AULA 02 — EM BREVE -->
-      <div class="aula-card em-breve reveal reveal-d1">
-        <div class="aula-card-top">
-          <div class="aula-num-bg">02</div>
-          <div class="aula-header">
-            <div class="aula-num-badge" style="background:linear-gradient(135deg,#9b8abf,#7B6B9B)">02</div>
-            <div class="aula-status status-soon"><span class="status-dot"></span>Em breve</div>
-          </div>
-          <div class="aula-title">Como a <em>Web Funciona</em></div>
-          <div class="aula-desc">HTTP, navegadores, DNS, renderização e o papel do HTML, CSS e JavaScript.</div>
-        </div>
-        <div class="aula-topics">
-          <span class="topic-tag">HTTP</span>
-          <span class="topic-tag">DNS</span>
-          <span class="topic-tag">Browser</span>
-          <span class="topic-tag">HTML</span>
-        </div>
-        <div class="aula-card-bottom">
-          <div class="aula-meta-row">
-            <div class="aula-meta-item">
-              <i data-lucide="calendar" style="width:13px;height:13px"></i>
-              Em breve
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- AULA 03 — EM BREVE -->
-      <div class="aula-card em-breve reveal reveal-d2">
-        <div class="aula-card-top">
-          <div class="aula-num-bg">03</div>
-          <div class="aula-header">
-            <div class="aula-num-badge" style="background:linear-gradient(135deg,#9b8abf,#7B6B9B)">03</div>
-            <div class="aula-status status-soon"><span class="status-dot"></span>Em breve</div>
-          </div>
-          <div class="aula-title">HTML5 <em>Semântico</em></div>
-          <div class="aula-desc">Estrutura básica, tags semânticas, acessibilidade e boas práticas de marcação.</div>
-        </div>
-        <div class="aula-topics">
-          <span class="topic-tag">HTML5</span>
-          <span class="topic-tag">Semântica</span>
-          <span class="topic-tag">Acessibilidade</span>
-        </div>
-        <div class="aula-card-bottom">
-          <div class="aula-meta-row">
-            <div class="aula-meta-item">
-              <i data-lucide="calendar" style="width:13px;height:13px"></i>
-              Em breve
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- AULA 04 — EM BREVE -->
-      <div class="aula-card em-breve reveal reveal-d3">
-        <div class="aula-card-top">
-          <div class="aula-num-bg">04</div>
-          <div class="aula-header">
-            <div class="aula-num-badge" style="background:linear-gradient(135deg,#9b8abf,#7B6B9B)">04</div>
-            <div class="aula-status status-soon"><span class="status-dot"></span>Em breve</div>
-          </div>
-          <div class="aula-title">CSS3 <em>Fundamentos</em></div>
-          <div class="aula-desc">Seletores, box model, tipografia, cores e variáveis CSS.</div>
-        </div>
-        <div class="aula-topics">
-          <span class="topic-tag">CSS3</span>
-          <span class="topic-tag">Box Model</span>
-          <span class="topic-tag">Variáveis</span>
-        </div>
-        <div class="aula-card-bottom">
-          <div class="aula-meta-row">
-            <div class="aula-meta-item">
-              <i data-lucide="calendar" style="width:13px;height:13px"></i>
-              Em breve
-            </div>
-          </div>
-        </div>
-      </div>
+    <div class="aulas-grid" id="aulas-grid">
 
     </div>
   </div>
@@ -207,6 +126,9 @@
   <div class="footer-right">Projeto Integrador I · Prof.ª Samara Sabino</div>
 </footer>
 
+<script src="auth.js"></script>
+<script src="editor.js"></script>
+<script src="app.js"></script>
 <script>
 lucide.createIcons();
 const prog = document.getElementById('prog');

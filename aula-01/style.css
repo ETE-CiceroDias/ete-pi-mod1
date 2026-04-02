@@ -226,7 +226,7 @@ body::after {
 .alt-bg { background-color: #ede8f5; }
 
 /* ── CONCEPT GRID ────────────────────────────── */
-.concept-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center; }
+.concept-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: flex-start; }
 .prose p { font-size: 1rem; color: var(--text-2); line-height: 1.85; margin-bottom: 1rem; }
 .prose p:last-child { margin-bottom: 0; }
 .highlight { display: inline-block; padding: .1rem .45rem; background: rgba(124,74,224,.1); border-radius: 5px; color: var(--primary); font-weight: 600; }
@@ -777,3 +777,161 @@ body::after {
 .autor-mais .autor-avatar { background: rgba(124,74,224,.15); color: var(--primary); }
 .autor-nome { font-size: .75rem; font-weight: 700; color: var(--text); line-height: 1.2; }
 .autor-ref { font-size: .65rem; color: var(--primary); font-weight: 600; text-transform: uppercase; letter-spacing: .05em; }
+
+/* ══ HERO COVER (aula-01 estilo imagem 2) ════════════ */
+.hero-cover {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 0;
+  position: relative;
+  overflow: hidden;
+  background-image: var(--cover-url);
+  background-size: cover;
+  background-position: center top;
+}
+.hero-cover-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to top,
+    rgba(5,2,20,.95) 0%,
+    rgba(5,2,20,.75) 40%,
+    rgba(5,2,20,.35) 70%,
+    rgba(5,2,20,.1)  100%
+  );
+  z-index: 1;
+}
+.hero-cover-inner {
+  position: relative;
+  z-index: 2;
+  max-width: 960px;
+  padding: 4rem 4rem 3.5rem;
+  width: 100%;
+}
+.hero-cover-meta {
+  display: flex;
+  align-items: center;
+  gap: .75rem;
+  margin-bottom: 1.75rem;
+  flex-wrap: nowrap;
+}
+.hero-badge-dark {
+  background: rgba(124,74,224,.4) !important;
+  border: 1px solid rgba(124,74,224,.55) !important;
+  color: #fff !important;
+  backdrop-filter: blur(8px);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.hm-tag-dark {
+  display: inline-flex;
+  align-items: center;
+  gap: .4rem;
+  font-size: .78rem;
+  font-weight: 600;
+  color: rgba(255,255,255,.65);
+  white-space: nowrap;
+}
+.hm-sep-dark {
+  color: rgba(255,255,255,.25);
+  font-size: .9rem;
+}
+.hero-cover-title {
+  font-family: var(--font-h);
+  font-size: clamp(3rem, 6vw, 5.5rem);
+  font-weight: 300;
+  line-height: 1.06;
+  letter-spacing: -.03em;
+  color: #fff;
+  margin-bottom: 1.25rem;
+  text-align: left;
+}
+.hero-cover-title em {
+  font-style: italic;
+  color: #c4a1ff;
+  font-weight: 200;
+}
+.hero-cover-sub {
+  font-size: clamp(.92rem, 1.6vw, 1.05rem);
+  color: rgba(255,255,255,.65);
+  max-width: 600px;
+  line-height: 1.75;
+  margin-bottom: 2rem;
+  text-align: left;
+}
+.hero-cover-divider {
+  width: 100%;
+  height: 1px;
+  background: rgba(255,255,255,.12);
+  margin-bottom: 1.5rem;
+}
+.hero-cover-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: .45rem;
+  margin-left: auto;
+  padding: .65rem 1.35rem;
+  background: rgba(255,255,255,.1);
+  border: 1px solid rgba(255,255,255,.22);
+  border-radius: 99px;
+  color: #fff;
+  font-size: .82rem;
+  font-weight: 700;
+  text-decoration: none;
+  backdrop-filter: blur(8px);
+  transition: background .2s, border-color .2s;
+  white-space: nowrap;
+}
+.hero-cover-cta:hover { background: rgba(124,74,224,.45); border-color: rgba(124,74,224,.65); }
+
+@media(max-width:900px){
+  .hero-cover-inner { padding: 2rem 2rem 2.5rem; }
+  .hero-cover-title { font-size: clamp(2.2rem,7vw,3.5rem); }
+  .hero-cover-meta { flex-wrap: wrap; }
+}
+@media(max-width:600px){
+  .hero-cover-inner { padding: 1.5rem 1.5rem 2rem; }
+  .hero-cover-cta { margin-left:0; margin-top:.75rem; }
+  .hero-ed-author { flex-wrap:wrap; gap:.65rem; }
+}
+
+
+/* ── Alinhamento nav + hero cover ── */
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: .75rem;
+  margin-left: auto;
+}
+.nav-aula-info {
+  font-size: .75rem;
+  color: var(--text-3);
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+/* Author row — autor à esquerda, CTA à direita, na mesma linha */
+.hero-cover-author-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  width: 100%;
+}
+.hero-cover-author-row .hero-ed-author {
+  display: flex;
+  align-items: center;
+  gap: .85rem;
+  flex: 1;
+  min-width: 0;
+}
+.hero-cover-inner {
+  text-align: left;
+}
+
+@media(max-width:600px) {
+  .hero-cover-author-row { flex-wrap: wrap; }
+  .hero-cover-cta { margin-left: 0; }
+}
