@@ -4,9 +4,14 @@
     { "src": "server.js", "use": "@vercel/node" }
   ],
   "routes": [
-    { "src": "/(.*)", "dest": "/server.js" },
-    { "src": "/(.*).png", "dest": "/public/$1.png" },
-    { "src": "/(.*).jpg", "dest": "/public/$1.jpg" },
-    { "src": "/(.*).svg", "dest": "/public/$1.svg" }
+    { "src": "/(.*\\.png)", "dest": "/public/$1" },
+    { "src": "/(.*\\.jpg)", "dest": "/public/$1" },
+    { "src": "/(.*\\.svg)", "dest": "/public/$1" },
+  
+    { "src": "/(.*\\.css)", "dest": "/$1" },
+    { "src": "/(.*\\.js)", "dest": "/$1" },
+    { "src": "/assets/(.*)", "dest": "/assets/$1" },
+
+    { "src": "/(.*)", "dest": "/server.js" }
   ]
 }
