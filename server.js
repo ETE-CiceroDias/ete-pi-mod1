@@ -9,7 +9,7 @@ const ROOT = __dirname;
 
 app.use(express.json());
 // app.use(express.static(ROOT));
-// Serve arquivos estáticos do public/
+// Serve arquivos estáticos da pasta public
 app.use(express.static(path.join(ROOT, 'public')));
 
 // Serve arquivos estáticos do restante do projeto (assets, CSS, etc.)
@@ -124,6 +124,11 @@ app.post('/api/publish/:id', (req, res) => {
   } catch (e) {
     res.status(500).json({ error: e.message });
   }
+});
+
+// Serve index.html na raiz
+app.get('/', (req, res) => {
+  res.sendFile(path.join(ROOT, 'index.html'));
 });
 
 app.listen(PORT, () => {
