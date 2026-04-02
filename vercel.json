@@ -1,0 +1,12 @@
+{
+  "version": 2,
+  "builds": [
+    { "src": "server.js", "use": "@vercel/node" }
+  ],
+  "routes": [
+    { "src": "/(.*)", "dest": "/server.js" },
+    { "src": "/(.*).png", "dest": "/public/$1.png" },
+    { "src": "/(.*).jpg", "dest": "/public/$1.jpg" },
+    { "src": "/(.*).svg", "dest": "/public/$1.svg" }
+  ]
+}
