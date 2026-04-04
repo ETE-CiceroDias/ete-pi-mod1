@@ -8,6 +8,14 @@ const PORT = 3000;
 const ROOT = __dirname;
 
 app.use(express.json());
+
+// ── Permitir iframe (Review Editor do Atelier.sh) ──
+app.use((req, res, next) => {
+  res.setHeader('X-Frame-Options', 'ALLOWALL')
+  res.setHeader('Content-Security-Policy', "frame-ancestors *")
+  next()
+});
+
 // Serve todos os arquivos estáticos da raiz (base.css, index.css, app.js, etc.)
 app.use(express.static(ROOT));
 // Serve arquivos estáticos da pasta public (og:image, etc.)
