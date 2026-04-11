@@ -37,6 +37,7 @@
   </a>
   <div class="nav-links">
     <a href="#o-que-e" data-section="o-que-e">O que é?</a>
+    <a href="#mercado" data-section="mercado">Mercado</a>
     <a href="#videos" data-section="videos">Vídeos</a>
     <a href="#instalacao" data-section="instalacao">Instalação</a>
     <a href="#terminal" data-section="terminal">Terminal</a>
@@ -137,10 +138,48 @@
   </div>
 </section>
 
+<!-- ══ MERCADO DE TRABALHO ══ -->
+<section class="section section-alt" id="mercado">
+  <div class="article-inner">
+    <div class="article-label">02 · Mercado de trabalho</div>
+    <h2 class="article-title">Por que todo <em>dev usa</em></h2>
+
+    <p class="article-body">Git não é uma ferramenta opcional. Qualquer vaga de desenvolvimento — frontend, backend, mobile ou dados — exige que você saiba usar Git. Não é diferencial, é <strong>requisito básico</strong>.</p>
+
+    <div class="mercado-grid">
+      <div class="mercado-card">
+        <div class="mercado-icon"><i data-lucide="briefcase" style="width:20px;height:20px"></i></div>
+        <div class="mercado-titulo">Toda empresa usa</div>
+        <div class="mercado-desc">De startups a grandes empresas como Nubank, iFood e Mercado Livre — todas usam Git no dia a dia. Sem Git, você não passa pela entrevista técnica.</div>
+      </div>
+      <div class="mercado-card">
+        <div class="mercado-icon"><i data-lucide="users" style="width:20px;height:20px"></i></div>
+        <div class="mercado-titulo">Trabalho em equipe</div>
+        <div class="mercado-desc">Em um time, várias pessoas mexem no mesmo código ao mesmo tempo. O Git é o que evita que o trabalho de uma pessoa sobrescreva o da outra.</div>
+      </div>
+      <div class="mercado-card">
+        <div class="mercado-icon"><i data-lucide="shield" style="width:20px;height:20px"></i></div>
+        <div class="mercado-titulo">Segurança do código</div>
+        <div class="mercado-desc">Com Git, nada se perde. Se um bug surgir em produção, você identifica qual commit causou e reverte para a versão anterior com um comando.</div>
+      </div>
+      <div class="mercado-card">
+        <div class="mercado-icon"><i data-lucide="folder-open" style="width:20px;height:20px"></i></div>
+        <div class="mercado-titulo">Portfólio no GitHub</div>
+        <div class="mercado-desc">O GitHub é o seu currículo como dev. Recrutadores olham seu perfil para ver o que você construiu, como você escreve commits e com que frequência você contribui.</div>
+      </div>
+    </div>
+
+    <div class="callout callout-info">
+      <i data-lucide="trending-up" style="width:16px;height:16px"></i>
+      <span><strong>Dado real:</strong> Git aparece em mais de 90% das vagas de desenvolvimento no Brasil. Dominar Git é uma das habilidades com melhor custo-benefício para quem está começando na área.</span>
+    </div>
+  </div>
+</section>
+
 <!-- ══ VÍDEOS ══ -->
 <section class="section section-alt" id="videos">
   <div class="article-inner">
-    <div class="article-label">02 · Antes da aula</div>
+    <div class="article-label">03 · Antes da aula</div>
     <h2 class="article-title">Assista <em>primeiro</em></h2>
 
     <p class="article-body">Esses dois vídeos cobrem o contexto que a gente vai praticar juntos. Não precisa entender tudo — só ter uma ideia geral antes de colocar a mão no terminal.</p>
@@ -176,30 +215,49 @@
 <!-- ══ INSTALAÇÃO ══ -->
 <section class="section" id="instalacao">
   <div class="article-inner">
-    <div class="article-label">03 · Preparação</div>
+    <div class="article-label">04 · Preparação</div>
     <h2 class="article-title">Instalando o <em>Git</em></h2>
 
-    <p class="article-body">Antes de qualquer coisa, o Git precisa estar instalado no seu computador. Segue o passo a passo para cada sistema.</p>
+    <p class="article-body">Antes de qualquer coisa, o Git precisa estar instalado no seu computador. Siga o passo a passo do seu sistema operacional.</p>
 
-    <div class="install-cards">
+    <div class="install-steps">
+      <div class="install-step-title"><i data-lucide="monitor" style="width:14px;height:14px"></i>Windows</div>
+      <ol class="install-ol">
+        <li>Acesse <a href="https://git-scm.com/install/" target="_blank" class="install-link-inline">git-scm.com/install</a> e clique em <strong>Download for Windows</strong></li>
+        <li>Execute o instalador e clique em <strong>Next</strong> em todas as telas — as opções padrão já estão corretas</li>
+        <li>Na tela <em>"Adjusting your PATH environment"</em>, escolha <strong>"Git from the command line and also from 3rd-party software"</strong></li>
+        <li>Conclua a instalação e abra o <strong>Git Bash</strong> que foi instalado junto</li>
+        <li>Confirme rodando: <code>git --version</code></li>
+      </ol>
+      <div class="install-step-title" style="margin-top:1.5rem"><i data-lucide="apple" style="width:14px;height:14px"></i>macOS</div>
+      <ol class="install-ol">
+        <li>Abra o Terminal</li>
+        <li>Rode: <code>xcode-select --install</code></li>
+        <li>Uma janela vai aparecer — clique em <strong>Instalar</strong></li>
+        <li>Confirme com: <code>git --version</code></li>
+      </ol>
+      <div class="install-step-title" style="margin-top:1.5rem"><i data-lucide="terminal" style="width:14px;height:14px"></i>Linux (Ubuntu/Debian)</div>
+      <ol class="install-ol">
+        <li>Abra o terminal</li>
+        <li>Rode: <code>sudo apt update && sudo apt install git</code></li>
+        <li>Confirme com: <code>git --version</code></li>
+      </ol>
+    </div>
+
+    <div class="install-cards" style="margin-top:1.5rem">
       <a href="https://git-scm.com/install/" target="_blank" class="install-card">
-        <div class="install-icon">
-          <i data-lucide="monitor" style="width:22px;height:22px"></i>
-        </div>
+        <div class="install-icon"><i data-lucide="monitor" style="width:22px;height:22px"></i></div>
         <div class="install-info">
-          <div class="install-title">Git · Windows / Mac / Linux</div>
-          <div class="install-desc">Baixe o instalador oficial em <strong>git-scm.com</strong>. No Windows, use todas as opções padrão durante a instalação.</div>
+          <div class="install-title">Git · Instalador oficial</div>
+          <div class="install-desc">Disponível para Windows, Mac e Linux em <strong>git-scm.com</strong>.</div>
           <div class="install-link"><i data-lucide="external-link" style="width:11px;height:11px"></i>git-scm.com/install</div>
         </div>
       </a>
-
       <a href="https://desktop.github.com/download/" target="_blank" class="install-card">
-        <div class="install-icon install-icon-gh">
-          <i data-lucide="github" style="width:22px;height:22px"></i>
-        </div>
+        <div class="install-icon install-icon-gh"><i data-lucide="github" style="width:22px;height:22px"></i></div>
         <div class="install-info">
           <div class="install-title">GitHub Desktop <span class="install-optional">opcional</span></div>
-          <div class="install-desc">Interface visual para quem está começando. Facilita ver o histórico de commits e usar o Git sem decorar todos os comandos.</div>
+          <div class="install-desc">Interface visual para quem está começando. Facilita ver o histórico de commits sem decorar todos os comandos.</div>
           <div class="install-link"><i data-lucide="external-link" style="width:11px;height:11px"></i>desktop.github.com</div>
         </div>
       </a>
@@ -207,7 +265,13 @@
 
     <div class="callout callout-warn">
       <i data-lucide="terminal" style="width:16px;height:16px"></i>
-      <span>Depois de instalar, abra o terminal e rode <code>git --version</code>. Se aparecer a versão, está funcionando.</span>
+      <span>Depois de instalar, rode <code>git --version</code>. Se aparecer algo como <code>git version 2.x.x</code>, está funcionando!</span>
+    </div>
+    <div class="callout callout-tip" style="margin-top:0.5rem">
+      <i data-lucide="user" style="width:16px;height:16px"></i>
+      <span>Configure seu nome e e-mail — o Git vai usar esses dados em todos os seus commits:<br>
+      <code>git config --global user.name "Seu Nome"</code><br>
+      <code>git config --global user.email "seu@email.com"</code></span>
     </div>
   </div>
 </section>
@@ -215,7 +279,7 @@
 <!-- ══ TERMINAL INTERATIVO ══ -->
 <section class="section section-alt" id="terminal">
   <div class="article-inner">
-    <div class="article-label">04 · Mão no terminal</div>
+    <div class="article-label">05 · Mão no terminal</div>
     <h2 class="article-title">Primeiro <em>repositório</em></h2>
 
     <p class="article-body">Vamos criar um repositório do zero juntos. Clique em <strong>Próximo</strong> para avançar passo a passo e ver o que cada comando faz.</p>
@@ -266,7 +330,7 @@
 <!-- ══ COMANDOS ══ -->
 <section class="section" id="comandos">
   <div class="article-inner">
-    <div class="article-label">05 · Referência</div>
+    <div class="article-label">06 · Referência</div>
     <h2 class="article-title">Comandos <em>essenciais</em></h2>
 
     <p class="article-body">Cola no seu caderno ou salva no celular. Esses são os comandos que você vai usar todo dia.</p>

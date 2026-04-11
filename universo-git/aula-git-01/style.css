@@ -507,3 +507,81 @@
   .cmd-row { grid-template-columns: 1fr; }
   .cmd-col-code { border-right: none; border-bottom: 1px solid rgba(124,74,224,0.08); }
 }
+
+/* ── MERCADO DE TRABALHO ─────────────────────── */
+.mercado-grid {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 1rem; margin: 2rem 0;
+}
+.mercado-card {
+  background: rgba(255,255,255,0.02);
+  border: 1px solid rgba(124,74,224,0.15);
+  border-radius: 12px; padding: 1.4rem;
+  display: flex; flex-direction: column; gap: 0.6rem;
+  transition: border-color 0.2s, background 0.2s;
+}
+.mercado-card:hover {
+  border-color: rgba(124,74,224,0.35);
+  background: rgba(124,74,224,0.04);
+}
+.mercado-icon {
+  width: 40px; height: 40px; border-radius: 10px;
+  background: rgba(124,74,224,0.12);
+  border: 1px solid rgba(124,74,224,0.25);
+  display: flex; align-items: center; justify-content: center;
+  color: #b89aff;
+}
+.mercado-titulo {
+  font-size: 0.88rem; font-weight: 700; color: var(--git-text);
+}
+.mercado-desc {
+  font-size: 0.8rem; color: rgba(234,230,255,0.5); line-height: 1.65;
+}
+@media(max-width: 600px) { .mercado-grid { grid-template-columns: 1fr; } }
+
+/* ── INSTALAÇÃO EXPANDIDA ────────────────────── */
+.install-steps {
+  background: rgba(255,255,255,0.02);
+  border: 1px solid rgba(124,74,224,0.15);
+  border-radius: 12px; padding: 1.4rem 1.6rem;
+  margin: 2rem 0;
+}
+.install-step-title {
+  display: flex; align-items: center; gap: 0.5rem;
+  font-size: 0.75rem; font-weight: 700; letter-spacing: 0.06em;
+  text-transform: uppercase; color: #b89aff;
+  margin-bottom: 0.8rem;
+}
+.install-ol {
+  list-style: none; padding: 0; margin: 0;
+  display: flex; flex-direction: column; gap: 0.55rem;
+  counter-reset: step-counter;
+}
+.install-ol li {
+  display: flex; align-items: flex-start; gap: 0.75rem;
+  font-size: 0.84rem; color: rgba(234,230,255,0.6);
+  line-height: 1.6; counter-increment: step-counter;
+}
+.install-ol li::before {
+  content: counter(step-counter);
+  min-width: 20px; height: 20px;
+  background: rgba(124,74,224,0.15);
+  border: 1px solid rgba(124,74,224,0.3);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.62rem; font-weight: 700; color: #b89aff;
+  flex-shrink: 0; margin-top: 2px;
+}
+.install-ol li strong { color: var(--git-text); }
+.install-ol li em { color: rgba(234,230,255,0.4); font-style: normal; }
+.install-ol li code {
+  font-family: var(--git-mono);
+  background: rgba(124,74,224,0.12); border: 1px solid rgba(124,74,224,0.22);
+  border-radius: 4px; padding: 0.1em 0.4em;
+  font-size: 0.85em; color: #b89aff;
+}
+.install-link-inline {
+  color: #b89aff; text-decoration: underline;
+  text-decoration-color: rgba(184,154,255,0.3); font-weight: 600;
+}
+.callout code { display: inline-block; margin: 2px 0; }

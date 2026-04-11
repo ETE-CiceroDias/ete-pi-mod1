@@ -200,6 +200,7 @@ body::before {
   color: var(--git-text-sub);
   line-height: 1.75;
   max-width: 480px;
+  text-align: center;
 }
 .hero-scroll {
   position: absolute; bottom: 1.5rem; left: 50%;
