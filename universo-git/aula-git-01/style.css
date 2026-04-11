@@ -1,3 +1,15 @@
+/* ── NAV BASE (sobrescreve index.css que não é carregado aqui) ───────── */
+.nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 300;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0.85rem 2.5rem;
+  background: rgba(7,5,15,0.92);
+  backdrop-filter: blur(18px);
+  border-bottom: 1px solid rgba(124,74,224,0.12);
+  transition: box-shadow 220ms cubic-bezier(.4,0,.2,1);
+}
+.nav.scrolled { box-shadow: 0 6px 20px rgba(0,0,0,0.4); }
+
 /* =============================================
    AULA GIT 01 · style.css
    Estilos específicos desta aula
@@ -229,9 +241,9 @@
   color: #b89aff;
 }
 .diff-icon-gh {
-  background: rgba(234,230,255,0.06);
-  border-color: rgba(234,230,255,0.1);
-  color: rgba(234,230,255,0.6);
+  background: rgba(234,230,255,0.08);
+  border-color: rgba(234,230,255,0.2);
+  color: rgba(234,230,255,0.85);
 }
 .diff-name {
   font-family: var(--font-h); font-size: 1.4rem;
@@ -360,8 +372,8 @@
   display: flex; align-items: center; justify-content: center; color: #b89aff;
 }
 .install-icon-gh {
-  background: rgba(234,230,255,0.06); border-color: rgba(234,230,255,0.1);
-  color: rgba(234,230,255,0.5);
+  background: rgba(234,230,255,0.08); border-color: rgba(234,230,255,0.2);
+  color: rgba(234,230,255,0.85);
 }
 .install-info { flex: 1; }
 .install-title {
@@ -543,8 +555,9 @@
 .install-steps {
   background: rgba(255,255,255,0.02);
   border: 1px solid rgba(124,74,224,0.15);
-  border-radius: 12px; padding: 1.4rem 1.6rem;
+  border-radius: 12px; padding: 1.6rem 2rem;
   margin: 2rem 0;
+  max-width: 100%;
 }
 .install-step-title {
   display: flex; align-items: center; gap: 0.5rem;
@@ -560,7 +573,8 @@
 .install-ol li {
   display: flex; align-items: flex-start; gap: 0.75rem;
   font-size: 0.84rem; color: rgba(234,230,255,0.6);
-  line-height: 1.6; counter-increment: step-counter;
+  line-height: 1.7; counter-increment: step-counter;
+  word-break: normal; overflow-wrap: break-word;
 }
 .install-ol li::before {
   content: counter(step-counter);
