@@ -185,7 +185,7 @@
     <p class="article-body">Esses dois vídeos cobrem o contexto que a gente vai praticar juntos. Não precisa entender tudo — só ter uma ideia geral antes de colocar a mão no terminal.</p>
 
     <div class="videos-grid">
-      <a href="https://www.youtube.com/watch?v=DqTITcMq68k" target="_blank" class="video-card">
+      <button class="video-card" onclick="openVideo('DqTITcMq68k', 'Git e GitHub: O que é e como usar?')">
         <div class="video-thumb">
           <img src="https://img.youtube.com/vi/DqTITcMq68k/mqdefault.jpg" alt="Git e GitHub: O que é e como usar?" loading="lazy"/>
           <div class="video-play"><i data-lucide="play" style="width:20px;height:20px"></i></div>
@@ -195,9 +195,9 @@
           <div class="video-title">Git e GitHub: O que é e como usar?</div>
           <div class="video-channel"><i data-lucide="youtube" style="width:12px;height:12px"></i>YouTube · assistir antes da aula</div>
         </div>
-      </a>
+      </button>
 
-      <a href="https://www.youtube.com/watch?v=UBAX-13g8OM" target="_blank" class="video-card">
+      <button class="video-card" onclick="openVideo('UBAX-13g8OM', 'Git e GitHub na prática')">
         <div class="video-thumb">
           <img src="https://img.youtube.com/vi/UBAX-13g8OM/mqdefault.jpg" alt="Git e GitHub na prática" loading="lazy"/>
           <div class="video-play"><i data-lucide="play" style="width:20px;height:20px"></i></div>
@@ -207,8 +207,25 @@
           <div class="video-title">Git e GitHub na prática</div>
           <div class="video-channel"><i data-lucide="youtube" style="width:12px;height:12px"></i>YouTube · contexto prático</div>
         </div>
-      </a>
+      </button>
     </div>
+
+<!-- ══ MODAL DE VÍDEO ══ -->
+<div class="video-modal" id="videoModal" onclick="closeVideoModal(event)">
+  <div class="video-modal-box">
+    <div class="video-modal-header">
+      <span class="video-modal-title" id="videoModalTitle"></span>
+      <button class="video-modal-close" onclick="closeVideo()">
+        <i data-lucide="x" style="width:20px;height:20px"></i>
+      </button>
+    </div>
+    <div class="video-modal-player">
+      <iframe id="videoIframe" src="" frameborder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen></iframe>
+    </div>
+  </div>
+</div>
   </div>
 </section>
 
@@ -513,6 +530,34 @@ function escHtml(str) {
 }
 
 document.addEventListener('DOMContentLoaded', renderTerminal);
+
+// ── MODAL DE VÍDEO ──────────────────────────────
+function openVideo(videoId, title) {
+  const modal = document.getElementById('videoModal');
+  const iframe = document.getElementById('videoIframe');
+  const titleEl = document.getElementById('videoModalTitle');
+  iframe.src = 'https://www.youtube.com/embed/' + videoId + '?autoplay=1&rel=0';
+  titleEl.textContent = title;
+  modal.classList.add('open');
+  document.body.style.overflow = 'hidden';
+  lucide.createIcons();
+}
+
+function closeVideo() {
+  const modal = document.getElementById('videoModal');
+  const iframe = document.getElementById('videoIframe');
+  modal.classList.remove('open');
+  iframe.src = '';
+  document.body.style.overflow = '';
+}
+
+function closeVideoModal(e) {
+  if (e.target === document.getElementById('videoModal')) closeVideo();
+}
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') closeVideo();
+});
 </script>
 </body>
 </html>

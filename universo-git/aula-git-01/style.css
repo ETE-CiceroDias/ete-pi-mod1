@@ -599,3 +599,73 @@
   text-decoration-color: rgba(184,154,255,0.3); font-weight: 600;
 }
 .callout code { display: inline-block; margin: 2px 0; }
+
+/* ── MODAL DE VÍDEO ─────────────────────────────── */
+.video-card {
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  width: 100%;
+  padding: 0;
+}
+
+.video-modal {
+  position: fixed; inset: 0; z-index: 1000;
+  background: rgba(0,0,0,0.85);
+  backdrop-filter: blur(8px);
+  display: flex; align-items: center; justify-content: center;
+  padding: 1.5rem;
+  opacity: 0; pointer-events: none;
+  transition: opacity 0.25s ease;
+}
+.video-modal.open {
+  opacity: 1; pointer-events: all;
+}
+.video-modal-box {
+  width: 100%; max-width: 860px;
+  background: #07050f;
+  border: 1px solid rgba(124,74,224,0.3);
+  border-radius: 16px;
+  overflow: hidden;
+  transform: translateY(20px) scale(0.97);
+  transition: transform 0.25s ease;
+  box-shadow: 0 24px 80px rgba(0,0,0,0.7);
+}
+.video-modal.open .video-modal-box {
+  transform: translateY(0) scale(1);
+}
+.video-modal-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0.9rem 1.2rem;
+  background: rgba(255,255,255,0.03);
+  border-bottom: 1px solid rgba(124,74,224,0.12);
+}
+.video-modal-title {
+  font-size: 0.82rem; font-weight: 600;
+  color: rgba(234,230,255,0.7);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  max-width: calc(100% - 48px);
+}
+.video-modal-close {
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(124,74,224,0.2);
+  border-radius: 8px;
+  color: rgba(234,230,255,0.6);
+  cursor: pointer; padding: 5px;
+  display: flex; align-items: center; justify-content: center;
+  transition: background 0.2s, color 0.2s;
+  flex-shrink: 0;
+}
+.video-modal-close:hover {
+  background: rgba(124,74,224,0.2);
+  color: #b89aff;
+}
+.video-modal-player {
+  position: relative; aspect-ratio: 16/9; width: 100%;
+  background: #000;
+}
+.video-modal-player iframe {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+}
