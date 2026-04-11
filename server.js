@@ -8,7 +8,7 @@ const PORT = 3000;
 const ROOT = __dirname;
 
 app.use(express.json());
-// app.use(express.static(ROOT));
+app.use(express.static(ROOT));
 // Serve arquivos estáticos da pasta public
 app.use(express.static(path.join(ROOT, 'public')));
 
