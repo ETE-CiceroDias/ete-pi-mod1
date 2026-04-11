@@ -186,3 +186,125 @@
   color: var(--text-3);
   font-weight: 500;
 }
+
+/* ── Card Universo Git ─────────────────────────── */
+.aula-card-universo {
+  position: relative;
+  background: linear-gradient(135deg, #0a0814 0%, #130d2a 60%, #1a0f2e 100%);
+  border: 1.5px solid rgba(124,74,224,0.4);
+  border-radius: 20px;
+  overflow: hidden;
+  color: #eae6ff;
+  transition: transform var(--t), box-shadow var(--t), border-color var(--t);
+  grid-column: span 1;
+  min-height: 280px;
+  display: flex;
+  flex-direction: column;
+}
+.aula-card-universo:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 20px 60px rgba(124,74,224,0.35);
+  border-color: rgba(124,74,224,0.8);
+}
+.universo-glow {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at 30% 30%, rgba(124,74,224,0.25) 0%, transparent 65%),
+              radial-gradient(ellipse at 80% 80%, rgba(193,77,216,0.18) 0%, transparent 55%);
+  pointer-events: none;
+  z-index: 0;
+}
+.universo-inner {
+  position: relative;
+  z-index: 1;
+  padding: 1.6rem;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  gap: 0.6rem;
+}
+.universo-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.4rem;
+}
+.universo-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.22rem 0.7rem;
+  border-radius: 99px;
+  font-size: 0.62rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  background: rgba(124,74,224,0.2);
+  color: #b89aff;
+  border: 1px solid rgba(124,74,224,0.4);
+}
+.universo-badge .status-dot {
+  background: #b89aff;
+  animation: pulse 2s ease-in-out infinite;
+}
+.universo-icon {
+  width: 44px; height: 44px;
+  border-radius: 12px;
+  background: rgba(124,74,224,0.2);
+  border: 1px solid rgba(124,74,224,0.35);
+  display: flex; align-items: center; justify-content: center;
+  color: #b89aff;
+}
+.universo-title {
+  font-family: var(--font-h);
+  font-size: 2rem;
+  font-weight: 300;
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+  color: #eae6ff;
+}
+.universo-title em {
+  font-style: italic;
+  color: #b89aff;
+}
+.universo-desc {
+  font-size: 0.83rem;
+  color: rgba(234,230,255,0.6);
+  line-height: 1.6;
+  flex: 1;
+}
+.universo-topics {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+.aula-card-universo .topic-tag {
+  background: rgba(124,74,224,0.15);
+  border-color: rgba(124,74,224,0.3);
+  color: rgba(234,230,255,0.6);
+}
+.universo-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 0.8rem;
+  border-top: 1px solid rgba(124,74,224,0.2);
+  margin-top: 0.4rem;
+}
+.universo-count {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.74rem;
+  color: rgba(234,230,255,0.45);
+  font-weight: 500;
+}
+.universo-arrow {
+  color: rgba(184,154,255,0.5);
+  transition: transform var(--t), color var(--t);
+  display: flex;
+}
+.aula-card-universo:hover .universo-arrow {
+  transform: translate(3px, -3px);
+  color: #b89aff;
+}

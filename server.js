@@ -8,12 +8,13 @@ const PORT = 3000;
 const ROOT = __dirname;
 
 app.use(express.json());
-// Serve todos os arquivos estáticos da raiz (base.css, index.css, app.js, etc.)
-app.use(express.static(ROOT));
-// Serve arquivos estáticos da pasta public (og:image, etc.)
+// app.use(express.static(ROOT));
+// Serve arquivos estáticos da pasta public
 app.use(express.static(path.join(ROOT, 'public')));
-// Serve arquivos estáticos da pasta assets
+
+// Serve arquivos estáticos do restante do projeto (assets, CSS, etc.)
 app.use('/assets', express.static(path.join(ROOT, 'assets')));
+app.use('/css', express.static(path.join(ROOT))); // se quiser servir base.css e index.css
 
 // ── GET /api/db — retorna db.json ───────────────────────────────────────
 app.get('/api/db', (req, res) => {

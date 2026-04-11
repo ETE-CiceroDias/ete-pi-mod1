@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Git 01 · Introdução ao Git & GitHub · ETE Cícero Dias</title>
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,200;1,300;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="../../base.css"/>
+<link rel="stylesheet" href="../style.css"/>
+<link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+
+<div id="prog"></div>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu">
+  <button class="mobile-close" onclick="toggleMobile()">
+    <i data-lucide="x" style="width:28px;height:28px;color:var(--git-text)"></i>
+  </button>
+  <a href="#intro" onclick="toggleMobile()">Introdução</a>
+  <a href="#o-que-e" onclick="toggleMobile()">O que é?</a>
+  <a href="#videos" onclick="toggleMobile()">Vídeos</a>
+  <a href="#instalacao" onclick="toggleMobile()">Instalação</a>
+  <a href="#terminal" onclick="toggleMobile()">Terminal</a>
+  <a href="#comandos" onclick="toggleMobile()">Comandos</a>
+</div>
+
+<!-- NAV -->
+<nav class="nav" id="nav">
+  <a href="../index.html" class="nav-back">
+    <i data-lucide="arrow-left" style="width:15px;height:15px"></i>
+    Universo Git
+  </a>
+  <div class="nav-links">
+    <a href="#o-que-e" data-section="o-que-e">O que é?</a>
+    <a href="#videos" data-section="videos">Vídeos</a>
+    <a href="#instalacao" data-section="instalacao">Instalação</a>
+    <a href="#terminal" data-section="terminal">Terminal</a>
+    <a href="#comandos" data-section="comandos">Comandos</a>
+  </div>
+  <div class="nav-right">
+    <span class="nav-aula-info">Git 01 · abr 2026</span>
+  </div>
+  <button class="nav-hamburger" onclick="toggleMobile()">
+    <i data-lucide="menu" style="width:24px;height:24px"></i>
+  </button>
+</nav>
+
+<button id="btt" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+  <i data-lucide="arrow-up" style="width:20px;height:20px"></i>
+</button>
+
+<!-- ══ HERO ══ -->
+<section class="hero-aula" id="intro">
+  <div class="git-blob git-blob-1"></div>
+  <div class="git-blob git-blob-2"></div>
+  <div class="hero-aula-inner">
+    <div class="hero-aula-meta">
+      <div class="hero-badge-git"><span class="bdot-git"></span>Git 01</div>
+      <span class="hm-dot">·</span>
+      <span class="hm-tag-git"><i data-lucide="calendar" style="width:12px;height:12px"></i>abr 2026</span>
+      <span class="hm-dot">·</span>
+      <span class="hm-tag-git"><i data-lucide="clock" style="width:12px;height:12px"></i>1h20</span>
+    </div>
+    <h1 class="hero-aula-title">Antes de commitar,<br><em>entenda onde você está salvando</em></h1>
+    <p class="hero-aula-sub">Git não é só "salvar o arquivo". É ter o histórico completo de tudo que você fez, poder voltar no tempo e trabalhar em equipe sem sobrescrever o código de ninguém.</p>
+    <div class="hero-ed-divider"></div>
+    <div class="hero-aula-author">
+      <div class="hero-aula-avatar">S</div>
+      <div>
+        <div class="hero-aula-name">Prof. Samara Sabino</div>
+        <div class="hero-aula-role">ETE Cícero Dias · Desenvolvimento de Sistemas · Módulo 1</div>
+      </div>
+    </div>
+  </div>
+  <div class="hero-scroll"><i data-lucide="chevron-down" style="width:24px;height:24px"></i></div>
+</section>
+
+<!-- ══ O QUE É GIT? ══ -->
+<section class="section" id="o-que-e">
+  <div class="article-inner">
+    <div class="article-label">01 · O que é Git</div>
+    <h2 class="article-title">Controle de <em>versão</em></h2>
+
+    <p class="article-body">Imagina que você está fazendo um trabalho escolar no Word. Você salva o arquivo, faz mais alterações, salva de novo. Aí você percebe que errou — mas não tem como voltar pra versão de ontem. A maioria das pessoas resolve isso assim: <code>trabalho_final.docx</code>, <code>trabalho_final_v2.docx</code>, <code>trabalho_final_agora_vai.docx</code>.</p>
+
+    <p class="article-body">Com código, esse problema é ainda maior. Você pode ter dezenas de arquivos, alterações que quebram funcionalidades que estavam funcionando, e várias pessoas mexendo no mesmo projeto ao mesmo tempo. É aí que entra o <strong>Git</strong>.</p>
+
+    <!-- Card comparativo -->
+    <div class="compare-grid">
+      <div class="compare-card compare-without">
+        <div class="compare-label">Sem Git</div>
+        <div class="compare-files">
+          <span class="cf">index.html</span>
+          <span class="cf">index_v2.html</span>
+          <span class="cf">index_backup.html</span>
+          <span class="cf cf-lost">index_final_v3_agora.html</span>
+        </div>
+        <div class="compare-desc">Caos. Qual é o arquivo certo? Quem mexeu o quê?</div>
+      </div>
+      <div class="compare-card compare-with">
+        <div class="compare-label">Com Git</div>
+        <div class="compare-commits">
+          <div class="commit-line"><span class="commit-dot"></span><span class="commit-msg">feat: adiciona navbar</span></div>
+          <div class="commit-line"><span class="commit-dot"></span><span class="commit-msg">fix: corrige link quebrado</span></div>
+          <div class="commit-line"><span class="commit-dot commit-head"></span><span class="commit-msg">style: ajusta cores <span class="commit-tag">HEAD</span></span></div>
+        </div>
+        <div class="compare-desc">Histórico organizado. Cada mudança registrada com motivo.</div>
+      </div>
+    </div>
+
+    <div class="article-label" style="margin-top:3rem;">Git vs GitHub — não é a mesma coisa</div>
+
+    <div class="diff-cards">
+      <div class="diff-card">
+        <div class="diff-icon"><i data-lucide="hard-drive" style="width:20px;height:20px"></i></div>
+        <div class="diff-name">Git</div>
+        <div class="diff-desc">Uma ferramenta que fica <strong>no seu computador</strong>. Ele registra o histórico de alterações dos seus arquivos localmente. Funciona mesmo sem internet.</div>
+        <div class="diff-tag">instalado na sua máquina</div>
+      </div>
+      <div class="diff-card">
+        <div class="diff-icon diff-icon-gh"><i data-lucide="github" style="width:20px;height:20px"></i></div>
+        <div class="diff-name">GitHub</div>
+        <div class="diff-desc">Uma plataforma <strong>na nuvem</strong> onde você hospeda seu repositório Git. Permite colaboração, backup remoto e portfólio para o mercado.</div>
+        <div class="diff-tag diff-tag-gh">site na internet</div>
+      </div>
+    </div>
+
+    <div class="callout callout-info">
+      <i data-lucide="lightbulb" style="width:16px;height:16px"></i>
+      <span><strong>Analogia:</strong> Git é como o "histórico" do seu navegador — só que para código. GitHub é como o Google Drive — só que para repositórios Git.</span>
+    </div>
+  </div>
+</section>
+
+<!-- ══ VÍDEOS ══ -->
+<section class="section section-alt" id="videos">
+  <div class="article-inner">
+    <div class="article-label">02 · Antes da aula</div>
+    <h2 class="article-title">Assista <em>primeiro</em></h2>
+
+    <p class="article-body">Esses dois vídeos cobrem o contexto que a gente vai praticar juntos. Não precisa entender tudo — só ter uma ideia geral antes de colocar a mão no terminal.</p>
+
+    <div class="videos-grid">
+      <a href="https://www.youtube.com/watch?v=DqTITcMq68k" target="_blank" class="video-card">
+        <div class="video-thumb">
+          <img src="https://img.youtube.com/vi/DqTITcMq68k/mqdefault.jpg" alt="Git e GitHub: O que é e como usar?" loading="lazy"/>
+          <div class="video-play"><i data-lucide="play" style="width:20px;height:20px"></i></div>
+        </div>
+        <div class="video-info">
+          <div class="video-tag">Vídeo 1</div>
+          <div class="video-title">Git e GitHub: O que é e como usar?</div>
+          <div class="video-channel"><i data-lucide="youtube" style="width:12px;height:12px"></i>YouTube · assistir antes da aula</div>
+        </div>
+      </a>
+
+      <a href="https://www.youtube.com/watch?v=UBAX-13g8OM" target="_blank" class="video-card">
+        <div class="video-thumb">
+          <img src="https://img.youtube.com/vi/UBAX-13g8OM/mqdefault.jpg" alt="Git e GitHub na prática" loading="lazy"/>
+          <div class="video-play"><i data-lucide="play" style="width:20px;height:20px"></i></div>
+        </div>
+        <div class="video-info">
+          <div class="video-tag">Vídeo 2</div>
+          <div class="video-title">Git e GitHub na prática</div>
+          <div class="video-channel"><i data-lucide="youtube" style="width:12px;height:12px"></i>YouTube · contexto prático</div>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ══ INSTALAÇÃO ══ -->
+<section class="section" id="instalacao">
+  <div class="article-inner">
+    <div class="article-label">03 · Preparação</div>
+    <h2 class="article-title">Instalando o <em>Git</em></h2>
+
+    <p class="article-body">Antes de qualquer coisa, o Git precisa estar instalado no seu computador. Segue o passo a passo para cada sistema.</p>
+
+    <div class="install-cards">
+      <a href="https://git-scm.com/install/" target="_blank" class="install-card">
+        <div class="install-icon">
+          <i data-lucide="monitor" style="width:22px;height:22px"></i>
+        </div>
+        <div class="install-info">
+          <div class="install-title">Git · Windows / Mac / Linux</div>
+          <div class="install-desc">Baixe o instalador oficial em <strong>git-scm.com</strong>. No Windows, use todas as opções padrão durante a instalação.</div>
+          <div class="install-link"><i data-lucide="external-link" style="width:11px;height:11px"></i>git-scm.com/install</div>
+        </div>
+      </a>
+
+      <a href="https://desktop.github.com/download/" target="_blank" class="install-card">
+        <div class="install-icon install-icon-gh">
+          <i data-lucide="github" style="width:22px;height:22px"></i>
+        </div>
+        <div class="install-info">
+          <div class="install-title">GitHub Desktop <span class="install-optional">opcional</span></div>
+          <div class="install-desc">Interface visual para quem está começando. Facilita ver o histórico de commits e usar o Git sem decorar todos os comandos.</div>
+          <div class="install-link"><i data-lucide="external-link" style="width:11px;height:11px"></i>desktop.github.com</div>
+        </div>
+      </a>
+    </div>
+
+    <div class="callout callout-warn">
+      <i data-lucide="terminal" style="width:16px;height:16px"></i>
+      <span>Depois de instalar, abra o terminal e rode <code>git --version</code>. Se aparecer a versão, está funcionando.</span>
+    </div>
+  </div>
+</section>
+
+<!-- ══ TERMINAL INTERATIVO ══ -->
+<section class="section section-alt" id="terminal">
+  <div class="article-inner">
+    <div class="article-label">04 · Mão no terminal</div>
+    <h2 class="article-title">Primeiro <em>repositório</em></h2>
+
+    <p class="article-body">Vamos criar um repositório do zero juntos. Clique em <strong>Próximo</strong> para avançar passo a passo e ver o que cada comando faz.</p>
+
+    <!-- Terminal interativo -->
+    <div class="iterm-wrap">
+      <div class="iterm-bar">
+        <span class="term-dot term-red"></span>
+        <span class="term-dot term-yellow"></span>
+        <span class="term-dot term-green"></span>
+        <span class="iterm-title">bash — ~/meu-projeto</span>
+      </div>
+
+      <div class="iterm-body" id="itermBody">
+        <!-- Linhas injetadas via JS -->
+      </div>
+
+      <div class="iterm-controls">
+        <div class="iterm-step-info">
+          <span class="iterm-step-num" id="stepNum">Passo 1</span>
+          <span class="iterm-step-label" id="stepLabel">de 6</span>
+        </div>
+        <div class="iterm-btns">
+          <button class="iterm-btn iterm-btn-ghost" id="btnPrev" onclick="prevStep()" disabled>
+            <i data-lucide="chevron-left" style="width:15px;height:15px"></i>
+            Anterior
+          </button>
+          <button class="iterm-btn iterm-btn-primary" id="btnNext" onclick="nextStep()">
+            Próximo
+            <i data-lucide="chevron-right" style="width:15px;height:15px"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Explicação do passo atual -->
+    <div class="iterm-explain" id="itermExplain">
+      <div class="explain-icon" id="explainIcon">
+        <i data-lucide="info" style="width:16px;height:16px"></i>
+      </div>
+      <div class="explain-text" id="explainText">
+        Começamos criando uma pasta para o projeto e entrando nela.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ COMANDOS ══ -->
+<section class="section" id="comandos">
+  <div class="article-inner">
+    <div class="article-label">05 · Referência</div>
+    <h2 class="article-title">Comandos <em>essenciais</em></h2>
+
+    <p class="article-body">Cola no seu caderno ou salva no celular. Esses são os comandos que você vai usar todo dia.</p>
+
+    <div class="cmd-table">
+      <div class="cmd-row cmd-row-header">
+        <div class="cmd-col cmd-col-code">Comando</div>
+        <div class="cmd-col cmd-col-desc">O que faz</div>
+      </div>
+      <div class="cmd-row"><div class="cmd-col cmd-col-code"><code>git init</code></div><div class="cmd-col cmd-col-desc">Inicia um repositório Git na pasta atual</div></div>
+      <div class="cmd-row"><div class="cmd-col cmd-col-code"><code>git status</code></div><div class="cmd-col cmd-col-desc">Mostra o estado atual — o que mudou, o que está preparado</div></div>
+      <div class="cmd-row"><div class="cmd-col cmd-col-code"><code>git add .</code></div><div class="cmd-col cmd-col-desc">Prepara <em>todos</em> os arquivos modificados para o commit</div></div>
+      <div class="cmd-row"><div class="cmd-col cmd-col-code"><code>git add arquivo.html</code></div><div class="cmd-col cmd-col-desc">Prepara só um arquivo específico</div></div>
+      <div class="cmd-row"><div class="cmd-col cmd-col-code"><code>git commit -m "mensagem"</code></div><div class="cmd-col cmd-col-desc">Salva um snapshot do projeto com uma descrição</div></div>
+      <div class="cmd-row"><div class="cmd-col cmd-col-code"><code>git log --oneline</code></div><div class="cmd-col cmd-col-desc">Lista o histórico de commits de forma resumida</div></div>
+      <div class="cmd-row"><div class="cmd-col cmd-col-code"><code>git diff</code></div><div class="cmd-col cmd-col-desc">Mostra exatamente o que mudou desde o último commit</div></div>
+    </div>
+
+    <div class="callout callout-tip">
+      <i data-lucide="zap" style="width:16px;height:16px"></i>
+      <span><strong>Dica profissional:</strong> Sempre escreva a mensagem do commit no imperativo e em português ou inglês consistente. Ex: <code>adiciona página de contato</code> ou <code>add contact page</code>.</span>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer-git">
+  <div>
+    <div class="footer-logo">ETE <em>Cícero Dias</em></div>
+    <div class="footer-sub">Desenvolvimento de Sistemas · Módulo 1 · 2026</div>
+  </div>
+  <div class="footer-right">Git 01 · Prof.ª Samara Sabino</div>
+</footer>
+
+<script>
+lucide.createIcons();
+
+// Progress + nav scroll
+const prog = document.getElementById('prog');
+window.addEventListener('scroll', () => {
+  prog.style.width = (window.scrollY / (document.body.scrollHeight - window.innerHeight) * 100) + '%';
+  document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 60);
+  document.getElementById('btt').classList.toggle('show', window.scrollY > 400);
+});
+
+// Reveal
+const revObs = new IntersectionObserver(e => e.forEach(x => {
+  if (x.isIntersecting) x.target.classList.add('vis');
+}), { threshold: 0.1 });
+document.querySelectorAll('.reveal').forEach(el => revObs.observe(el));
+
+// Active nav
+const sectionObs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      document.querySelectorAll('.nav-links a').forEach(a =>
+        a.classList.toggle('active', a.dataset.section === e.target.id));
+    }
+  });
+}, { rootMargin: '-40% 0px -55% 0px' });
+document.querySelectorAll('section[id]').forEach(s => sectionObs.observe(s));
+
+// Mobile menu
+function toggleMobile() {
+  document.getElementById('mobileMenu').classList.toggle('open');
+  lucide.createIcons();
+}
+
+// ── TERMINAL INTERATIVO ──────────────────────────────
+const STEPS = [
+  {
+    cmd: 'mkdir meu-projeto',
+    output: null,
+    explain: 'Criamos a pasta onde o projeto vai ficar. <code>mkdir</code> é "make directory" — cria um diretório.',
+    icon: 'folder-plus'
+  },
+  {
+    cmd: 'cd meu-projeto',
+    output: null,
+    explain: '<code>cd</code> é "change directory" — entramos dentro da pasta que acabamos de criar. Agora todos os comandos vão acontecer aqui.',
+    icon: 'folder-open'
+  },
+  {
+    cmd: 'git init',
+    output: 'Initialized empty Git repository in ~/meu-projeto/.git/',
+    explain: 'Este comando transforma a pasta num <strong>repositório Git</strong>. Ele cria uma pasta oculta chamada <code>.git/</code> onde todo o histórico vai ser guardado.',
+    icon: 'git-branch'
+  },
+  {
+    cmd: 'git status',
+    output: 'On branch main\nNo commits yet\nnothing to commit (create/copy files and add to staging)',
+    explain: '<code>git status</code> é seu melhor amigo — mostra o estado atual do repositório. Aqui ele diz que está na branch <strong>main</strong> e que ainda não há nenhum arquivo monitorado.',
+    icon: 'activity'
+  },
+  {
+    cmd: 'git add index.html',
+    output: null,
+    explain: 'Esse comando "prepara" o arquivo para ser salvo no histórico. É como colocar um item numa caixa antes de fechar e etiquetar. Sem o <code>git add</code>, o commit não vai incluir o arquivo.',
+    icon: 'plus-circle'
+  },
+  {
+    cmd: 'git commit -m "feat: cria estrutura inicial"',
+    output: '[main (root-commit) a3f1b2c] feat: cria estrutura inicial\n 1 file changed, 12 insertions(+)',
+    explain: 'Agora sim — o snapshot foi salvo! O <code>-m</code> indica a mensagem que descreve o que foi feito. Cada commit é uma foto do projeto naquele momento, com um código único (<strong>hash</strong>) que o identifica.',
+    icon: 'check-circle'
+  }
+];
+
+let currentStep = 0;
+
+function renderTerminal() {
+  const body = document.getElementById('itermBody');
+  body.innerHTML = '';
+
+  for (let i = 0; i <= currentStep; i++) {
+    const s = STEPS[i];
+
+    // Linha do comando
+    const cmdLine = document.createElement('div');
+    cmdLine.className = 'iterm-line';
+    cmdLine.innerHTML = `<span class="iterm-prompt">$ </span><span class="iterm-cmd${i === currentStep ? ' iterm-cmd-new' : ''}">${escHtml(s.cmd)}</span>`;
+    body.appendChild(cmdLine);
+
+    // Output (se houver)
+    if (s.output) {
+      const out = document.createElement('div');
+      out.className = 'iterm-out';
+      out.innerHTML = escHtml(s.output).replace(/\n/g, '<br>');
+      body.appendChild(out);
+    }
+
+    // Espaço entre comandos
+    if (i < currentStep) {
+      const spacer = document.createElement('div');
+      spacer.style.height = '4px';
+      body.appendChild(spacer);
+    }
+  }
+
+  // Cursor no final
+  if (currentStep < STEPS.length - 1) {
+    const cur = document.createElement('div');
+    cur.className = 'iterm-line iterm-line-cursor';
+    cur.innerHTML = `<span class="iterm-prompt">$ </span><span class="term-cursor"></span>`;
+    body.appendChild(cur);
+  } else {
+    const done = document.createElement('div');
+    done.className = 'iterm-done';
+    done.innerHTML = `<i data-lucide="check-circle" style="width:14px;height:14px"></i>&nbsp;Repositório criado com sucesso!`;
+    body.appendChild(done);
+    lucide.createIcons();
+  }
+
+  // Scrolla para o final
+  body.scrollTop = body.scrollHeight;
+
+  // Explicação
+  const step = STEPS[currentStep];
+  document.getElementById('explainText').innerHTML = step.explain;
+  const iconEl = document.getElementById('explainIcon');
+  iconEl.innerHTML = `<i data-lucide="${step.icon}" style="width:16px;height:16px"></i>`;
+  lucide.createIcons();
+
+  // Botões
+  document.getElementById('btnPrev').disabled = currentStep === 0;
+  document.getElementById('btnNext').disabled = currentStep >= STEPS.length - 1;
+  document.getElementById('stepNum').textContent = `Passo ${currentStep + 1}`;
+  document.getElementById('stepLabel').textContent = `de ${STEPS.length}`;
+}
+
+function nextStep() {
+  if (currentStep < STEPS.length - 1) { currentStep++; renderTerminal(); }
+}
+function prevStep() {
+  if (currentStep > 0) { currentStep--; renderTerminal(); }
+}
+
+function escHtml(str) {
+  return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+document.addEventListener('DOMContentLoaded', renderTerminal);
+</script>
+</body>
+</html>

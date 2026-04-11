@@ -36,6 +36,34 @@ function renderCards(aulas) {
   grid.innerHTML = '';
 
   aulas.forEach((aula, i) => {
+    // ── Card especial: Universo Git ──────────────────
+    if (aula.tipo === 'universo') {
+      const card = document.createElement('a');
+      card.href = aula.href;
+      card.className = 'aula-card aula-card-universo reveal';
+      card.innerHTML = `
+        <div class="universo-glow"></div>
+        <div class="universo-inner">
+          <div class="universo-top">
+            <div class="universo-badge"><span class="status-dot"></span>Trilha completa</div>
+            <div class="universo-icon">
+              <i data-lucide="git-branch" style="width:22px;height:22px"></i>
+            </div>
+          </div>
+          <div class="universo-title">Universo <em>Git</em></div>
+          <div class="universo-desc">${aula.descricao}</div>
+          <div class="universo-topics">
+            ${(aula.topicos||[]).map(t=>`<span class="topic-tag">${t}</span>`).join('')}
+          </div>
+          <div class="universo-footer">
+            <span class="universo-count"><i data-lucide="layers" style="width:13px;height:13px"></i>&nbsp;Trilha de aulas</span>
+            <span class="universo-arrow"><i data-lucide="arrow-up-right" style="width:18px;height:18px"></i></span>
+          </div>
+        </div>`;
+      grid.appendChild(card);
+      return;
+    }
+
     const delay = i > 0 ? ` reveal-d${Math.min(i,4)}` : '';
     const ok    = aula.status === 'publicada';
 

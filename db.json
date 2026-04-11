@@ -77,6 +77,21 @@
       "href": null,
       "coverUrl": "https://images.unsplash.com/photo-1507721999472-8ed4421c4af2?w=1400&q=80",
       "topicos": ["CSS3", "Box Model", "Variáveis"]
+    },
+    {
+      "id": "universo-git",
+      "numero": "★",
+      "tipo": "universo",
+      "titulo": "Universo",
+      "tituloEm": "Git",
+      "descricao": "Versionamento de código, colaboração e boas práticas com Git & GitHub — uma trilha completa de aulas.",
+      "dataA": "abr 2026",
+      "dataB": "abr 2026",
+      "duracao": "trilha",
+      "status": "publicada",
+      "href": "universo-git/index.html",
+      "coverUrl": "",
+      "topicos": ["Git", "GitHub", "Terminal", "Commits", "Branches"]
     }
   ]
 }
