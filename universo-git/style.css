@@ -32,9 +32,15 @@ body::before {
 
 /* ── NAV ─────────────────────────────────────── */
 .nav {
-  background: rgba(7,5,15,0.92) !important;
-  border-bottom-color: var(--git-border) !important;
+  position: fixed; top: 0; left: 0; right: 0; z-index: 300;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0.85rem 2.5rem;
+  background: rgba(7,5,15,0.92);
+  backdrop-filter: blur(18px);
+  border-bottom: 1px solid rgba(124,74,224,0.12);
+  transition: box-shadow 220ms cubic-bezier(.4,0,.2,1);
 }
+.nav.scrolled { box-shadow: 0 6px 20px rgba(0,0,0,0.4); }
 .nav-back {
   display: inline-flex; align-items: center; gap: 0.5rem;
   font-size: 0.8rem; font-weight: 600;
