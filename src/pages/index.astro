@@ -1,0 +1,120 @@
+---
+import Base from '../layouts/Base.astro'
+import { getCollection } from 'astro:content'
+
+const todasAulas = await getCollection('aulas')
+const aulas = todasAulas.sort((a, b) => a.data.numero.localeCompare(b.data.numero, undefined, { numeric: true }))
+const publicadas = aulas.filter(a => a.data.status === 'publicada').length
+---
+<Base title="PI I · ETE Cícero Dias" description="Material de aulas de Projeto Integrador I — ETE Cícero Dias, 2026.">
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
+
+    <div class="hero-inner">
+      <div class="hero-badge">
+        <span class="bdot"></span>
+        Projeto Integrador I · Módulo 1 · 2026
+      </div>
+      <h1 class="hero-title">Aulas de <em>PI I</em></h1>
+      <p class="hero-sub">HTML5, CSS3, Git, Metodologia Ágil e Projeto ODS — um material por aula, tudo organizado aqui.</p>
+      <div class="hero-meta">
+        <div class="hm-item">
+          <div class="hm-n">{publicadas}</div>
+          <div class="hm-l">Aulas publicadas</div>
+        </div>
+        <div class="hm-div"></div>
+        <div class="hm-item">
+          <div class="hm-n">PI I</div>
+          <div class="hm-l">Disciplina</div>
+        </div>
+        <div class="hm-div"></div>
+        <div class="hm-item">
+          <div class="hm-n">2026</div>
+          <div class="hm-l">Semestre</div>
+        </div>
+      </div>
+    </div>
+    <div class="hero-scroll">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
+    </div>
+  </section>
+
+  <!-- AULAS -->
+  <section class="section" id="aulas">
+    <div class="section-inner">
+      <div class="section-header reveal">
+        <div class="section-label">Material de Aulas</div>
+        <h2 class="section-title">Todas as <em>Aulas</em></h2>
+      </div>
+
+      <div class="aulas-grid">
+        {aulas.map((aula, i) => {
+          const { numero, titulo, tituloEm, subtitulo, dataA, duracao, status, topicos, coverUrl } = aula.data
+          const href = status === 'publicada' ? `/aulas/${aula.id}` : null
+          const isEmBreve = status === 'em-breve'
+
+          return (
+            <a
+              href={href ?? undefined}
+              class={`aula-card reveal reveal-d${Math.min(i % 4 + 1, 4)}${isEmBreve ? ' em-breve' : ''}`}
+              style={!href ? 'pointer-events:none' : ''}
+            >
+              {coverUrl && (
+                <div class="card-cover" style={`background-image:url(${coverUrl})`}></div>
+              )}
+              <div class="aula-card-top">
+                <div class="aula-header">
+                  <div class="aula-num-badge">{numero}</div>
+                  <span class={`aula-status ${isEmBreve ? 'status-soon' : 'status-ok'}`}>
+                    <span class="status-dot"></span>
+                    {isEmBreve ? 'Em breve' : 'Publicada'}
+                  </span>
+                </div>
+                <div class="aula-title">{titulo} <em>{tituloEm}</em></div>
+                <div class="aula-desc">{subtitulo}</div>
+              </div>
+              <div class="aula-topics">
+                {topicos.map((t: string) => (
+                  <span class="topic-tag">{t}</span>
+                ))}
+              </div>
+              <div class="aula-card-bottom">
+                <div class="aula-meta-row">
+                  <span class="aula-meta-item">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12,6 12,12 16,14"/></svg>
+                    {duracao}
+                  </span>
+                  {dataA && (
+                    <span class="aula-meta-item">
+                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                      {dataA}
+                    </span>
+                  )}
+                </div>
+                <div class="aula-arrow">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17 17 7M17 7H7M17 7v10"/></svg>
+                </div>
+              </div>
+            </a>
+          )
+        })}
+      </div>
+    </div>
+  </section>
+
+</Base>
+
+<style>
+  .card-cover {
+    height: 120px;
+    background-size: cover;
+    background-position: center;
+    opacity: .7;
+    transition: opacity var(--t);
+  }
+  .aula-card:hover .card-cover { opacity: 1; }
+</style>

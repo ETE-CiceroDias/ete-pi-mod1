@@ -1,0 +1,74 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "numero": {
+      "type": "string"
+    },
+    "titulo": {
+      "type": "string"
+    },
+    "tituloEm": {
+      "type": "string"
+    },
+    "subtitulo": {
+      "type": "string"
+    },
+    "dataA": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "dataB": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "duracao": {
+      "type": "string"
+    },
+    "status": {
+      "default": "publicada",
+      "type": "string",
+      "enum": [
+        "publicada",
+        "em-breve",
+        "trilha"
+      ]
+    },
+    "disciplina": {
+      "default": "PI I",
+      "type": "string"
+    },
+    "topicos": {
+      "default": [],
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "coverUrl": {
+      "type": "string"
+    },
+    "$schema": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "numero",
+    "titulo",
+    "tituloEm",
+    "subtitulo",
+    "duracao"
+  ]
+}
