@@ -2,7 +2,7 @@
 numero: "01"
 titulo: "Metodologia"
 tituloEm: "Ágil"
-subtitulo: "Governança, modelos de software, ciclo SDLC, cascata, incremental, Manifesto Ágil, Scrum, Kanban e Product Backlog."
+subtitulo: "Governança de TI, modelos de software, ciclo SDLC, cascata, incremental, Manifesto Ágil, Scrum, Kanban e Product Backlog."
 dataA: "27 mar 2026"
 dataB: "27 mar 2026"
 duracao: "1h20"
@@ -12,4 +12,130 @@ topicos: ["Governança", "Scrum", "Kanban", "Backlog", "Cascata"]
 coverUrl: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=1400&q=80"
 ---
 
-Conteúdo em construção.
+import Callout from '../../components/Callout.astro'
+
+## Governança de TI
+
+Antes de escrever uma linha de código, existe um problema de gestão: como garantir que o que está sendo construído está alinhado com o que foi pedido? Como controlar prazo, qualidade e custo ao mesmo tempo?
+
+**Governança de TI** é o conjunto de práticas e estruturas que garante que os sistemas de tecnologia realmente sirvam ao propósito da organização — e não só funcionem tecnicamente.
+
+<Callout type="info" title="Por que isso importa para um dev?">
+  Desenvolvedores que entendem o contexto de negócio e processo entregam software melhor. Saber por que você está construindo algo — e para quem — muda completamente as decisões técnicas que você toma.
+</Callout>
+
+## O Ciclo de Vida do Software — SDLC
+
+O **SDLC** (*Software Development Life Cycle*) descreve as fases que todo projeto de software atravessa, do problema inicial até o sistema em operação.
+
+| Fase | O que acontece |
+|---|---|
+| **Planejamento** | Define escopo, prazo, custo e viabilidade |
+| **Análise** | Levanta requisitos — o que o sistema precisa fazer |
+| **Design** | Projeta a arquitetura e a interface |
+| **Implementação** | Escreve o código |
+| **Testes** | Verifica se o que foi construído funciona como esperado |
+| **Implantação** | Coloca em produção — o sistema chega aos usuários |
+| **Manutenção** | Corrige bugs, adiciona funcionalidades, mantém vivo |
+
+## Modelo Cascata
+
+O modelo **cascata** (*waterfall*) foi o primeiro modelo formal de desenvolvimento de software. A lógica é linear: cada fase precisa estar 100% concluída antes que a próxima comece.
+
+```
+Planejamento → Análise → Design → Código → Testes → Deploy
+```
+
+### Quando faz sentido
+
+- Requisitos estáveis e bem definidos desde o início
+- Projetos com prazo e custo fixos (contratos governamentais)
+- Sistemas críticos onde mudanças tardias são muito caras
+
+### Problemas do cascata
+
+O maior problema é que o cliente só vê o produto funcionando no final. Se algo foi mal entendido nos requisitos, o custo de corrigir é enorme. A realidade mostrou que mudanças são inevitáveis — e o cascata não lida bem com elas.
+
+## Modelos Incrementais e Iterativos
+
+A resposta ao cascata foi dividir o trabalho em partes menores, entregando valor continuamente.
+
+**Incremental:** o sistema é desenvolvido em partes. Cada incremento adiciona funcionalidades ao que já existe.
+
+**Iterativo:** o sistema inteiro é desenvolvido em ciclos curtos. Cada ciclo refina e melhora o que foi feito antes.
+
+Na prática, os métodos ágeis combinam as duas abordagens.
+
+## O Manifesto Ágil
+
+Em 2001, 17 desenvolvedores se reuniram em Utah e redigiram o **Manifesto Ágil** — um documento curto que definiu uma nova forma de pensar sobre software.
+
+Os quatro valores centrais:
+
+> **Indivíduos e interações** mais que processos e ferramentas
+>
+> **Software funcionando** mais que documentação abrangente
+>
+> **Colaboração com o cliente** mais que negociação de contratos
+>
+> **Responder a mudanças** mais que seguir um plano
+
+<Callout type="tip" title="Ágil não significa sem processo">
+  O manifesto não diz que documentação, contratos e planos são ruins — diz que as pessoas, o software funcionando e a adaptação valem *mais*. É uma questão de prioridade, não de eliminação.
+</Callout>
+
+## Scrum
+
+Scrum é o framework ágil mais usado no mundo. Ele organiza o trabalho em ciclos curtos chamados **Sprints** — geralmente de 1 a 4 semanas — ao final dos quais há sempre algo funcional para entregar.
+
+### Papéis no Scrum
+
+| Papel | Responsabilidade |
+|---|---|
+| **Product Owner** | Define o que deve ser construído e a prioridade |
+| **Scrum Master** | Facilita o processo, remove impedimentos |
+| **Dev Team** | Constrói o produto |
+
+### Artefatos
+
+**Product Backlog** — lista ordenada de tudo que o produto precisa ter. O Product Owner é dono desta lista.
+
+**Sprint Backlog** — subconjunto do Product Backlog que o time se compromete a entregar em uma Sprint.
+
+**Incremento** — o produto funcionando ao final de cada Sprint.
+
+### Cerimônias
+
+| Cerimônia | Frequência | Objetivo |
+|---|---|---|
+| **Sprint Planning** | Início de cada Sprint | Define o que será feito |
+| **Daily Scrum** | Diária, 15 min | Sincroniza o time |
+| **Sprint Review** | Fim de cada Sprint | Demonstra o que foi feito |
+| **Retrospectiva** | Fim de cada Sprint | Melhora o processo |
+
+## Kanban
+
+Kanban é um método visual para gerenciar fluxo de trabalho. A ideia central: **visualize o trabalho, limite o trabalho em progresso, gerencie o fluxo**.
+
+O quadro Kanban básico tem três colunas:
+
+```
+A Fazer  |  Em Progresso  |  Concluído
+---------|-----------------|-----------
+Tarefa A |    Tarefa C     |  Tarefa E
+Tarefa B |                 |  Tarefa F
+```
+
+### Diferença do Scrum
+
+Scrum tem Sprints com começo e fim definidos. Kanban é contínuo — itens entram e saem do quadro à medida que o trabalho avança. Muitos times usam um **Scrumban** — uma combinação dos dois.
+
+<Callout type="info" title="No nosso projeto">
+  Vamos usar um quadro Kanban no Trello para organizar as tarefas do projeto ODS. Colunas: Backlog, A Fazer, Em Progresso, Revisão, Concluído.
+</Callout>
+
+## Referências
+
+- [Manifesto Ágil](https://agilemanifesto.org/iso/ptbr/manifesto.html)
+- [Scrum Guide](https://scrumguides.org/scrum-guide.html)
+- [Kanban — Desenvolvimento ágil de software](https://www.agilealliance.org/glossary/kanban/)

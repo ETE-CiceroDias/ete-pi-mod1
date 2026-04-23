@@ -1,0 +1,534 @@
+---
+numero: "05"
+titulo: "HTML5"
+tituloEm: "A Estrutura de Tudo"
+subtitulo: "Anatomia de tags, atributos, estrutura do documento, elementos de bloco e inline, validação e o primeiro desafio prático."
+dataA: "23 abr 2026"
+dataB: "25 abr 2026"
+duracao: "1h20"
+status: "publicada"
+disciplina: "PI I"
+topicos: ["HTML5", "Tags", "Atributos", "Semântica", "Validação"]
+---
+
+import Callout from '../../components/Callout.astro'
+import ExCard from '../../components/ExCard.astro'
+
+## 🎯 Objetivos da Aula
+
+- Compreender o que é HTML e qual o seu papel na web
+- Conhecer a anatomia de um elemento HTML: tag de abertura, conteúdo e tag de fechamento
+- Entender o que são atributos e como utilizá-los corretamente
+- Identificar as tags essenciais do documento: `<!DOCTYPE>`, `<html>`, `<head>` e `<body>`
+- Conhecer as meta tags fundamentais e por que elas importam
+- Diferenciar elementos de bloco e elementos em linha
+- Escrever um documento HTML válido do zero, sem CSS
+
+---
+
+## 1. O Que É HTML?
+
+HTML — *HyperText Markup Language* — é a linguagem de marcação utilizada para estruturar e dar significado ao conteúdo de páginas web. Não se trata de uma linguagem de programação: não há lógica, não há variáveis, não há condicionais. HTML é uma linguagem **declarativa** — você declara o que cada parte do conteúdo é, e o navegador interpreta essa declaração para renderizar a página.
+
+A palavra-chave aqui é **estrutura**. HTML responde à pergunta: *"O que é este conteúdo?"* É um título? É um parágrafo? É uma imagem? É um link? CSS responde à pergunta: *"Como ele deve parecer?"*. JavaScript responde: *"O que ele deve fazer?"*. As três tecnologias trabalham juntas, mas HTML é sempre a base.
+
+<Callout type="tip" title="Analogia — HTML como a planta de uma casa">
+  Pense em uma página web como uma casa. O HTML é a planta baixa — define onde ficam as paredes, as portas, as janelas, os cômodos. O CSS é a decoração — tinta, móveis, iluminação. O JavaScript é a parte elétrica — o que acontece quando você aperta um interruptor.
+
+  Construir sem HTML sólido é como decorar uma casa sem paredes. Pode parecer bonito por um instante, mas não sustenta nada.
+</Callout>
+
+### 1.1 Breve Histórico
+
+HTML foi criado por Tim Berners-Lee em 1991 como uma forma de compartilhar documentos científicos pelo que viria a ser a World Wide Web. A versão atual — **HTML5** — foi padronizada pelo W3C e pelo WHATWG e representa o **padrão vivo** da linguagem: está em constante evolução, sem versões numeradas subsequentes.
+
+### 1.2 HTML, CSS e JavaScript — Uma Visão Geral
+
+| Tecnologia | Responsabilidade |
+|---|---|
+| **HTML** | Estrutura e significado semântico do conteúdo |
+| **CSS** | Aparência visual: cores, fontes, espaçamentos, layout |
+| **JavaScript** | Comportamento dinâmico: interações, lógica, manipulação do DOM |
+
+<Callout type="warn" title="Inline styles não são CSS separado">
+  Nesta aula, alguns exercícios utilizam o atributo `style=` diretamente nas tags. Isso é tecnicamente válido, mas não é a prática recomendada em projetos reais. Em projetos profissionais, o CSS vive em arquivos `.css` separados. Aqui, o inline style serve apenas para que vocês enxerguem o resultado imediatamente, sem precisar criar um segundo arquivo.
+</Callout>
+
+---
+
+## 2. Anatomia de um Elemento HTML
+
+Um elemento HTML é composto por três partes principais: a **tag de abertura**, o **conteúdo** e a **tag de fechamento**.
+
+```html
+<h1>Olá, mundo!</h1>
+```
+
+| Parte | Descrição |
+|---|---|
+| `<h1>` | Tag de abertura — indica onde o elemento começa |
+| `Olá, mundo!` | Conteúdo — texto, imagens, outros elementos... |
+| `</h1>` | Tag de fechamento — a barra `/` a diferencia da tag de abertura |
+
+### 2.1 Tags Void — Elementos Sem Conteúdo
+
+Algumas tags não possuem conteúdo e, portanto, não possuem tag de fechamento. São chamadas de **void elements**. Exemplos: `<img>`, `<br>`, `<hr>`, `<input>`, `<meta>`, `<link>`.
+
+```html
+<!-- Elemento void: não tem tag de fechamento -->
+<img src="foto.jpg" alt="Descrição da foto">
+<br>
+<hr>
+```
+
+<Callout type="info" title="Nota sobre XHTML e self-closing tags">
+  Você pode encontrar a sintaxe `<br />` ou `<img />` em código mais antigo. Isso vem do XHTML. Em HTML5 puro, a barra final é opcional e geralmente omitida. Ambas as formas são aceitas pelos navegadores modernos.
+</Callout>
+
+### 2.2 Aninhamento
+
+Elementos HTML podem ser aninhados — um elemento pode conter outros. A regra fundamental é: **quem abriu por último, fecha por primeiro**.
+
+```html
+<!-- ✅ Correto: fechamento na ordem inversa da abertura -->
+<p>Este texto tem uma palavra em <strong>negrito</strong>.</p>
+
+<!-- ❌ Errado: sobreposição de tags -->
+<p>Texto <strong>errado</p></strong>
+```
+
+---
+
+## 3. Atributos
+
+Atributos fornecem informações adicionais sobre um elemento. Eles sempre aparecem na **tag de abertura**, no formato `nome="valor"`.
+
+```html
+<a href="https://www.google.com" target="_blank">Google</a>
+<!--    ^nome    ^valor             ^nome   ^valor         -->
+```
+
+### 3.1 Atributos Globais e Específicos
+
+| Tipo | Exemplos e Descrição |
+|---|---|
+| **Globais** | `id`, `class`, `style`, `title`, `lang`, `hidden` — válidos em qualquer tag |
+| **Específicos de `<a>`** | `href` (destino), `target` (onde abrir), `rel` (relação com o destino) |
+| **Específicos de `<img>`** | `src` (caminho da imagem), `alt` (texto alternativo), `width`, `height` |
+| **Específicos de `<input>`** | `type`, `name`, `placeholder`, `required`, `value`, `disabled` |
+
+### 3.2 O Atributo `alt` — Acessibilidade e SEO
+
+O atributo `alt` em imagens serve a três propósitos fundamentais:
+
+- **Acessibilidade:** leitores de tela utilizados por pessoas com deficiência visual leem o `alt` em voz alta
+- **SEO:** mecanismos de busca não "enxergam" imagens, mas indexam o texto do `alt`
+- **Fallback:** quando a imagem não carrega, o `alt` é exibido no lugar dela
+
+<Callout type="danger" title="Nunca deixe o alt vazio em imagens de conteúdo">
+  `alt=""` é válido apenas para imagens puramente decorativas. Para toda imagem que comunica algo — foto, diagrama, ícone funcional — o `alt` deve descrever o que está sendo mostrado.
+</Callout>
+
+---
+
+## 4. Estrutura do Documento HTML
+
+Todo documento HTML bem formado segue uma estrutura mínima obrigatória:
+
+```html
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Título da Página</title>
+  </head>
+  <body>
+    <!-- Conteúdo visível aqui -->
+  </body>
+</html>
+```
+
+### 4.1 `<!DOCTYPE html>`
+
+Não é uma tag HTML — é uma instrução ao navegador sobre qual versão do HTML está sendo utilizada. Em HTML5, é sempre `<!DOCTYPE html>`. Deve ser a **primeira linha** do arquivo.
+
+### 4.2 O Elemento `<html>` e o Atributo `lang`
+
+O elemento `<html>` é o **elemento raiz** — todos os outros são seus descendentes. O atributo `lang` informa o idioma do conteúdo, afetando leitores de tela e correção ortográfica.
+
+```html
+<html lang="pt-BR">   <!-- Português do Brasil -->
+<html lang="en-US">   <!-- Inglês americano -->
+```
+
+### 4.3 O Elemento `<head>`
+
+Contém **metadados** — informações sobre o documento que não são exibidas na página, mas são essenciais para seu funcionamento correto.
+
+| Tag / Elemento | Função |
+|---|---|
+| `<meta charset>` | Define o conjunto de caracteres. UTF-8 suporta acentos, emojis e qualquer língua |
+| `<meta viewport>` | Controla a renderização em dispositivos móveis |
+| `<title>` | Texto exibido na aba do navegador e nos resultados de busca |
+| `<link rel="stylesheet">` | Vincula um arquivo CSS externo |
+| `<meta name="description">` | Texto exibido nos resultados de busca abaixo do título |
+
+<Callout type="danger" title="O que acontece sem o meta charset?">
+  Sem `<meta charset="UTF-8">`, acentos aparecem corrompidos: `"programação"` vira `"programaÃ§Ã£o"`. Sempre inclua o charset como **primeira tag** dentro do `<head>`.
+</Callout>
+
+<Callout type="danger" title="O que acontece sem o meta viewport?">
+  Sem o meta viewport, dispositivos móveis renderizam a página como se tivesse ~980px de largura e encolhem tudo — o texto fica minúsculo. Com `width=device-width, initial-scale=1.0`, a página ocupa a largura real do dispositivo. Esse é o ponto de partida do design responsivo.
+</Callout>
+
+### 4.4 O Elemento `<body>`
+
+Contém todo o **conteúdo visível** da página: textos, imagens, links, formulários, vídeos. Tudo que o usuário vê e interage.
+
+---
+
+## 5. Tags Essenciais — Referência Rápida
+
+### 5.1 Hierarquia de Headings
+
+`<h1>` a `<h6>` definem a hierarquia do conteúdo. `<h1>` é o título principal — deve existir **apenas um por documento**.
+
+<Callout type="info">
+  Mecanismos de busca e leitores de tela utilizam a hierarquia de headings para entender a estrutura do conteúdo. Um `<h1>` ausente ou mal utilizado prejudica SEO e acessibilidade.
+</Callout>
+
+### 5.2 Parágrafo, Quebra de Linha e Linha Horizontal
+
+| Tag | Comportamento |
+|---|---|
+| `<p>` | Parágrafo — cria espaçamento automático acima e abaixo. Elemento de bloco. |
+| `<br>` | Quebra de linha forçada dentro de um parágrafo. Void element. Use com moderação. |
+| `<hr>` | Linha horizontal — separador temático entre seções. Void element. Tem valor semântico. |
+
+### 5.3 Formatação de Texto em Linha
+
+| Tag | Significado Semântico |
+|---|---|
+| `<strong>` | Texto de forte importância — tipicamente negrito |
+| `<em>` | Ênfase — tipicamente itálico. Altera a entonação em leitores de tela |
+| `<mark>` | Destaque — como um marcador amarelo |
+| `<del>` | Texto deletado — conteúdo não mais válido. Tipicamente tachado |
+| `<sub>` | Subscrito — fórmulas químicas (ex.: H₂O) |
+| `<sup>` | Sobrescrito — expoentes (ex.: x²) |
+
+<Callout type="warn" title="strong vs b e em vs i">
+  `<b>` e `<i>` são puramente visuais — sem significado semântico. Em HTML5 moderno, prefira sempre `<strong>` e `<em>`.
+</Callout>
+
+### 5.4 Imagens
+
+```html
+<img src="foto.jpg" alt="Descrição da imagem" width="300">
+```
+
+| Atributo | Descrição |
+|---|---|
+| `src` | Caminho da imagem. Pode ser relativo, absoluto ou URL externa |
+| `alt` | Texto alternativo. Obrigatório por acessibilidade e SEO |
+| `width` / `height` | Dimensões em pixels. Evita que o layout "pule" enquanto a imagem carrega |
+
+### 5.5 Links
+
+```html
+<a href="https://exemplo.com" target="_blank" rel="noopener">Visite o site</a>
+```
+
+| Atributo | Descrição |
+|---|---|
+| `href` | URL de destino |
+| `target="_blank"` | Abre o link em uma nova aba |
+| `rel="noopener"` | Segurança: impede acesso ao contexto da página original via `window.opener` |
+
+### 5.6 Comentários
+
+```html
+<!-- Isso é um comentário e não aparece na página -->
+
+<!-- TODO: adicionar formulário de contato aqui -->
+
+<!--
+  Comentários podem ter
+  múltiplas linhas
+-->
+```
+
+### 5.7 Citações e Abreviações
+
+| Tag | Uso |
+|---|---|
+| `<blockquote cite="URL">` | Citação em bloco, com referência à fonte |
+| `<abbr title="significado">` | Abreviação. Exibe o significado completo como tooltip |
+| `<pre>` | Texto pré-formatado. Preserva espaços e quebras de linha |
+
+---
+
+## 6. Elementos de Bloco vs. Elementos em Linha
+
+| Tipo | Comportamento e Exemplos |
+|---|---|
+| **Elemento de bloco** | Ocupa toda a largura disponível e sempre começa em nova linha. Ex: `<p>`, `<h1>`–`<h6>`, `<div>`, `<hr>`, `<blockquote>`, `<pre>` |
+| **Elemento em linha** | Ocupa apenas o espaço do conteúdo, sem forçar nova linha. Ex: `<a>`, `<strong>`, `<em>`, `<img>`, `<span>`, `<abbr>`, `<mark>`, `<del>` |
+
+<Callout type="info">
+  Esse comportamento é o padrão, mas o CSS pode alterá-lo com `display: inline-block`, `flex`, `grid` e outros. Por enquanto, compreenda o comportamento nativo antes de modificá-lo.
+</Callout>
+
+---
+
+## 7. Validação de HTML
+
+Escrever HTML válido não é opcional em projetos profissionais. Um documento inválido pode ser interpretado de forma diferente por cada navegador.
+
+O W3C oferece um validador oficial: **[validator.w3.org](https://validator.w3.org)**
+
+### ✅ Checklist de Validação — Aula 03
+
+- `<!DOCTYPE html>` presente como primeira linha
+- Atributo `lang` no elemento `<html>`
+- `<meta charset="UTF-8">` como primeira tag do `<head>`
+- `<meta name="viewport">` presente
+- `<title>` preenchido com texto descritivo
+- Todas as tags abertas estão fechadas (exceto void elements)
+- Aninhamento correto — sem sobreposição de tags
+- Todas as imagens com atributo `alt` preenchido
+- Nenhum erro ou aviso no validador do W3C
+
+---
+
+## 8. Exercícios
+
+Os exercícios abaixo seguem a estrutura do W3Schools. Em sala, a professora abre o VS Code e constrói cada solução ao vivo. Em seguida, você replica e depois **adapta para o seu próprio contexto**.
+
+<Callout type="tip" title="Como usar estes exercícios">
+  **Primeiro:** leia o enunciado e tente resolver antes de olhar a solução.
+
+  **Depois:** copie a solução e adapte — troque o texto, a imagem, os atributos — para algo relacionado a você.
+
+  **Objetivo final:** ao terminar todos os exercícios, você terá os ingredientes para construir sua Mini Página Pessoal.
+</Callout>
+
+<ExCard num={1} title="Estrutura Básica e Elementos de Texto">
+
+**Instruções:**
+1. Feche o elemento `<h1>` com a tag de fechamento correta
+2. Adicione um elemento `<p>` com o texto `My first paragraph.`
+3. Dentro do parágrafo, adicione um `<br>` após a palavra `first`
+4. Feche o elemento `<body>` com a tag de fechamento correta
+
+```html
+<!DOCTYPE html>
+<html>
+<body>
+  <h1>My First Heading</h1>
+  <p>My first<br> paragraph.</p>
+</body>
+</html>
+```
+
+> 📌 `<br>` é um void element — não tem tag de fechamento. O `</body>` deve vir depois de todo o conteúdo visível.
+
+</ExCard>
+
+<ExCard num={2} title="Imagem com Atributos">
+
+**Instruções:**
+1. Adicione um elemento `<img>` após o parágrafo
+2. Defina `src` como `img_girl.jpg`
+3. Defina `alt` como `Girl with a jacket`
+4. Defina `width` como `250` e `height` como `300`
+
+```html
+<!DOCTYPE html>
+<html>
+<body>
+  <h1>My Gallery</h1>
+  <p>Here is a photo from my vacation:</p>
+  <img src="img_girl.jpg" alt="Girl with a jacket" width="250" height="300">
+</body>
+</html>
+```
+
+</ExCard>
+
+<ExCard num={3} title="Hierarquia de Headings">
+
+**Instruções:**
+1. Use `<h1>` para `My Website`
+2. Use `<h2>` para `About Me` e `My Hobbies`
+3. Use `<h3>` para `Photography`
+
+```html
+<!DOCTYPE html>
+<html>
+<body>
+  <h1>My Website</h1>
+  <h2>About Me</h2>
+  <p>I love building web pages.</p>
+  <h2>My Hobbies</h2>
+  <h3>Photography</h3>
+  <p>I enjoy taking photos of nature.</p>
+</body>
+</html>
+```
+
+</ExCard>
+
+<ExCard num={4} title="Parágrafo, br, hr e pre">
+
+**Instruções:**
+1. Envolva as duas primeiras linhas em um `<p>`
+2. Adicione um `<br>` entre as duas linhas
+3. Adicione um `<hr>` após o parágrafo
+4. Envolva as duas últimas linhas em um `<pre>`
+
+```html
+<!DOCTYPE html>
+<html>
+<body>
+  <h1>A Short Poem</h1>
+  <p>Twinkle twinkle little star,<br>
+  How I wonder what you are.</p>
+  <hr>
+  <pre>
+Up above the world so high,
+Like a diamond in the sky.
+  </pre>
+</body>
+</html>
+```
+
+> 📌 `<pre>` preserva toda a formatação: espaços múltiplos, indentação e quebras de linha. `<br>` força uma quebra pontual dentro de um parágrafo comum.
+
+</ExCard>
+
+<ExCard num={5} title="Estilos Inline — Cor, Fonte e Alinhamento">
+
+**Instruções:**
+1. Defina `background-color` do `<body>` como `powderblue`
+2. Defina `color` do `<h1>` como `blue` e `font-family` como `verdana`
+3. Defina `text-align` do `<p>` como `center` e `font-size` como `20px`
+
+```html
+<!DOCTYPE html>
+<html>
+<body style="background-color:powderblue;">
+  <h1 style="color:blue;font-family:verdana;">Welcome to My Page</h1>
+  <p style="text-align:center;font-size:20px;">This is a styled paragraph.</p>
+</body>
+</html>
+```
+
+> ⚠️ Em projetos reais, estilos vivem em arquivos `.css` separados. O `style=` inline dificulta manutenção. Nas próximas aulas, você aprenderá a separar estrutura e apresentação de forma profissional.
+
+</ExCard>
+
+<ExCard num={6} title="Formatação Semântica de Texto">
+
+**Instruções:**
+1. Envolva `important` em `<strong>`
+2. Envolva `carefully` em `<em>`
+3. Envolva `milk` em `<mark>`
+4. Envolva o `2` em H2O com `<sub>`
+5. Envolva `blue` em `<del>`
+
+```html
+<!DOCTYPE html>
+<html>
+<body>
+  <h1>Formatting Text</h1>
+  <p>This is an <strong>important</strong> message.</p>
+  <p>Please read <em>carefully</em>.</p>
+  <p>Do not forget to buy <mark>milk</mark> today.</p>
+  <p>The chemical formula for water is: H<sub>2</sub>O</p>
+  <p>My favorite color is <del>blue</del> red.</p>
+</body>
+</html>
+```
+
+</ExCard>
+
+<ExCard num={7} title="Citações e Abreviações">
+
+**Instruções:**
+1. Envolva a citação em `<blockquote>` com `cite="https://www.w3schools.com"`
+2. Envolva `HTML` em `<abbr>` com `title="Hyper Text Markup Language"`
+
+```html
+<!DOCTYPE html>
+<html>
+<body>
+  <h1>Famous Quotes</h1>
+  <p>Here is a quote from W3Schools:</p>
+  <blockquote cite="https://www.w3schools.com">
+    Learning HTML is fun and easy!
+  </blockquote>
+  <p>We all love <abbr title="Hyper Text Markup Language">HTML</abbr>!</p>
+</body>
+</html>
+```
+
+</ExCard>
+
+<ExCard num={8} title="Comentários">
+
+**Instruções:**
+1. Adicione um comentário `This is the navigation` acima do primeiro parágrafo
+2. Comente o segundo parágrafo para que não apareça no navegador
+
+```html
+<!DOCTYPE html>
+<html>
+<body>
+  <h1>My Website</h1>
+  <!-- This is the navigation -->
+  <p>Home | About | Contact</p>
+  <!-- <p>This paragraph should be hidden.</p> -->
+</body>
+</html>
+```
+
+</ExCard>
+
+---
+
+## 9. Desafio Prático — Página sobre o que você ama
+
+Após os exercícios guiados, você vai construir uma página do zero, sem CSS, utilizando apenas os elementos vistos nesta aula. Esta página é o **embrião do seu portfólio** — ela crescerá a cada aula.
+
+O tema é livre: pode ser sobre **você**, sobre um **artista**, sobre um **jogo**, sobre uma **série**, sobre uma **causa** — qualquer coisa que você genuinamente curta. O que importa é que a página fale de verdade, não seja uma cópia do exemplo.
+
+### 📋 Requisitos Mínimos
+
+- Estrutura completa: `<!DOCTYPE>`, `<html lang>`, `<head>` com charset + viewport + title, `<body>`
+- Um `<h1>` com o título da página
+- Um `<h2>` "Sobre" com parágrafo usando pelo menos um `<strong>` ou `<em>`
+- Um `<h2>` com lista não-ordenada (`<ul>` + `<li>`) — mínimo 3 itens
+- Uma imagem com `src`, `alt` e `width` definidos
+- Um link com `href`, `target="_blank"` e `rel="noopener"`
+- Pelo menos dois comentários explicando seções do código
+- Código validado no W3C sem erros
+
+### 🏆 Critérios de Avaliação
+
+| Critério | O que será observado |
+|---|---|
+| **Validade** | Sem erros no W3C Validator |
+| **Semântica** | Hierarquia de headings correta, `alt` descritivo |
+| **Legibilidade** | Indentação consistente, comentários presentes |
+| **Criatividade** | A página tem identidade — não é cópia do exemplo |
+
+---
+
+## Referências
+
+- [W3C — HTML Living Standard](https://html.spec.whatwg.org/multipage/)
+- [MDN Web Docs — HTML](https://developer.mozilla.org/pt-BR/docs/Web/HTML)
+- [W3Schools — HTML Tutorial](https://www.w3schools.com/html/)
+- [W3C Markup Validation Service](https://validator.w3.org/)
+- [WebAIM — Introduction to Web Accessibility](https://webaim.org/intro/)

@@ -2,85 +2,72 @@
 import Base from '../layouts/Base.astro'
 import { getCollection } from 'astro:content'
 
-const todasAulas = await getCollection('aulas')
-const aulas = todasAulas.sort((a, b) => a.data.numero.localeCompare(b.data.numero, undefined, { numeric: true }))
+const todas = await getCollection('aulas')
+
+// Ordena: bonus fica após 01, resto por numero
+function sortKey(a: any) {
+  if (a.id.startsWith('bonus')) return '01.5'
+  return a.data.numero.padStart(3,'0')
+}
+const aulas = todas.sort((a,b) => sortKey(a).localeCompare(sortKey(b)))
 const publicadas = aulas.filter(a => a.data.status === 'publicada').length
 ---
 <Base title="PI I · ETE Cícero Dias" description="Material de aulas de Projeto Integrador I — ETE Cícero Dias, 2026.">
 
-  <!-- HERO -->
   <section class="hero">
     <div class="blob blob-1"></div>
     <div class="blob blob-2"></div>
     <div class="blob blob-3"></div>
-
     <div class="hero-inner">
-      <div class="hero-badge">
-        <span class="bdot"></span>
-        Projeto Integrador I · Módulo 1 · 2026
-      </div>
+      <div class="hero-badge"><span class="bdot"></span>Projeto Integrador I · Módulo 1 · 2026</div>
       <h1 class="hero-title">Aulas de <em>PI I</em></h1>
       <p class="hero-sub">HTML5, CSS3, Git, Metodologia Ágil e Projeto ODS — um material por aula, tudo organizado aqui.</p>
       <div class="hero-meta">
-        <div class="hm-item">
-          <div class="hm-n">{publicadas}</div>
-          <div class="hm-l">Aulas publicadas</div>
-        </div>
+        <div class="hm-item"><div class="hm-n">{publicadas}</div><div class="hm-l">Publicadas</div></div>
         <div class="hm-div"></div>
-        <div class="hm-item">
-          <div class="hm-n">PI I</div>
-          <div class="hm-l">Disciplina</div>
-        </div>
+        <div class="hm-item"><div class="hm-n">{aulas.length}</div><div class="hm-l">Total de aulas</div></div>
         <div class="hm-div"></div>
-        <div class="hm-item">
-          <div class="hm-n">2026</div>
-          <div class="hm-l">Semestre</div>
-        </div>
+        <div class="hm-item"><div class="hm-n">2026</div><div class="hm-l">Semestre</div></div>
       </div>
     </div>
     <div class="hero-scroll">
-      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
+      <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
     </div>
   </section>
 
-  <!-- AULAS -->
   <section class="section" id="aulas">
     <div class="section-inner">
       <div class="section-header reveal">
         <div class="section-label">Material de Aulas</div>
         <h2 class="section-title">Todas as <em>Aulas</em></h2>
       </div>
-
       <div class="aulas-grid">
         {aulas.map((aula, i) => {
-          const { numero, titulo, tituloEm, subtitulo, dataA, duracao, status, topicos, coverUrl } = aula.data
-          const href = status === 'publicada' ? `/aulas/${aula.id}` : null
+          const { numero, titulo, tituloEm, subtitulo, dataA, duracao, status, topicos, coverUrl, tipo } = aula.data
+          const isBonus = tipo === 'bonus' || aula.id.startsWith('bonus')
           const isEmBreve = status === 'em-breve'
+          const href = isEmBreve ? undefined : `/aulas/${aula.id}`
+          const delay = `reveal-d${Math.min((i % 4) + 1, 4)}`
 
           return (
             <a
-              href={href ?? undefined}
-              class={`aula-card reveal reveal-d${Math.min(i % 4 + 1, 4)}${isEmBreve ? ' em-breve' : ''}`}
-              style={!href ? 'pointer-events:none' : ''}
+              href={href}
+              class={`aula-card reveal ${delay}${isEmBreve ? ' em-breve' : ''}${isBonus ? ' card-bonus' : ''}`}
             >
-              {coverUrl && (
-                <div class="card-cover" style={`background-image:url(${coverUrl})`}></div>
-              )}
+              {coverUrl && <div class="card-cover" style={`background-image:url(${coverUrl})`}></div>}
               <div class="aula-card-top">
                 <div class="aula-header">
                   <div class="aula-num-badge">{numero}</div>
                   <span class={`aula-status ${isEmBreve ? 'status-soon' : 'status-ok'}`}>
                     <span class="status-dot"></span>
-                    {isEmBreve ? 'Em breve' : 'Publicada'}
+                    {isBonus ? 'Trilha' : isEmBreve ? 'Em breve' : 'Publicada'}
                   </span>
                 </div>
                 <div class="aula-title">{titulo} <em>{tituloEm}</em></div>
                 <div class="aula-desc">{subtitulo}</div>
               </div>
               <div class="aula-topics">
-                {topicos.map((t: string) => (
-                  <span class="topic-tag">{t}</span>
-                ))}
+                {topicos.map((t: string) => <span class="topic-tag">{t}</span>)}
               </div>
               <div class="aula-card-bottom">
                 <div class="aula-meta-row">
@@ -105,16 +92,4 @@ const publicadas = aulas.filter(a => a.data.status === 'publicada').length
       </div>
     </div>
   </section>
-
 </Base>
-
-<style>
-  .card-cover {
-    height: 120px;
-    background-size: cover;
-    background-position: center;
-    opacity: .7;
-    transition: opacity var(--t);
-  }
-  .aula-card:hover .card-cover { opacity: 1; }
-</style>

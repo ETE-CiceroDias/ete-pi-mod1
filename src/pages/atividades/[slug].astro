@@ -1,0 +1,18 @@
+---
+import { getCollection, render } from 'astro:content'
+import AtividadeLayout from '../../layouts/AtividadeLayout.astro'
+
+export async function getStaticPaths() {
+  const atividades = await getCollection('atividades')
+  return atividades.map(at => ({
+    params: { slug: at.id },
+    props:  { at },
+  }))
+}
+
+const { at } = Astro.props
+const { Content } = await render(at)
+---
+<AtividadeLayout at={at.data}>
+  <Content />
+</AtividadeLayout>
