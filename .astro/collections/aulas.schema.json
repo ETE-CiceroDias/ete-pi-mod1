@@ -63,6 +63,9 @@
     "tipo": {
       "type": "string"
     },
+    "paginaRica": {
+      "type": "string"
+    },
     "$schema": {
       "type": "string"
     }

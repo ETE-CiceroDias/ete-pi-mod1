@@ -11,6 +11,12 @@ export async function getStaticPaths() {
 }
 
 const { aula } = Astro.props
+
+// Se tiver paginaRica, redireciona direto
+if (aula.data.paginaRica) {
+  return Astro.redirect(aula.data.paginaRica)
+}
+
 const { Content } = await render(aula)
 ---
 <AulaLayout aula={aula.data}>

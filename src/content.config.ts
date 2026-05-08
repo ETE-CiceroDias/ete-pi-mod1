@@ -16,22 +16,8 @@ const aulas = defineCollection({
     topicos:    z.array(z.string()).default([]),
     coverUrl:   z.string().optional(),
     tipo:       z.string().optional(),
+    paginaRica: z.string().optional(),
   }),
 })
 
-const atividades = defineCollection({
-  loader: glob({ pattern: '**/*.mdx', base: './src/content/atividades' }),
-  schema: z.object({
-    titulo:      z.string(),
-    tipo:        z.enum(['exercicio', 'desafio', 'projeto', 'quiz']).default('exercicio'),
-    aulaRef:     z.string(),           // slug da aula — ex: "04-intro-html-parte1"
-    subtitulo:   z.string(),
-    duracao:     z.string().optional(),
-    nivel:       z.enum(['basico', 'intermediario', 'avancado']).default('basico'),
-    entrega:     z.string().nullable().optional(),
-    status:      z.enum(['aberta', 'em-breve', 'encerrada']).default('aberta'),
-    topicos:     z.array(z.string()).default([]),
-  }),
-})
-
-export const collections = { aulas, atividades }
+export const collections = { aulas }

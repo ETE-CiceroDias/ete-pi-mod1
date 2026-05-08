@@ -3,14 +3,11 @@ import Base from '../layouts/Base.astro'
 import { getCollection } from 'astro:content'
 
 const todas = await getCollection('aulas')
-
-// Ordena: bonus fica após 01, resto por numero
-function sortKey(a: any) {
-  if (a.id.startsWith('bonus')) return '01.5'
-  return a.data.numero.padStart(3,'0')
-}
-const aulas = todas.sort((a,b) => sortKey(a).localeCompare(sortKey(b)))
-const publicadas = aulas.filter(a => a.data.status === 'publicada').length
+// Excluir o bonus-universo-git do grid de aulas normais (vai como card fixo)
+const aulasFiltradas = todas
+  .filter(a => !a.id.startsWith('bonus'))
+  .sort((a,b) => a.data.numero.localeCompare(b.data.numero, undefined, { numeric: true }))
+const publicadas = aulasFiltradas.filter(a => a.data.status === 'publicada').length
 ---
 <Base title="PI I · ETE Cícero Dias" description="Material de aulas de Projeto Integrador I — ETE Cícero Dias, 2026.">
 
@@ -21,11 +18,11 @@ const publicadas = aulas.filter(a => a.data.status === 'publicada').length
     <div class="hero-inner">
       <div class="hero-badge"><span class="bdot"></span>Projeto Integrador I · Módulo 1 · 2026</div>
       <h1 class="hero-title">Aulas de <em>PI I</em></h1>
-      <p class="hero-sub">HTML5, CSS3, Git, Metodologia Ágil e Projeto ODS — um material por aula, tudo organizado aqui.</p>
+      <p class="hero-sub">HTML5, CSS3, Git, Terminal e Metodologia Ágil — um material por aula, tudo organizado aqui.</p>
       <div class="hero-meta">
         <div class="hm-item"><div class="hm-n">{publicadas}</div><div class="hm-l">Publicadas</div></div>
         <div class="hm-div"></div>
-        <div class="hm-item"><div class="hm-n">{aulas.length}</div><div class="hm-l">Total de aulas</div></div>
+        <div class="hm-item"><div class="hm-n">{aulasFiltradas.length}</div><div class="hm-l">Total de aulas</div></div>
         <div class="hm-div"></div>
         <div class="hm-item"><div class="hm-n">2026</div><div class="hm-l">Semestre</div></div>
       </div>
@@ -35,32 +32,88 @@ const publicadas = aulas.filter(a => a.data.status === 'publicada').length
     </div>
   </section>
 
-  <section class="section" id="aulas">
+  <!-- TRILHAS FIXAS NO TOPO -->
+  <section class="section" id="trilhas">
+    <div class="section-inner">
+      <div class="section-header reveal">
+        <div class="section-label">Trilhas</div>
+        <h2 class="section-title">Conteúdo <em>Complementar</em></h2>
+      </div>
+      <div class="trilhas-grid">
+
+        <!-- GIT — paleta GitHub: dark + purple + green -->
+        <a href="/universo-git" class="trilha-card trilha-git reveal">
+          <div class="trilha-card-body">
+            <div class="trilha-icon trilha-icon-git">
+              <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M23.546 10.93L13.067.452c-.604-.603-1.582-.603-2.188 0L8.708 2.627l2.76 2.76c.645-.215 1.379-.07 1.889.441.516.515.658 1.258.438 1.9l2.658 2.66c.645-.223 1.387-.078 1.9.435.721.72.721 1.884 0 2.604-.719.719-1.881.719-2.6 0-.539-.541-.674-1.337-.404-1.996L12.86 8.955v6.525c.176.086.342.203.488.348.713.721.713 1.883 0 2.6-.719.721-1.889.721-2.609 0-.719-.719-.719-1.879 0-2.598.182-.18.387-.316.605-.406V8.835c-.217-.091-.424-.222-.6-.401-.545-.545-.676-1.342-.396-2.009L7.636 3.7.45 10.881c-.6.605-.6 1.584 0 2.189l10.48 10.477c.604.604 1.582.604 2.186 0l10.43-10.43c.605-.603.605-1.582 0-2.187"/></svg>
+            </div>
+            <div>
+              <div class="trilha-label">Universo Git</div>
+              <div class="trilha-desc">Versionamento, commits, branches e GitHub — do zero ao profissional.</div>
+            </div>
+          </div>
+          <div class="trilha-tags">
+            <span class="trilha-tag">git init</span>
+            <span class="trilha-tag">git commit</span>
+            <span class="trilha-tag">branches</span>
+            <span class="trilha-tag">GitHub</span>
+          </div>
+          <div class="trilha-footer">
+            <span class="trilha-badge">Trilha · 4 aulas</span>
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17 17 7M17 7H7M17 7v10"/></svg>
+          </div>
+        </a>
+
+        <!-- TERMINAL — noir -->
+        <a href="/universo-terminal" class="trilha-card trilha-terminal reveal reveal-d1">
+          <div class="trilha-card-body">
+            <div class="trilha-icon trilha-icon-term">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/></svg>
+            </div>
+            <div>
+              <div class="trilha-label">Universo Terminal</div>
+              <div class="trilha-desc">pwd, ls, mkdir, cd, touch, code . — linha de comando do zero para todo dev.</div>
+            </div>
+          </div>
+          <div class="trilha-tags">
+            <span class="trilha-tag">pwd</span>
+            <span class="trilha-tag">mkdir</span>
+            <span class="trilha-tag">cd</span>
+            <span class="trilha-tag">code .</span>
+          </div>
+          <div class="trilha-footer">
+            <span class="trilha-badge">Trilha · 4 aulas</span>
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17 17 7M17 7H7M17 7v10"/></svg>
+          </div>
+        </a>
+
+
+      </div>
+    </div>
+  </section>
+
+  <!-- AULAS -->
+  <section class="section alt" id="aulas">
     <div class="section-inner">
       <div class="section-header reveal">
         <div class="section-label">Material de Aulas</div>
         <h2 class="section-title">Todas as <em>Aulas</em></h2>
       </div>
       <div class="aulas-grid">
-        {aulas.map((aula, i) => {
-          const { numero, titulo, tituloEm, subtitulo, dataA, duracao, status, topicos, coverUrl, tipo } = aula.data
-          const isBonus = tipo === 'bonus' || aula.id.startsWith('bonus')
+        {aulasFiltradas.map((aula, i) => {
+          const { numero, titulo, tituloEm, subtitulo, dataA, duracao, status, topicos, coverUrl, paginaRica } = aula.data
           const isEmBreve = status === 'em-breve'
-          const href = isEmBreve ? undefined : `/aulas/${aula.id}`
+          const href = isEmBreve ? undefined : (paginaRica ?? `/aulas/${aula.id}`)
           const delay = `reveal-d${Math.min((i % 4) + 1, 4)}`
-
           return (
-            <a
-              href={href}
-              class={`aula-card reveal ${delay}${isEmBreve ? ' em-breve' : ''}${isBonus ? ' card-bonus' : ''}`}
-            >
+            <a href={href} class={`aula-card reveal ${delay}${isEmBreve ? ' em-breve' : ''}`}>
               {coverUrl && <div class="card-cover" style={`background-image:url(${coverUrl})`}></div>}
               <div class="aula-card-top">
                 <div class="aula-header">
                   <div class="aula-num-badge">{numero}</div>
                   <span class={`aula-status ${isEmBreve ? 'status-soon' : 'status-ok'}`}>
                     <span class="status-dot"></span>
-                    {isBonus ? 'Trilha' : isEmBreve ? 'Em breve' : 'Publicada'}
+                    {isEmBreve ? 'Em breve' : 'Publicada'}
                   </span>
                 </div>
                 <div class="aula-title">{titulo} <em>{tituloEm}</em></div>
@@ -75,12 +128,10 @@ const publicadas = aulas.filter(a => a.data.status === 'publicada').length
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12,6 12,12 16,14"/></svg>
                     {duracao}
                   </span>
-                  {dataA && (
-                    <span class="aula-meta-item">
-                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-                      {dataA}
-                    </span>
-                  )}
+                  {dataA && <span class="aula-meta-item">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                    {dataA}
+                  </span>}
                 </div>
                 <div class="aula-arrow">
                   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17 17 7M17 7H7M17 7v10"/></svg>
@@ -93,3 +144,53 @@ const publicadas = aulas.filter(a => a.data.status === 'publicada').length
     </div>
   </section>
 </Base>
+
+<style>
+  /* TRILHAS GRID */
+  .trilhas-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1.2rem;}
+  .trilha-card{border-radius:18px;overflow:hidden;display:flex;flex-direction:column;text-decoration:none;color:inherit;transition:transform var(--t),box-shadow var(--t),border-color var(--t);border:1.5px solid;}
+  .trilha-card-body{display:flex;align-items:flex-start;gap:1rem;padding:1.4rem 1.4rem .9rem;}
+  .trilha-icon{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+  .trilha-label{font-family:var(--font-h);font-size:1.25rem;font-weight:300;line-height:1.2;margin-bottom:.25rem;}
+  .trilha-desc{font-size:.78rem;color:var(--text-2);line-height:1.55;}
+  .trilha-tags{display:flex;flex-wrap:wrap;gap:.35rem;padding:0 1.4rem .9rem;}
+  .trilha-tag{font-size:.62rem;font-weight:700;padding:.15rem .55rem;border-radius:4px;text-transform:uppercase;letter-spacing:.05em;}
+  .trilha-footer{padding:.8rem 1.4rem;display:flex;align-items:center;justify-content:space-between;border-top:1px solid;}
+  .trilha-badge{font-size:.65rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;}
+
+  /* GIT — purple puro */
+  .trilha-git{background:linear-gradient(160deg,#07050f 0%,#0f0b1f 100%);border-color:rgba(124,74,224,.25);}
+  .trilha-git:hover{transform:translateY(-5px);box-shadow:0 16px 40px rgba(124,74,224,.2);border-color:rgba(124,74,224,.55);}
+  .trilha-icon-git{background:rgba(124,74,224,.12);color:#b89aff;}
+  .trilha-git .trilha-label{color:#eae6ff;}
+  .trilha-git .trilha-desc{color:rgba(234,230,255,.55);}
+  .trilha-git .trilha-tag{background:rgba(124,74,224,.1);border:1px solid rgba(124,74,224,.25);color:rgba(184,154,255,.8);}
+  .trilha-git .trilha-footer{border-color:rgba(124,74,224,.12);}
+  .trilha-git .trilha-badge{color:#b89aff;}
+  .trilha-git svg:last-child{color:rgba(184,154,255,.3);}
+  .trilha-git:hover svg:last-child{color:#b89aff;}
+
+  /* TERMINAL — noir */
+  .trilha-terminal{background:linear-gradient(160deg,#080808 0%,#111 100%);border-color:rgba(255,255,255,.09);}
+  .trilha-terminal:hover{transform:translateY(-5px);box-shadow:0 16px 40px rgba(0,0,0,.7);border-color:rgba(255,255,255,.22);}
+  .trilha-icon-term{background:rgba(255,255,255,.06);color:rgba(255,255,255,.6);}
+  .trilha-terminal .trilha-label{color:#f0f0f0;}
+  .trilha-terminal .trilha-desc{color:rgba(240,240,240,.45);}
+  .trilha-terminal .trilha-tag{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);color:rgba(240,240,240,.4);font-family:var(--font-mono);}
+  .trilha-terminal .trilha-footer{border-color:rgba(255,255,255,.07);}
+  .trilha-terminal .trilha-badge{color:rgba(240,240,240,.3);}
+  .trilha-terminal svg:last-child{color:rgba(255,255,255,.25);}
+  .trilha-terminal:hover svg:last-child{color:#f0f0f0;}
+
+  /* EXERCÍCIOS — React blue */
+  .trilha-ex{background:linear-gradient(160deg,#020d1a 0%,#041525 100%);border-color:rgba(97,218,251,.15);opacity:.6;pointer-events:none;}
+  .trilha-icon-ex{background:rgba(97,218,251,.08);color:#61dafb;}
+  .trilha-ex .trilha-label{color:#e8edf5;}
+  .trilha-ex .trilha-desc{color:rgba(232,237,245,.55);}
+  .trilha-ex .trilha-tag{background:rgba(97,218,251,.07);border:1px solid rgba(97,218,251,.15);color:rgba(97,218,251,.6);}
+  .trilha-ex .trilha-footer{border-color:rgba(97,218,251,.08);}
+  .trilha-ex .trilha-badge{color:rgba(97,218,251,.5);}
+  .trilha-ex svg:last-child{color:rgba(97,218,251,.3);}
+
+  @media(max-width:900px){.trilhas-grid{grid-template-columns:1fr;}}
+</style>

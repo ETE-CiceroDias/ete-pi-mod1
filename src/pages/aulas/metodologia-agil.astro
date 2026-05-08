@@ -1,0 +1,813 @@
+---
+---
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Aula 01 · Metodologia Ágil · ETE Cícero Dias</title>
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<link rel="icon" type="image/svg+xml" href="/favicon.svg"/>
+<style>
+:root{--primary:#7c4ae0;--primary-h:#532d9f;--secondary:#c14dd8;--accent:#090B20;--bg:#F8F5FF;--surface:rgba(255,255,255,0.65);--elevated:rgba(255,255,255,0.92);--glass:rgba(124,74,224,0.07);--glass-b:rgba(124,74,224,0.18);--text:#090B20;--text-2:#4A3C6B;--text-3:#7B6B9B;--border:rgba(124,74,224,0.14);--shadow-sm:0 1px 3px rgba(112,48,239,0.1);--shadow-md:0 6px 20px rgba(112,48,239,0.15);--shadow-lg:0 18px 50px rgba(112,48,239,0.22);--grad:linear-gradient(135deg,#7c4ae0 0%,#c14dd8 60%,#090B20 100%);--grad-btn:linear-gradient(135deg,#7c4ae0 0%,#532d9f 100%);--font-h:'Cormorant Garamond',Georgia,serif;--font-b:'Plus Jakarta Sans',sans-serif;--t:220ms cubic-bezier(.4,0,.2,1);}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}html{scroll-behavior:smooth;}
+body{font-family:var(--font-b);background:var(--bg);color:var(--text);line-height:1.65;overflow-x:hidden;}
+a{text-decoration:none;color:inherit;}img{display:block;max-width:100%;}
+::selection{background:var(--primary);color:#fff;}
+::-webkit-scrollbar{width:4px;}::-webkit-scrollbar-track{background:var(--bg);}::-webkit-scrollbar-thumb{background:var(--primary);border-radius:99px;}
+body::after{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='4'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='0.032'/%3E%3C/svg%3E");pointer-events:none;opacity:0.3;z-index:-1;}
+#prog{position:fixed;top:0;left:0;height:3px;z-index:400;background:var(--grad-btn);width:0;transition:width .1s;}
+#btt{position:fixed;bottom:2rem;right:2rem;z-index:350;width:48px;height:48px;border-radius:50%;background:var(--grad-btn);color:#fff;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:var(--shadow-lg);opacity:0;transform:translateY(16px) scale(.85);transition:opacity .3s,transform .3s;pointer-events:none;}
+#btt.show{opacity:1;transform:translateY(0) scale(1);pointer-events:all;}#btt:hover{transform:translateY(-3px) scale(1.08);}
+.nav{position:fixed;top:0;left:0;right:0;z-index:300;display:flex;align-items:center;justify-content:space-between;padding:.85rem 2.5rem;background:rgba(248,245,255,0.9);backdrop-filter:blur(18px);border-bottom:1px solid var(--border);transition:box-shadow var(--t);}
+.nav.scrolled{box-shadow:var(--shadow-md);}
+.nav-back{display:inline-flex;align-items:center;gap:.4rem;font-size:.78rem;font-weight:600;color:var(--text-2);transition:color var(--t);}
+.nav-back:hover{color:var(--primary);}
+.nav-links{display:flex;align-items:center;gap:1.5rem;}
+.nav-links a{font-size:.78rem;font-weight:600;color:var(--text-2);padding-bottom:3px;border-bottom:2px solid transparent;transition:color var(--t),border-color var(--t);}
+.nav-links a:hover{color:var(--primary);}
+.nav-links a.active{color:var(--primary);border-bottom-color:var(--primary);}
+.nav-right{display:flex;align-items:center;gap:.75rem;margin-left:auto;}
+.nav-aula-info{font-size:.75rem;color:var(--text-3);font-weight:500;}
+.nav-hamburger{display:none;background:none;border:none;cursor:pointer;color:var(--text);}
+.mobile-menu{display:none;position:fixed;inset:0;z-index:280;background:rgba(248,245,255,.97);backdrop-filter:blur(18px);flex-direction:column;align-items:center;justify-content:center;gap:2rem;}
+.mobile-menu.open{display:flex;}
+.mobile-menu a{font-family:var(--font-h);font-size:2rem;font-weight:300;color:var(--text-2);font-style:italic;transition:color var(--t);}
+.mobile-menu a:hover{color:var(--primary);}
+.mobile-close{position:absolute;top:1.5rem;right:1.5rem;background:none;border:none;cursor:pointer;}
+.blob{position:absolute;pointer-events:none;filter:blur(72px);}
+.blob-1{width:520px;height:340px;border-radius:60% 40% 55% 45%/50% 60% 40% 50%;background:radial-gradient(circle at 40%,rgba(124,74,224,.28),rgba(193,77,216,.18) 60%,transparent);top:-8%;left:5%;animation:bd1 20s ease-in-out infinite;}
+.blob-2{width:380px;height:500px;border-radius:40% 60% 45% 55%/65% 35% 65% 35%;background:radial-gradient(circle at 60%,rgba(100,150,255,.22),rgba(193,77,216,.16) 55%,transparent);top:20%;right:0;animation:bd2 26s ease-in-out infinite;}
+.blob-3{width:300px;height:360px;border-radius:70% 30% 50% 50%/35% 70% 30% 65%;background:radial-gradient(circle at 35%,rgba(67,233,123,.14),rgba(124,74,224,.12) 60%,transparent);bottom:5%;left:15%;animation:bd3 22s ease-in-out infinite;}
+@keyframes bd1{0%,100%{transform:translate(0,0) scale(1) rotate(0deg);}33%{transform:translate(40px,-30px) scale(1.07) rotate(8deg);}66%{transform:translate(-25px,20px) scale(.95) rotate(-5deg);}}
+@keyframes bd2{0%,100%{transform:translate(0,0);}40%{transform:translate(-30px,40px) scale(.93);}75%{transform:translate(20px,-25px) scale(1.05);}}
+@keyframes bd3{0%,100%{transform:translate(0,0) scale(1);}50%{transform:translate(30px,-35px) scale(1.08) rotate(10deg);}}
+.marquee-wrap{overflow:hidden;white-space:nowrap;}
+.marquee-track{display:inline-flex;animation:marquee-scroll 28s linear infinite;}
+.marquee-track:hover{animation-play-state:paused;}
+.marquee-item{display:inline-flex;align-items:center;gap:.5rem;padding:.55rem 1.4rem;font-family:var(--font-b);font-size:.88rem;font-weight:700;letter-spacing:.02em;white-space:nowrap;}
+.marquee-item .dot{width:4px;height:4px;border-radius:50%;background:currentColor;opacity:.5;}
+@keyframes marquee-scroll{from{transform:translateX(0);}to{transform:translateX(-50%);}}
+.fita-1{background:#fff;color:var(--accent);border-top:1px solid rgba(0,0,0,.07);border-bottom:1px solid rgba(0,0,0,.07);transform:rotate(-1.5deg);margin:0 -40px;box-shadow:0 4px 20px rgba(0,0,0,.09);}
+.fita-1 .marquee-item:nth-child(odd){color:var(--primary);}
+.fita-2{background:var(--primary);color:rgba(255,255,255,.75);transform:rotate(1deg);margin:0 -40px;box-shadow:0 4px 20px rgba(124,74,224,.3);}
+.fita-2 .marquee-item:nth-child(odd){color:#fff;}
+.fita-2 .marquee-track{animation-direction:reverse;animation-duration:22s;}
+.hero-cover{min-height:100vh;display:flex;flex-direction:column;justify-content:flex-end;padding:0;position:relative;overflow:hidden;background-image:var(--cover-url);background-size:cover;background-position:center top;}
+.hero-cover-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(5,2,20,.95) 0%,rgba(5,2,20,.75) 40%,rgba(5,2,20,.35) 70%,rgba(5,2,20,.1) 100%);z-index:1;}
+.hero-cover-inner{position:relative;z-index:2;max-width:960px;padding:4rem 4rem 3.5rem;width:100%;text-align:left;}
+.hero-cover-meta{display:flex;align-items:center;gap:.75rem;margin-bottom:1.75rem;flex-wrap:nowrap;}
+.hero-badge{display:inline-flex;align-items:center;gap:.5rem;padding:.38rem 1rem;background:var(--glass);border:1px solid var(--glass-b);border-radius:99px;backdrop-filter:blur(16px);font-size:.72rem;font-weight:700;color:var(--primary);letter-spacing:.07em;text-transform:uppercase;}
+.hero-badge-dark{background:rgba(124,74,224,.4)!important;border:1px solid rgba(124,74,224,.55)!important;color:#fff!important;backdrop-filter:blur(8px);white-space:nowrap;flex-shrink:0;}
+.badge-dot{width:6px;height:6px;border-radius:50%;background:var(--primary);animation:pulse 2s ease-in-out infinite;}
+.hero-badge-dark .badge-dot{background:#fff;}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1);}50%{opacity:.5;transform:scale(1.5);}}
+.hm-tag-dark{display:inline-flex;align-items:center;gap:.4rem;font-size:.78rem;font-weight:600;color:rgba(255,255,255,.65);}
+.hm-sep-dark{color:rgba(255,255,255,.25);font-size:.9rem;}
+.hero-cover-title{font-family:var(--font-h);font-size:clamp(3rem,6vw,5.5rem);font-weight:300;line-height:1.06;letter-spacing:-.03em;color:#fff;margin-bottom:1.25rem;}
+.hero-cover-title em{font-style:italic;color:#c4a1ff;font-weight:200;}
+.hero-cover-sub{font-size:clamp(.92rem,1.6vw,1.05rem);color:rgba(255,255,255,.65);max-width:600px;line-height:1.75;margin-bottom:2rem;}
+.hero-cover-divider{width:100%;height:1px;background:rgba(255,255,255,.12);margin-bottom:1.5rem;}
+.hero-cover-author-row{display:flex;align-items:center;justify-content:space-between;gap:1rem;width:100%;}
+.hero-ed-author{display:flex;align-items:center;gap:.85rem;flex:1;min-width:0;}
+.hero-ed-avatar{width:40px;height:40px;border-radius:50%;background:var(--grad-btn);display:flex;align-items:center;justify-content:center;font-family:var(--font-h);font-size:1.2rem;color:#fff;font-style:italic;flex-shrink:0;}
+.hero-ed-name{font-size:.85rem;font-weight:700;}
+.hero-ed-role{font-size:.72rem;}
+.hero-cover-cta{display:inline-flex;align-items:center;gap:.45rem;padding:.65rem 1.35rem;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.22);border-radius:99px;color:#fff;font-size:.82rem;font-weight:700;backdrop-filter:blur(8px);transition:background .2s,border-color .2s;white-space:nowrap;}
+.hero-cover-cta:hover{background:rgba(124,74,224,.45);border-color:rgba(124,74,224,.65);}
+.fitas-hero{display:flex;flex-direction:column;gap:.7rem;margin:0 -2rem 2.5rem;overflow:hidden;}
+.section{padding:4rem 0;display:block;width:100%;box-sizing:border-box;}
+.section-inner{max-width:1100px;margin:0 auto;padding:0 2rem;}
+.section-label{font-size:.68rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--primary);margin-bottom:.7rem;display:flex;align-items:center;gap:.5rem;}
+.section-label::before{content:'';width:18px;height:2px;background:var(--grad-btn);border-radius:99px;}
+.section-title{font-family:var(--font-h);font-size:clamp(1.9rem,4vw,3rem);font-weight:300;letter-spacing:-.02em;margin-bottom:.9rem;line-height:1.1;}
+.section-title em{font-style:italic;color:var(--primary);font-weight:200;}
+.section-sub{font-size:1rem;color:var(--text-2);max-width:580px;line-height:1.7;}
+.section-header{margin-bottom:3rem;}
+.alt-bg{background-color:#ede8f5;}
+.concept-grid{display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:flex-start;}
+.prose p{font-size:1rem;color:var(--text-2);line-height:1.85;margin-bottom:1rem;}
+.highlight{display:inline-block;padding:.1rem .45rem;background:rgba(124,74,224,.1);border-radius:5px;color:var(--primary);font-weight:600;}
+.stack-wrap{position:relative;display:flex;justify-content:center;}
+.stack{position:relative;width:440px;height:270px;flex-shrink:0;}
+.stack-card{position:absolute;inset:0;background:#0f0a1e;border:1px solid rgba(124,74,224,.25);border-radius:22px;padding:2rem 2.2rem;transition:transform .4s cubic-bezier(.34,1.56,.64,1);}
+.stack-card:nth-child(3){transform:rotate(-5deg) translate(-18px,12px);z-index:1;}
+.stack-card:nth-child(2){transform:rotate(-2.5deg) translate(-8px,6px);z-index:2;}
+.stack-card:nth-child(1){z-index:3;box-shadow:0 24px 60px rgba(0,0,0,.45);}
+.stack:hover .stack-card:nth-child(3){transform:rotate(-7deg) translate(-28px,18px);}
+.stack:hover .stack-card:nth-child(2){transform:rotate(-3.5deg) translate(-12px,10px);}
+.stack-card .kw{font-size:.65rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--primary);margin-bottom:.8rem;}
+.stack-card .ct{font-size:1rem;color:#e8e0ff;line-height:1.65;}
+.stack-card .ct span{color:var(--primary);}
+.stack-card .ct span.rose{color:#c14dd8;}
+.stack-card .sig{position:absolute;bottom:1.2rem;left:1.8rem;font-family:var(--font-h);font-size:2.2rem;font-weight:300;font-style:italic;color:rgba(255,255,255,.1);}
+.stack-bkg-w{position:absolute;bottom:-10px;right:-5px;font-family:var(--font-h);font-size:5rem;font-weight:600;color:rgba(124,74,224,.15);line-height:1;text-transform:lowercase;pointer-events:none;}
+.cards-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.2rem;}
+.cards-grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;}
+.comp-card{background:var(--glass);border:1px solid var(--glass-b);border-radius:18px;overflow:hidden;transition:transform var(--t),box-shadow var(--t),border-color var(--t);}
+.comp-card:hover{transform:translateY(-5px);box-shadow:var(--shadow-lg);border-color:var(--primary);}
+.comp-card-top{padding:1.5rem 1.5rem 0;}
+.comp-card-icon{width:44px;height:44px;border-radius:12px;background:var(--grad-btn);display:flex;align-items:center;justify-content:center;color:#fff;margin-bottom:.9rem;}
+.comp-card-icon svg{width:20px;height:20px;}
+.comp-card-badge{display:inline-block;padding:.18rem .6rem;font-size:.62rem;font-weight:700;text-transform:uppercase;letter-spacing:.07em;background:rgba(124,74,224,.12);color:var(--primary);border-radius:99px;margin-bottom:.8rem;}
+.comp-card-title{font-family:var(--font-h);font-size:1.25rem;font-weight:400;line-height:1.2;}
+.comp-card-title em{font-style:italic;color:var(--primary);}
+.comp-card-body{padding:.75rem 1.5rem 1.5rem;}
+.comp-card-body p{font-size:.88rem;color:var(--text-2);line-height:1.7;}
+.img-ph{width:100%;border-radius:18px;background:linear-gradient(135deg,rgba(124,74,224,.09),rgba(193,77,216,.05));border:2px dashed rgba(124,74,224,.2);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.65rem;padding:3rem 2rem;overflow:hidden;}
+.img-ph:has(.img-section){padding:0;border:none;background:none;}
+.img-section{width:100%;height:auto;display:block;border-radius:18px;box-shadow:var(--shadow-md);object-fit:cover;}
+.img-contain{object-fit:contain;max-height:420px;background:transparent;}
+.sdlc-accordion{display:flex;flex-direction:column;gap:.5rem;}
+.sdlc-item{border:1.5px solid var(--border);border-radius:14px;overflow:hidden;background:var(--elevated);transition:border-color var(--t),box-shadow var(--t);}
+.sdlc-item.active{border-color:var(--primary);box-shadow:var(--shadow-sm);}
+.sdlc-head{display:flex;align-items:center;justify-content:space-between;padding:.9rem 1.2rem;cursor:pointer;transition:background var(--t);}
+.sdlc-head:hover{background:var(--glass);}
+.sdlc-head-left{display:flex;align-items:center;gap:.75rem;}
+.sdlc-icon{width:34px;height:34px;border-radius:10px;background:var(--grad-btn);display:flex;align-items:center;justify-content:center;color:#fff;flex-shrink:0;transition:opacity var(--t);}
+.sdlc-item:not(.active) .sdlc-icon{background:rgba(124,74,224,.12);color:var(--primary);}
+.sdlc-num{font-family:var(--font-h);font-size:1.1rem;font-weight:600;color:var(--primary);opacity:.6;min-width:1.6rem;}
+.sdlc-name{font-weight:700;font-size:.9rem;color:var(--text);}
+.sdlc-chevron{color:var(--text-3);transition:transform .3s;flex-shrink:0;}
+.sdlc-item.active .sdlc-chevron{transform:rotate(180deg);color:var(--primary);}
+.sdlc-body{max-height:0;overflow:hidden;transition:max-height .35s cubic-bezier(.4,0,.2,1),padding .35s;padding:0 1.2rem;}
+.sdlc-item.active .sdlc-body{max-height:200px;padding:0 1.2rem 1.1rem;}
+.sdlc-body p{font-size:.88rem;color:var(--text-2);line-height:1.7;}
+.sdlc-body strong{color:var(--primary);font-weight:700;}
+.people-scene{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border-radius:24px;overflow:hidden;box-shadow:var(--shadow-lg);min-height:400px;}
+.person-panel{position:relative;cursor:pointer;display:flex;flex-direction:column;justify-content:flex-end;padding:2rem;overflow:hidden;transition:flex .6s cubic-bezier(.4,0,.2,1);flex:1;}
+.person-panel.active{flex:2.2;}
+.person-bg{position:absolute;inset:0;transition:opacity .4s;}
+.pp-1 .person-bg{background:linear-gradient(160deg,#1a0533 0%,#7c4ae0 100%);}
+.pp-2 .person-bg{background:linear-gradient(160deg,#1a0a22 0%,#532d9f 100%);}
+.pp-3 .person-bg{background:linear-gradient(160deg,#0d0820 0%,#c14dd8 100%);}
+.person-panel::after{content:'';position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.7) 0%,transparent 60%);}
+.person-num{position:absolute;top:1.5rem;left:1.5rem;z-index:2;font-family:var(--font-h);font-size:4rem;font-weight:300;color:rgba(255,255,255,.12);line-height:1;transition:color .3s;}
+.person-panel.active .person-num{color:rgba(255,255,255,.2);}
+.person-icon{position:absolute;top:1.5rem;right:1.5rem;z-index:2;width:44px;height:44px;border-radius:12px;background:rgba(255,255,255,.12);display:flex;align-items:center;justify-content:center;transition:background .3s;}
+.person-panel.active .person-icon{background:rgba(255,255,255,.22);}
+.person-icon svg{width:22px;height:22px;color:#fff;}
+.person-content{position:relative;z-index:2;}
+.person-role{font-size:.65rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.55);margin-bottom:.3rem;}
+.person-name{font-family:var(--font-h);font-size:clamp(1.2rem,2.5vw,1.7rem);font-weight:300;color:#fff;font-style:italic;margin-bottom:.5rem;line-height:1.1;}
+.person-desc{font-size:.85rem;color:rgba(255,255,255,.75);line-height:1.65;max-height:0;overflow:hidden;transition:max-height .5s cubic-bezier(.4,0,.2,1),opacity .4s;opacity:0;}
+.person-panel.active .person-desc{max-height:200px;opacity:1;}
+.person-hint{font-size:.68rem;color:rgba(255,255,255,.35);margin-top:.8rem;display:flex;align-items:center;gap:.3rem;}
+.person-hint svg{width:12px;height:12px;}
+.person-panel.active .person-hint{display:none;}
+.kanban-wrapper{background:rgba(124,74,224,.04);border:1px solid var(--border);border-radius:20px;padding:1.5rem;}
+.kanban-board{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;}
+.k-col-head{display:flex;align-items:center;justify-content:space-between;padding:.5rem .75rem;margin-bottom:.75rem;border-radius:10px;font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.07em;}
+.k-col-head .hd-left{display:flex;align-items:center;gap:.5rem;}
+.k-col-head .dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
+.k-col-head .add-btn{width:24px;height:24px;border-radius:6px;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .15s,transform .15s;flex-shrink:0;}
+.k-col-head .add-btn:hover{transform:scale(1.15);}
+.k-col-head .add-btn svg{width:13px;height:13px;}
+.col-backlog .k-col-head{background:rgba(124,74,224,.1);color:#7c4ae0;}
+.col-backlog .dot{background:#7c4ae0;}
+.col-backlog .add-btn{background:rgba(124,74,224,.15);color:#7c4ae0;}
+.col-todo .k-col-head{background:rgba(193,77,216,.1);color:#c14dd8;}
+.col-todo .dot{background:#c14dd8;}
+.col-todo .add-btn{background:rgba(193,77,216,.15);color:#c14dd8;}
+.col-doing .k-col-head{background:rgba(245,158,11,.1);color:#d97706;}
+.col-doing .dot{background:#f59e0b;}
+.col-doing .add-btn{background:rgba(245,158,11,.15);color:#d97706;}
+.col-done .k-col-head{background:rgba(16,185,129,.1);color:#059669;}
+.col-done .dot{background:#10b981;}
+.col-done .add-btn{background:rgba(16,185,129,.15);color:#059669;}
+.k-cards{min-height:60px;display:flex;flex-direction:column;gap:.45rem;}
+.k-ticket{background:var(--elevated);border:1px solid var(--border);border-radius:8px;padding:.45rem .65rem;font-size:.75rem;color:var(--text-2);line-height:1.45;transition:box-shadow .2s,transform .2s;cursor:default;position:relative;}
+.k-ticket:hover{box-shadow:var(--shadow-sm);transform:translateY(-1px);}
+.k-ticket-tag{display:inline-block;font-size:.6rem;font-weight:700;padding:.15rem .55rem;border-radius:3px;margin-bottom:.3rem;text-transform:uppercase;letter-spacing:.06em;border-left:3px solid currentColor;}
+.tag-p{background:rgba(124,74,224,.12);color:var(--primary);}
+.tag-r{background:rgba(193,77,216,.12);color:#c14dd8;}
+.tag-a{background:rgba(245,158,11,.12);color:#d97706;}
+.tag-g{background:rgba(16,185,129,.12);color:#059669;}
+.k-del{position:absolute;top:.4rem;right:.4rem;width:20px;height:20px;border:none;border-radius:5px;background:rgba(239,68,68,.1);color:#ef4444;cursor:pointer;display:none;align-items:center;justify-content:center;}
+.k-del svg{width:11px;height:11px;}
+.k-ticket:hover .k-del{display:flex;}
+.k-del:hover{background:rgba(239,68,68,.2);}
+.bl-tree{display:flex;flex-direction:column;gap:1rem;}
+.bl-item{display:grid;grid-template-columns:56px 1fr;gap:1.25rem;align-items:start;background:var(--glass);border:1px solid var(--glass-b);border-radius:16px;padding:1.4rem 1.5rem;transition:transform var(--t),border-color var(--t),box-shadow var(--t);}
+.bl-item:hover{transform:translateX(6px);border-color:var(--primary);box-shadow:var(--shadow-md);}
+.bl-num{font-family:var(--font-h);font-size:2.8rem;font-weight:300;color:var(--primary);opacity:.5;line-height:1;text-align:center;padding-top:.2rem;}
+.bl-subtitle{font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--text-3);margin-bottom:.3rem;}
+.bl-title-t{font-family:var(--font-h);font-size:1.2rem;font-weight:400;margin-bottom:.4rem;}
+.bl-title-t em{font-style:italic;color:var(--primary);}
+.bl-desc-t{font-size:.87rem;color:var(--text-2);line-height:1.65;}
+.bl-example{margin-top:.6rem;padding:.45rem .75rem;background:rgba(124,74,224,.08);border-radius:7px;font-size:.77rem;color:var(--primary);font-style:italic;}
+.bl-priority-list{display:flex;flex-direction:column;background:var(--elevated);border:1.5px solid var(--border);border-radius:18px;overflow:hidden;}
+.bl-priority-header,.bl-priority-footer{padding:.5rem 1.1rem;background:rgba(124,74,224,.06);border-bottom:1px solid var(--border);}
+.bl-priority-footer{border-bottom:none;border-top:1px solid var(--border);}
+.bl-priority-label{font-size:.68rem;font-weight:700;letter-spacing:.08em;color:var(--text-3);text-transform:uppercase;}
+.bl-priority-item{display:flex;align-items:center;gap:.9rem;padding:.7rem 1.1rem;border-bottom:1px solid var(--border);transition:background var(--t);}
+.bl-priority-item:last-of-type{border-bottom:none;}
+.bl-priority-item:hover{background:var(--glass);}
+.bl-p-rank{font-family:var(--font-h);font-size:1.3rem;font-weight:600;color:var(--primary);opacity:.4;min-width:2rem;line-height:1;}
+.bl-p1 .bl-p-rank{opacity:1;}
+.bl-p2 .bl-p-rank{opacity:.75;}
+.bl-p3 .bl-p-rank{opacity:.55;}
+.bl-p4 .bl-p-rank{opacity:.4;}
+.bl-p5 .bl-p-rank{opacity:.28;}
+.bl-p-tag{font-size:.62rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--text-3);margin-bottom:.15rem;}
+.bl-p1 .bl-p-tag{color:#dc2626;}
+.bl-p2 .bl-p-tag{color:#d97706;}
+.bl-p-text{font-size:.84rem;color:var(--text-2);}
+.bl-p1 .bl-p-text{font-weight:600;color:var(--text);}
+.sprint-cal{background:var(--elevated);border:1.5px solid var(--border);border-radius:20px;overflow:hidden;box-shadow:var(--shadow-sm);}
+.sprint-cal-header{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.75rem;padding:1.1rem 1.5rem;background:linear-gradient(135deg,rgba(124,74,224,.08),rgba(193,77,216,.05));border-bottom:1px solid var(--border);}
+.sprint-cal-title{display:flex;align-items:center;gap:.75rem;}
+.sprint-badge{padding:.28rem .85rem;background:var(--grad-btn);color:#fff;border-radius:99px;font-size:.7rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;}
+.sprint-dates{font-size:.8rem;color:var(--text-3);font-weight:500;}
+.sprint-cal-legend{display:flex;align-items:center;gap:1rem;flex-wrap:wrap;}
+.leg-item{display:flex;align-items:center;gap:.35rem;font-size:.7rem;color:var(--text-3);font-weight:600;}
+.leg-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
+.sprint-week{padding:1rem 1.5rem .75rem;}
+.sprint-week+.sprint-week{border-top:1px solid var(--border);}
+.sprint-week-label{font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--text-3);margin-bottom:.6rem;}
+.sprint-days{display:grid;grid-template-columns:repeat(7,1fr);gap:.4rem;}
+.sprint-day{border-radius:10px;padding:.5rem .3rem .45rem;background:var(--bg);border:1px solid var(--border);text-align:center;transition:transform var(--t),box-shadow var(--t),border-color var(--t);min-height:70px;display:flex;flex-direction:column;align-items:center;gap:.18rem;}
+.sprint-day.has-event{cursor:pointer;}
+.sprint-day.has-event:hover{transform:translateY(-3px);box-shadow:var(--shadow-md);border-color:var(--primary);}
+.sprint-day.weekend{opacity:.4;}
+.day-name{font-size:.6rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--text-3);}
+.day-num{font-family:var(--font-h);font-size:1.3rem;font-weight:600;color:var(--text);line-height:1;}
+.day-event{margin-top:auto;width:100%;border-radius:5px;padding:.15rem .2rem;font-size:.58rem;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:#fff;text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.sprint-info-panel{border-top:1px solid var(--border);padding:0 1.5rem;max-height:0;overflow:hidden;transition:max-height .35s cubic-bezier(.4,0,.2,1),padding .35s;background:linear-gradient(135deg,rgba(124,74,224,.04),rgba(193,77,216,.03));}
+.sprint-info-panel.open{max-height:120px;padding:1rem 1.5rem;}
+.sip-content{display:flex;align-items:flex-start;gap:1rem;}
+.sip-icon{width:36px;height:36px;border-radius:10px;flex-shrink:0;background:var(--grad-btn);display:flex;align-items:center;justify-content:center;color:#fff;}
+.sip-title{font-weight:700;font-size:.9rem;color:var(--text);margin-bottom:.25rem;}
+.sip-desc{font-size:.83rem;color:var(--text-2);line-height:1.6;}
+.cta-box{background:var(--glass);border:1px solid var(--glass-b);border-radius:24px;padding:3rem 2rem;text-align:center;backdrop-filter:blur(16px);}
+.btn-primary{display:inline-flex;align-items:center;gap:.5rem;padding:.85rem 2rem;background:var(--grad-btn);color:#fff;border-radius:12px;font-weight:700;font-size:.95rem;border:none;cursor:pointer;font-family:var(--font-b);transition:transform var(--t),box-shadow var(--t);}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 12px 30px rgba(124,74,224,.35);}
+.btn-ghost{display:inline-flex;align-items:center;gap:.5rem;padding:.85rem 2rem;background:transparent;color:var(--text);border-radius:12px;font-weight:600;font-size:.95rem;border:2px solid var(--border);cursor:pointer;font-family:var(--font-b);transition:border-color var(--t),color var(--t);}
+.btn-ghost:hover{border-color:var(--primary);color:var(--primary);}
+.evt-card{background:var(--glass);border:1px solid var(--glass-b);border-radius:14px;padding:1.2rem 1rem;transition:transform var(--t),border-color var(--t),box-shadow var(--t);}
+.evt-card:hover{transform:translateY(-4px);border-color:var(--primary);box-shadow:var(--shadow-md);}
+.evt-icon{width:36px;height:36px;background:var(--grad-btn);border-radius:10px;display:flex;align-items:center;justify-content:center;color:#fff;margin-bottom:.6rem;}
+.evt-icon svg{width:17px;height:17px;}
+.evt-title{font-size:.82rem;font-weight:700;color:var(--text);margin-bottom:.3rem;}
+.evt-desc{font-size:.76rem;color:var(--text-2);line-height:1.6;}
+.manifesto-grid{display:flex;flex-direction:column;gap:.75rem;}
+.manifesto-item{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:1.5rem;background:var(--elevated);border:1.5px solid var(--border);border-radius:14px;padding:1rem 1.4rem;transition:border-color var(--t),box-shadow var(--t);}
+.manifesto-item:hover{border-color:var(--primary);box-shadow:var(--shadow-sm);}
+.manifesto-left{font-weight:700;font-size:.95rem;color:var(--text);}
+.manifesto-vs{font-size:1.2rem;color:var(--primary);opacity:.5;font-weight:300;}
+.manifesto-right{font-size:.88rem;color:var(--text-3);}
+.footer{padding:2rem 2.5rem;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem;}
+.footer-logo{font-family:var(--font-h);font-size:1.2rem;font-weight:300;letter-spacing:-.02em;}
+.footer-logo em{font-style:italic;color:var(--primary);}
+.footer-sub{font-size:.7rem;color:var(--text-3);margin-top:.1rem;}
+.footer-text{font-size:.78rem;color:var(--text-3);}
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .6s ease,transform .6s ease;}
+.reveal.vis{opacity:1;transform:translateY(0);}
+.reveal-d1{transition-delay:.1s;}.reveal-d2{transition-delay:.2s;}.reveal-d3{transition-delay:.3s;}.reveal-d4{transition-delay:.4s;}
+#toolbar{position:fixed;z-index:500;background:var(--accent);border-radius:10px;padding:.4rem .6rem;display:none;align-items:center;gap:.3rem;box-shadow:0 8px 24px rgba(0,0,0,.35);}
+#toolbar.show{display:flex;}
+.tb-btn{width:30px;height:28px;border:none;border-radius:6px;cursor:pointer;background:transparent;color:#fff;font-size:.82rem;font-weight:700;display:flex;align-items:center;justify-content:center;font-family:var(--font-b);transition:background .15s;}
+.tb-btn:hover{background:rgba(255,255,255,.15);}
+.tb-sep{width:1px;height:18px;background:rgba(255,255,255,.2);margin:0 .15rem;}
+.tb-color{width:20px;height:20px;border-radius:50%;border:2px solid rgba(255,255,255,.3);cursor:pointer;transition:transform .15s;}
+.tb-color:hover{transform:scale(1.2);}
+[contenteditable]{outline:none;cursor:text;border-radius:4px;transition:background .2s;}
+[contenteditable]:hover{background:rgba(124,74,224,.04);}
+[contenteditable]:focus{background:rgba(124,74,224,.07);box-shadow:0 0 0 2px rgba(124,74,224,.18);}
+@media(max-width:900px){.concept-grid{grid-template-columns:1fr;gap:3rem;}.cards-grid-4{grid-template-columns:repeat(2,1fr);}.people-scene{grid-template-columns:1fr;}.person-panel{min-height:180px;flex:unset!important;}.person-desc{max-height:200px!important;opacity:1!important;}.kanban-board{grid-template-columns:repeat(2,1fr);}}
+@media(max-width:600px){.nav-links{display:none;}.nav-hamburger{display:flex;}.hero-cover-inner{padding:1.5rem 1.5rem 2rem;}.section-inner{padding:0 1.25rem;}.cards-grid-4{grid-template-columns:repeat(2,1fr);}.kanban-board{grid-template-columns:1fr;}.stack{width:100%;max-width:340px;height:240px;}.hero-cover-author-row{flex-wrap:wrap;}.hero-cover-cta{margin-left:0;}}
+</style>
+</head>
+<body>
+<div id="prog"></div>
+<div id="toolbar">
+  <button class="tb-btn" id="tb-b" title="Negrito"><b>B</b></button>
+  <button class="tb-btn" id="tb-i" title="Itálico"><i>I</i></button>
+  <button class="tb-btn" id="tb-u" title="Sublinhado"><u>U</u></button>
+  <div class="tb-sep"></div>
+  <div class="tb-color" data-color="#7c4ae0" style="background:#7c4ae0" title="Roxo"></div>
+  <div class="tb-color" data-color="#c14dd8" style="background:#c14dd8" title="Rosa"></div>
+  <div class="tb-color" data-color="#090B20" style="background:#090B20" title="Escuro"></div>
+  <div class="tb-sep"></div>
+  <button class="tb-btn" id="tb-clr" title="Limpar">✕</button>
+</div>
+<div class="mobile-menu" id="mobileMenu">
+  <button class="mobile-close" onclick="toggleMobile()"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+  <a href="#governanca" onclick="toggleMobile()">Governança</a>
+  <a href="#modelo" onclick="toggleMobile()">Modelo</a>
+  <a href="#ciclo" onclick="toggleMobile()">SDLC</a>
+  <a href="#cascata" onclick="toggleMobile()">Cascata</a>
+  <a href="#incremental" onclick="toggleMobile()">Incremental</a>
+  <a href="#agil" onclick="toggleMobile()">Ágil</a>
+  <a href="#scrum" onclick="toggleMobile()">Scrum</a>
+  <a href="#kanban" onclick="toggleMobile()">Kanban</a>
+  <a href="#backlog" onclick="toggleMobile()">Backlog</a>
+</div>
+<nav class="nav" id="nav">
+  <a href="/" class="nav-back">
+    <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m15 18-6-6 6-6"/></svg>
+    Todas as aulas
+  </a>
+  <div class="nav-links">
+    <a href="#governanca" data-section="governanca">Governança</a>
+    <a href="#modelo" data-section="modelo">Modelo</a>
+    <a href="#ciclo" data-section="ciclo">SDLC</a>
+    <a href="#cascata" data-section="cascata">Cascata</a>
+    <a href="#incremental" data-section="incremental">Incremental</a>
+    <a href="#agil" data-section="agil">Ágil</a>
+    <a href="#scrum" data-section="scrum">Scrum</a>
+    <a href="#kanban" data-section="kanban">Kanban</a>
+    <a href="#backlog" data-section="backlog">Backlog</a>
+  </div>
+  <div class="nav-right">
+    <span class="nav-aula-info">Aula 01 · 27 mar 2026</span>
+  </div>
+  <button class="nav-hamburger" onclick="toggleMobile()">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="6" x2="20" y2="6"/><line x1="4" y1="18" x2="20" y2="18"/></svg>
+  </button>
+</nav>
+<button id="btt" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m18 15-6-6-6 6"/></svg>
+</button>
+
+<!-- HERO COVER com imagem -->
+<section class="hero-cover" id="hero" style="--cover-url:url('https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=1400&q=80')">
+  <div class="hero-cover-overlay"></div>
+  <div class="hero-cover-inner">
+    <div class="hero-cover-meta">
+      <div class="hero-badge hero-badge-dark"><span class="badge-dot"></span>Aula 01</div>
+      <span class="hm-sep-dark">·</span>
+      <span class="hm-tag-dark"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>27 mar 2026</span>
+      <span class="hm-sep-dark">·</span>
+      <span class="hm-tag-dark"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>1h20</span>
+    </div>
+    <h1 class="hero-cover-title">Como times de <em>tecnologia</em><br>realmente trabalham</h1>
+    <p class="hero-cover-sub">Governança, modelos de software, ciclo SDLC, cascata, incremental, Manifesto Ágil, Scrum, Kanban e Product Backlog — antes da primeira linha de código.</p>
+    <div class="hero-cover-divider"></div>
+    <div class="hero-cover-author-row">
+      <div class="hero-ed-author">
+        <div class="hero-ed-avatar">S</div>
+        <div>
+          <div class="hero-ed-name" style="color:#fff">Prof. Samara Sabino</div>
+          <div class="hero-ed-role" style="color:rgba(255,255,255,.55)">ETE Cícero Dias · PI I · Módulo 1</div>
+        </div>
+      </div>
+      <a href="#governanca" class="hero-cover-cta">
+        Ler aula <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- GOVERNANÇA -->
+<section class="section" id="governanca">
+  <div class="section-inner">
+    <div class="section-header reveal">
+      <div class="section-label">00 · Contexto</div>
+      <h2 class="section-title">Gestão de Projetos e <em>Governança</em></h2>
+      <p class="section-sub" contenteditable="true">Antes de entrar em modelos e frameworks, precisamos entender o campo maior em que tudo isso se insere: a gestão de projetos e a governança.</p>
+    </div>
+    <div class="concept-grid reveal" style="margin-bottom:3.5rem;">
+      <div class="prose reveal">
+        <p contenteditable="true">Todo projeto — seja construir uma casa, organizar um evento ou desenvolver um software — envolve um conjunto de decisões: quem faz o quê, em qual prazo, com quais recursos e como o progresso será acompanhado. A <span class="highlight">gestão de projetos</span> é a disciplina que responde essas perguntas de forma organizada.</p>
+        <p contenteditable="true">E dentro da gestão de projetos existe um conceito ainda mais amplo: a <span class="highlight">governança</span>. Governança é o conjunto de estruturas, processos e regras que determinam como as decisões são tomadas dentro de um projeto ou organização. Ela responde três perguntas fundamentais:</p>
+        <p contenteditable="true"><strong>Quem tem autoridade para decidir o quê?</strong> No Scrum, por exemplo, é o Product Owner quem decide o que entra no backlog. No Cascata, é o gerente de projeto.<br><br><strong>Como o progresso é medido e comunicado?</strong> Por entregas parciais? Por marcos? Por sprints?<br><br><strong>Quem é responsável pelo resultado?</strong> O indivíduo? O time? A liderança?</p>
+        <p contenteditable="true">Quando uma empresa decide adotar Scrum, ela está fazendo uma <span class="highlight">escolha de governança</span> — definindo como as decisões serão tomadas e como o trabalho será organizado.</p>
+      </div>
+      <div class="stack-wrap reveal reveal-d2">
+        <div class="stack">
+          <div class="stack-card"><div class="stack-bkg-w">gov</div><div class="kw">governança de projetos</div><div class="ct">Conjunto de <span>estruturas e processos</span> que definem como as decisões são tomadas, como o progresso é medido e <span class="rose">quem é responsável</span> pelos resultados.</div><div class="sig">Governança...</div></div>
+          <div class="stack-card"></div><div class="stack-card"></div>
+        </div>
+      </div>
+    </div>
+    <div class="reveal" style="margin-bottom:1.5rem;"><div class="section-label">As 3 perguntas da governança</div></div>
+    <div class="cards-grid reveal" style="margin-bottom:3.5rem;">
+      <div class="comp-card"><div class="comp-card-top"><div class="comp-card-icon"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><polyline points="16 11 18 13 22 9"/></svg></div><div class="comp-card-badge">Pergunta 01</div><div class="comp-card-title">Quem <em>decide?</em></div></div><div class="comp-card-body"><p contenteditable="true">Quem tem autoridade para tomar quais decisões — sobre o produto, sobre o processo, sobre prioridades?</p></div></div>
+      <div class="comp-card"><div class="comp-card-top"><div class="comp-card-icon"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg></div><div class="comp-card-badge">Pergunta 02</div><div class="comp-card-title">Como <em>medir?</em></div></div><div class="comp-card-body"><p contenteditable="true">Como o progresso é monitorado e comunicado? Por entregas funcionais? Por marcos? Por relatórios semanais?</p></div></div>
+      <div class="comp-card"><div class="comp-card-top"><div class="comp-card-icon"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg></div><div class="comp-card-badge">Pergunta 03</div><div class="comp-card-title">Quem é <em>responsável?</em></div></div><div class="comp-card-body"><p contenteditable="true">Quando algo não é entregue, quem presta contas? O indivíduo? O time coletivamente? A liderança?</p></div></div>
+    </div>
+    <div class="reveal" style="margin-bottom:1.5rem;"><div class="section-label">Modelos de gestão de projetos</div></div>
+    <div class="cards-grid-4 reveal" style="margin-bottom:1rem;">
+      <div class="comp-card"><div class="comp-card-top"><div class="comp-card-icon"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="7 10 12 15 17 10"/></svg></div><div class="comp-card-badge">Modelo 01</div><div class="comp-card-title">Cascata <em>(Waterfall)</em></div></div><div class="comp-card-body"><p contenteditable="true">Etapas sequenciais. Tudo planejado antes de começar. Entrega única no final. Ideal para requisitos fixos e imutáveis.</p></div></div>
+      <div class="comp-card"><div class="comp-card-top"><div class="comp-card-icon"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="6" height="18"/><rect x="9" y="3" width="6" height="18"/><rect x="16" y="3" width="6" height="18"/></svg></div><div class="comp-card-badge">Modelo 02</div><div class="comp-card-title"><em>Incremental</em></div></div><div class="comp-card-body"><p contenteditable="true">Desenvolvimento e entrega em partes funcionais. O cliente usa versões parciais e dá feedback desde cedo.</p></div></div>
+      <div class="comp-card"><div class="comp-card-top"><div class="comp-card-icon"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-3"/></svg></div><div class="comp-card-badge">Modelo 03</div><div class="comp-card-title"><em>Ágil</em></div></div><div class="comp-card-body"><p contenteditable="true">Ciclos curtos, entregas frequentes, adaptação constante. Scrum e Kanban são as principais implementações.</p></div></div>
+      <div class="comp-card"><div class="comp-card-top"><div class="comp-card-icon"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg></div><div class="comp-card-badge">Modelo 04</div><div class="comp-card-title"><em>Híbrido</em></div></div><div class="comp-card-body"><p contenteditable="true">Planejamento inicial estruturado combinado com execução ágil. Usado em projetos com partes fixas e variáveis.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- MODELO -->
+<section class="section alt-bg" id="modelo">
+  <div class="section-inner">
+    <div class="concept-grid">
+      <div class="stack-wrap reveal">
+        <div class="stack">
+          <div class="stack-card"><div class="stack-bkg-w">mod</div><div class="kw">modelo de software</div><div class="ct">É a forma como uma equipe decide <span>organizar e conduzir</span> o processo de desenvolvimento — em qual ordem as coisas vão ser feitas e como o time lida com <span class="rose">mudanças ao longo do caminho</span>.</div><div class="sig">Modelo...</div></div>
+          <div class="stack-card"></div><div class="stack-card"></div>
+        </div>
+      </div>
+      <div class="reveal reveal-d2">
+        <div class="section-label">01 · Organização</div>
+        <h2 class="section-title">Modelo de <em>Software</em></h2>
+        <div class="prose">
+          <p contenteditable="true">Quando um grupo de pessoas vai construir algo juntas, a primeira pergunta que surge é: por onde a gente começa? Quem faz o quê? No desenvolvimento de software, essa pergunta não é diferente.</p>
+          <p contenteditable="true">Antes de escrever qualquer código, o time precisa decidir como vai trabalhar. Os modelos existem porque, sem um acordo sobre como o trabalho vai fluir, cada pessoa puxa para um lado, os prazos estouram e o produto final não corresponde ao que o cliente esperava.</p>
+          <p contenteditable="true"><span class="highlight">Não existe um modelo perfeito</span> para todos os casos — o que existe é o modelo certo para o contexto certo.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SDLC -->
+<section class="section alt-bg" id="ciclo">
+  <div class="section-inner">
+    <div class="section-header reveal">
+      <div class="section-label">02 · Ciclo</div>
+      <h2 class="section-title">Ciclo de Desenvolvimento<br>de <em>Software</em></h2>
+      <p class="section-sub" contenteditable="true">Todo software tem uma história — nasce de uma necessidade, é planejado, construído, testado, entregue e um dia deixa de ser usado. Esse caminho completo é o ciclo SDLC.</p>
+    </div>
+    <div class="reveal" style="margin-bottom:3rem;">
+      <div class="img-ph" style="min-height:420px;">
+        <img src="https://res.cloudinary.com/dvib5lqwd/image/upload/v1774035888/sdlc_mt8wnl.png" alt="Ciclo SDLC" class="img-section img-contain">
+      </div>
+    </div>
+    <div class="sdlc-accordion reveal" id="sdlcAccordion">
+      <div class="sdlc-item active" data-idx="0">
+        <div class="sdlc-head" onclick="toggleFase(this)">
+          <div class="sdlc-head-left"><div class="sdlc-icon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg></div><span class="sdlc-num">01</span><span class="sdlc-name">Planejamento</span></div>
+          <svg xmlns="http://www.w3.org/2000/svg" class="sdlc-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
+        </div>
+        <div class="sdlc-body"><p contenteditable="true">Tudo começa aqui. O time levanta a viabilidade do projeto, define objetivos, estima custos, prazos e recursos. É a fase das grandes perguntas: <strong>vale fazer isso?</strong> Como vai funcionar? Quem vai fazer?</p></div>
+      </div>
+      <div class="sdlc-item" data-idx="1">
+        <div class="sdlc-head" onclick="toggleFase(this)">
+          <div class="sdlc-head-left"><div class="sdlc-icon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/></svg></div><span class="sdlc-num">02</span><span class="sdlc-name">Requisitos</span></div>
+          <svg xmlns="http://www.w3.org/2000/svg" class="sdlc-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
+        </div>
+        <div class="sdlc-body"><p contenteditable="true">Levantamento detalhado de tudo que o sistema precisa fazer. Inclui reuniões com o cliente, análise de necessidades e documentação funcional. A pergunta central: <strong>o que o software precisa fazer?</strong></p></div>
+      </div>
+      <div class="sdlc-item" data-idx="2">
+        <div class="sdlc-head" onclick="toggleFase(this)">
+          <div class="sdlc-head-left"><div class="sdlc-icon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 19l7-7 3 3-7 7-3-3z"/><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/><path d="M2 2l7.586 7.586"/><circle cx="11" cy="11" r="2"/></svg></div><span class="sdlc-num">03</span><span class="sdlc-name">Design</span></div>
+          <svg xmlns="http://www.w3.org/2000/svg" class="sdlc-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
+        </div>
+        <div class="sdlc-body"><p contenteditable="true">Com os requisitos em mãos, o time projeta a arquitetura do sistema: banco de dados, interfaces, fluxos, componentes. É o momento de criar o <strong>blueprint</strong> antes de construir qualquer coisa.</p></div>
+      </div>
+      <div class="sdlc-item" data-idx="3">
+        <div class="sdlc-head" onclick="toggleFase(this)">
+          <div class="sdlc-head-left"><div class="sdlc-icon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg></div><span class="sdlc-num">04</span><span class="sdlc-name">Desenvolvimento</span></div>
+          <svg xmlns="http://www.w3.org/2000/svg" class="sdlc-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
+        </div>
+        <div class="sdlc-body"><p contenteditable="true">O código é escrito. Programadores implementam tudo o que foi planejado nas fases anteriores. É a fase mais longa e visível do ciclo — mas sem as anteriores, ela vira caos.</p></div>
+      </div>
+      <div class="sdlc-item" data-idx="4">
+        <div class="sdlc-head" onclick="toggleFase(this)">
+          <div class="sdlc-head-left"><div class="sdlc-icon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 3H5a2 2 0 0 0-2 2v4m6-6h10a2 2 0 0 1 2 2v4M9 3v11m0 0h10m-10 0H5m10 0v4a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-4"/></svg></div><span class="sdlc-num">05</span><span class="sdlc-name">Testes</span></div>
+          <svg xmlns="http://www.w3.org/2000/svg" class="sdlc-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
+        </div>
+        <div class="sdlc-body"><p contenteditable="true">O sistema é verificado contra os requisitos originais. Bugs são encontrados e corrigidos. Testes funcionais, de performance, de segurança. Quanto mais tarde um bug é descoberto, <strong>mais caro fica corrigi-lo</strong>.</p></div>
+      </div>
+      <div class="sdlc-item" data-idx="5">
+        <div class="sdlc-head" onclick="toggleFase(this)">
+          <div class="sdlc-head-left"><div class="sdlc-icon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/><path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"/><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"/></svg></div><span class="sdlc-num">06</span><span class="sdlc-name">Implantação</span></div>
+          <svg xmlns="http://www.w3.org/2000/svg" class="sdlc-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
+        </div>
+        <div class="sdlc-body"><p contenteditable="true">O produto vai para produção — disponível para os usuários reais. Pode envolver migração de dados, treinamentos, configurações de servidor. É o momento de <strong>colocar no ar</strong>.</p></div>
+      </div>
+      <div class="sdlc-item" data-idx="6">
+        <div class="sdlc-head" onclick="toggleFase(this)">
+          <div class="sdlc-head-left"><div class="sdlc-icon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg></div><span class="sdlc-num">07</span><span class="sdlc-name">Manutenção</span></div>
+          <svg xmlns="http://www.w3.org/2000/svg" class="sdlc-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
+        </div>
+        <div class="sdlc-body"><p contenteditable="true">O software vivo precisa de cuidado constante: correção de bugs que só aparecem em produção, atualizações de segurança, melhorias de performance, novas funcionalidades. <strong>O ciclo nunca acaba</strong> — ele se reinicia.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CASCATA -->
+<section class="section alt-bg" id="cascata">
+  <div class="section-inner">
+    <div class="section-header reveal">
+      <div class="section-label">03 · Modelo</div>
+      <h2 class="section-title">Modelo em <em>Cascata</em></h2>
+    </div>
+    <div class="concept-grid">
+      <div class="reveal">
+        <div class="img-ph">
+          <img src="https://res.cloudinary.com/dvib5lqwd/image/upload/v1774035888/modelo-cascata_r8xlcm.png" alt="Modelo Cascata" class="img-section">
+        </div>
+      </div>
+      <div class="reveal reveal-d2">
+        <div class="prose">
+          <p contenteditable="true">O Modelo Cascata surgiu na década de 1970. Nele, o desenvolvimento acontece de forma linear e sequencial: primeiro levantam-se todos os requisitos, depois faz-se o design, em seguida o desenvolvimento, depois os testes, e por fim a entrega.</p>
+          <p contenteditable="true">Cada fase só começa quando a anterior está concluída — como uma cascata que só corre para baixo, sem voltar. O problema é que o modelo assume que tudo pode ser previsto no início, o que raramente acontece na prática.</p>
+          <p contenteditable="true">Se o cliente mudar de ideia ou um erro for descoberto tarde, o custo é alto. Foi exatamente por isso que o mercado foi buscando alternativas mais flexíveis — e nasceu o pensamento ágil.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- INCREMENTAL -->
+<section class="section" id="incremental" style="padding-top:2rem;">
+  <div class="section-inner">
+    <div class="section-header reveal">
+      <div class="section-label">04 · Modelo</div>
+      <h2 class="section-title">Modelo <em>Incremental</em></h2>
+    </div>
+    <div class="concept-grid">
+      <div class="reveal reveal-d2">
+        <div class="prose">
+          <p contenteditable="true">No modelo incremental, o sistema é desenvolvido e entregue em partes — cada parte é um <span class="highlight">incremento</span> funcional do produto final. O cliente usa versões parciais do sistema desde cedo e fornece feedback real.</p>
+          <p contenteditable="true">Diferente da cascata, o incremental admite que nem tudo pode ser previsto no início. Cada ciclo refina o entendimento do problema e ajusta o que vem a seguir. É a transição natural <span class="highlight">entre a cascata e o pensamento ágil</span>.</p>
+          <p contenteditable="true">Cada incremento passa por todas as fases do SDLC — planejamento, design, desenvolvimento, testes e entrega — mas aplicado a uma fatia menor e gerenciável do produto.</p>
+        </div>
+      </div>
+      <div class="reveal">
+        <div class="img-ph">
+          <img src="https://res.cloudinary.com/dvib5lqwd/image/upload/v1774035888/modelo-incremental_ehbhmx.png" alt="Modelo Incremental" class="img-section">
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ÁGIL -->
+<section class="section alt-bg" id="agil">
+  <div class="section-inner">
+    <div class="section-header reveal">
+      <div class="section-label">05 · Manifesto</div>
+      <h2 class="section-title">Metodologia <em>Ágil</em></h2>
+      <p class="section-sub" contenteditable="true">Em 2001, 17 desenvolvedores insatisfeitos com os modelos rígidos se reuniram e escreveram o Manifesto Ágil — um conjunto de valores que mudou a forma como o mundo desenvolve software.</p>
+    </div>
+    <div class="concept-grid reveal" style="margin-bottom:3rem;">
+      <div class="prose">
+        <p contenteditable="true">A metodologia ágil não é um método único — é uma <span class="highlight">filosofia de trabalho</span> que valoriza entregas rápidas, colaboração com o cliente e adaptação constante à mudança. Em vez de planejar tudo antes de começar, o time aprende enquanto constrói.</p>
+        <p contenteditable="true">O Manifesto Ágil estabelece 4 valores fundamentais: <span class="highlight">indivíduos e interações</span> acima de processos e ferramentas; <span class="highlight">software funcionando</span> acima de documentação extensa; <span class="highlight">colaboração com o cliente</span> acima de negociação de contratos; <span class="highlight">responder a mudanças</span> acima de seguir um plano.</p>
+        <p contenteditable="true">Scrum e Kanban são as principais implementações práticas dessa filosofia — frameworks que traduzem esses valores em cerimônias, papéis e fluxos de trabalho concretos.</p>
+      </div>
+      <div class="stack-wrap reveal reveal-d2">
+        <div class="stack">
+          <div class="stack-card"><div class="stack-bkg-w">ágil</div><div class="kw">manifesto ágil · 2001</div><div class="ct">Indivíduos acima de processos. Software funcionando acima de documentação. <span>Colaboração acima de contratos</span>. Responder a <span class="rose">mudanças acima de planos</span>.</div><div class="sig">Manifesto...</div></div>
+          <div class="stack-card"></div><div class="stack-card"></div>
+        </div>
+      </div>
+    </div>
+    <div class="cards-grid-4 reveal">
+      <div class="comp-card"><div class="comp-card-top"><div class="comp-card-icon"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div><div class="comp-card-badge">Valor 01</div><div class="comp-card-title"><em>Pessoas</em> acima de processos</div></div><div class="comp-card-body"><p contenteditable="true">Indivíduos e interações valem mais do que ferramentas e procedimentos rígidos.</p></div></div>
+      <div class="comp-card"><div class="comp-card-top"><div class="comp-card-icon"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg></div><div class="comp-card-badge">Valor 02</div><div class="comp-card-title"><em>Software</em> funcionando</div></div><div class="comp-card-body"><p contenteditable="true">Entregar algo que funciona é mais valioso do que uma documentação extensa e perfeita.</p></div></div>
+      <div class="comp-card"><div class="comp-card-top"><div class="comp-card-icon"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div><div class="comp-card-badge">Valor 03</div><div class="comp-card-title"><em>Colaboração</em> com cliente</div></div><div class="comp-card-body"><p contenteditable="true">Trabalhar junto ao cliente durante o processo vale mais do que negociar contratos fechados.</p></div></div>
+      <div class="comp-card"><div class="comp-card-top"><div class="comp-card-icon"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-3"/></svg></div><div class="comp-card-badge">Valor 04</div><div class="comp-card-title">Responder a <em>mudanças</em></div></div><div class="comp-card-body"><p contenteditable="true">Adaptar-se à realidade é mais inteligente do que seguir cegamente um plano desatualizado.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- SCRUM -->
+<section class="section" id="scrum">
+  <div class="section-inner">
+    <div class="section-header reveal">
+      <div class="section-label">06 · Framework</div>
+      <h2 class="section-title">O que é <em>Scrum?</em></h2>
+    </div>
+    <div class="concept-grid reveal" style="margin-bottom:3rem;">
+      <div class="prose">
+        <p contenteditable="true">A ideia central do Scrum é simples: em vez de planejar tudo de uma vez e entregar no final, o time trabalha em ciclos curtos entregando partes funcionais com frequência. Isso permite identificar erros cedo, o cliente acompanha o progresso e o time melhora a cada ciclo.</p>
+        <p contenteditable="true">O Scrum não é uma metodologia rígida — é um <span class="highlight">framework</span>, uma estrutura flexível que o time adapta à sua realidade.</p>
+      </div>
+      <div class="stack-wrap">
+        <div class="stack">
+          <div class="stack-card"><div class="stack-bkg-w">scrum</div><div class="kw">scrum · framework ágil</div><div class="ct">Ciclos curtos chamados <span>Sprints</span>. Entregas funcionais com frequência. O time <span class="rose">aprende e melhora</span> a cada ciclo.</div><div class="sig">Scrum...</div></div>
+          <div class="stack-card"></div><div class="stack-card"></div>
+        </div>
+      </div>
+    </div>
+    <div class="reveal" style="margin-top:10rem;margin-bottom:10rem;">
+      <div class="img-ph">
+        <img src="https://res.cloudinary.com/dvib5lqwd/image/upload/v1774037029/scrum-ciclo_tot9ht.png" alt="Ciclo do Scrum" class="img-section img-contain">
+      </div>
+    </div>
+    <div class="reveal" style="margin-bottom:1.5rem;"><div class="section-label">Pessoas no Scrum</div><p style="font-size:.8rem;color:var(--text-3);margin-top:.3rem;">Clique em cada papel para expandir</p></div>
+    <div class="people-scene reveal" style="margin-bottom:3.5rem;">
+      <div class="person-panel pp-1 active" onclick="activatePerson(this)">
+        <div class="person-bg"></div><div class="person-num">01</div>
+        <div class="person-icon"><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11"/></svg></div>
+        <div class="person-content">
+          <div class="person-role">Papel 01</div><div class="person-name">Product Owner</div>
+          <div class="person-desc" contenteditable="true">Representa os interesses do cliente e dos usuários. Decide o que o produto precisa ter e em qual ordem. Responsável pelo Product Backlog e por garantir que o time trabalhe no que gera mais valor.</div>
+          <div class="person-hint"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 3 20 12 6 21"/></svg> Clique para ver mais</div>
+        </div>
+      </div>
+      <div class="person-panel pp-2" onclick="activatePerson(this)">
+        <div class="person-bg"></div><div class="person-num">02</div>
+        <div class="person-icon"><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+        <div class="person-content">
+          <div class="person-role">Papel 02</div><div class="person-name">Scrum Master</div>
+          <div class="person-desc" contenteditable="true">Facilita o processo, garante que o time siga os princípios do Scrum e remove obstáculos. Não é um chefe — é um facilitador que atua como coach.</div>
+          <div class="person-hint"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 3 20 12 6 21"/></svg> Clique para ver mais</div>
+        </div>
+      </div>
+      <div class="person-panel pp-3" onclick="activatePerson(this)">
+        <div class="person-bg"></div><div class="person-num">03</div>
+        <div class="person-icon"><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg></div>
+        <div class="person-content">
+          <div class="person-role">Papel 03</div><div class="person-name">Dev Team</div>
+          <div class="person-desc" contenteditable="true">Composto pelas pessoas que constroem o produto: programadores, designers, analistas. É autogerenciável — decide como o trabalho vai ser feito dentro de cada ciclo.</div>
+          <div class="person-hint"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 3 20 12 6 21"/></svg> Clique para ver mais</div>
+        </div>
+      </div>
+    </div>
+    <div class="reveal" style="margin-bottom:1.5rem;"><div class="section-label">Artefatos do Scrum</div></div>
+    <div class="cards-grid reveal" style="margin-bottom:3.5rem;">
+      <div class="comp-card"><div class="comp-card-top"><div class="comp-card-icon"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m19 21-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></div><div class="comp-card-badge">Artefato 01</div><div class="comp-card-title"><em>Product</em> Backlog</div></div><div class="comp-card-body"><p contenteditable="true">Lista completa e priorizada de tudo que o produto precisa ter. Documento vivo que muda conforme o produto evolui.</p></div></div>
+      <div class="comp-card"><div class="comp-card-top"><div class="comp-card-icon"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/><path d="m9 14 2 2 4-4"/></svg></div><div class="comp-card-badge">Artefato 02</div><div class="comp-card-title"><em>Sprint</em> Backlog</div></div><div class="comp-card-body"><p contenteditable="true">Seleção de itens do Product Backlog que o time se compromete a entregar na Sprint atual.</p></div></div>
+      <div class="comp-card"><div class="comp-card-top"><div class="comp-card-icon"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg></div><div class="comp-card-badge">Artefato 03</div><div class="comp-card-title"><em>Incremento</em></div></div><div class="comp-card-body"><p contenteditable="true">Resultado entregue ao final de cada Sprint — versão funcional do produto apresentável ao cliente para feedback.</p></div></div>
+    </div>
+    <div class="reveal" style="margin-bottom:1.5rem;"><div class="section-label">Eventos do Scrum</div><p style="font-size:.8rem;color:var(--text-3);margin-top:.3rem;">Uma Sprint de 2 semanas — clique nos eventos para saber mais</p></div>
+    <div class="sprint-cal reveal">
+      <div class="sprint-cal-header">
+        <div class="sprint-cal-title"><span class="sprint-badge">Sprint 01</span><span class="sprint-dates">20 mar — 03 abr · 2026</span></div>
+        <div class="sprint-cal-legend">
+          <span class="leg-item"><span class="leg-dot" style="background:#7c4ae0"></span>Planejamento</span>
+          <span class="leg-item"><span class="leg-dot" style="background:#10b981"></span>Daily</span>
+          <span class="leg-item"><span class="leg-dot" style="background:#f59e0b"></span>Review</span>
+          <span class="leg-item"><span class="leg-dot" style="background:#c14dd8"></span>Retro</span>
+        </div>
+      </div>
+      <div class="sprint-week">
+        <div class="sprint-week-label">Semana 1</div>
+        <div class="sprint-days">
+          <div class="sprint-day has-event" onclick="showEvent('planning')"><div class="day-name">Sex</div><div class="day-num">20</div><div class="day-event" style="background:#7c4ae0">Sprint Planning</div></div>
+          <div class="sprint-day weekend"><div class="day-name">Sáb</div><div class="day-num">21</div></div>
+          <div class="sprint-day weekend"><div class="day-name">Dom</div><div class="day-num">22</div></div>
+          <div class="sprint-day has-event" onclick="showEvent('daily')"><div class="day-name">Seg</div><div class="day-num">23</div><div class="day-event" style="background:#10b981">Daily</div></div>
+          <div class="sprint-day has-event" onclick="showEvent('daily')"><div class="day-name">Ter</div><div class="day-num">24</div><div class="day-event" style="background:#10b981">Daily</div></div>
+          <div class="sprint-day has-event" onclick="showEvent('daily')"><div class="day-name">Qua</div><div class="day-num">25</div><div class="day-event" style="background:#10b981">Daily</div></div>
+          <div class="sprint-day has-event" onclick="showEvent('daily')"><div class="day-name">Qui</div><div class="day-num">26</div><div class="day-event" style="background:#10b981">Daily</div></div>
+        </div>
+      </div>
+      <div class="sprint-week">
+        <div class="sprint-week-label">Semana 2</div>
+        <div class="sprint-days">
+          <div class="sprint-day has-event" onclick="showEvent('daily')"><div class="day-name">Sex</div><div class="day-num">27</div><div class="day-event" style="background:#10b981">Daily</div></div>
+          <div class="sprint-day weekend"><div class="day-name">Sáb</div><div class="day-num">28</div></div>
+          <div class="sprint-day weekend"><div class="day-name">Dom</div><div class="day-num">29</div></div>
+          <div class="sprint-day has-event" onclick="showEvent('daily')"><div class="day-name">Seg</div><div class="day-num">30</div><div class="day-event" style="background:#10b981">Daily</div></div>
+          <div class="sprint-day has-event" onclick="showEvent('daily')"><div class="day-name">Ter</div><div class="day-num">31</div><div class="day-event" style="background:#10b981">Daily</div></div>
+          <div class="sprint-day has-event" onclick="showEvent('review')"><div class="day-name">Qua</div><div class="day-num">02</div><div class="day-event" style="background:#f59e0b">Review</div></div>
+          <div class="sprint-day has-event" onclick="showEvent('retro')"><div class="day-name">Qui</div><div class="day-num">03</div><div class="day-event" style="background:#c14dd8">Retro</div></div>
+        </div>
+      </div>
+      <div class="sprint-info-panel" id="sprintInfo">
+        <div class="sip-content" id="sprintInfoContent">
+          <div class="sip-icon" id="sprintInfoIcon"></div>
+          <div><div class="sip-title" id="sprintInfoTitle"></div><div class="sip-desc" id="sprintInfoDesc"></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- KANBAN -->
+<section class="section" id="kanban">
+  <div class="section-inner">
+    <div class="section-header reveal">
+      <div class="section-label">07 · Método</div>
+      <h2 class="section-title">O que é <em>Kanban?</em></h2>
+      <p class="section-sub" contenteditable="true">Método ágil visual e de fluxo contínuo — surgiu nas fábricas da Toyota e foi adaptado para o desenvolvimento de software. Sem ciclos fixos, sem papéis obrigatórios.</p>
+    </div>
+    <div class="concept-grid reveal" style="margin-bottom:3.5rem;">
+      <div class="stack-wrap">
+        <div class="stack">
+          <div class="stack-card"><div class="stack-bkg-w">kan</div><div class="kw">kanban · fluxo contínuo</div><div class="ct">Trabalho <span>visual e contínuo</span>. Novas tarefas entram à medida que outras são concluídas. Princípio fundamental: <span class="rose">limitar o que está em andamento</span>.</div><div class="sig">Kanban...</div></div>
+          <div class="stack-card"></div><div class="stack-card"></div>
+        </div>
+      </div>
+      <div class="prose reveal-d2">
+        <p contenteditable="true">O Kanban não trabalha com ciclos fixos nem exige papéis definidos — o trabalho flui de forma contínua. Um princípio fundamental é limitar tarefas em andamento ao mesmo tempo, evitando sobrecarga e perda de foco.</p>
+        <p contenteditable="true">Para projetos como o de vocês, o Kanban é o ponto de entrada mais natural pela sua simplicidade visual — é o que vocês vão montar no Trello hoje.</p>
+      </div>
+    </div>
+    <div class="reveal" style="margin-top:6rem;">
+      <div class="section-label" style="margin-bottom:.4rem;">Quadro Kanban</div>
+      <p style="font-size:.76rem;color:var(--text-3);margin-bottom:1.25rem;">Editável · Clique no texto para editar · + para adicionar · × para remover</p>
+      <div class="kanban-wrapper">
+        <div class="kanban-board" id="kanbanBoard">
+          <div class="k-col col-backlog"><div class="k-col-head"><div class="hd-left"><div class="dot"></div>Backlog</div><button class="add-btn" onclick="addTicket('backlog','ODS')"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button></div><div class="k-cards" id="col-backlog"><div class="k-ticket"><span class="k-ticket-tag tag-p">ODS</span><div class="k-ticket-inner" contenteditable="true">Pesquisa sobre ODS escolhido</div><button class="k-del" onclick="delTicket(this)"><svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button></div><div class="k-ticket"><span class="k-ticket-tag tag-p">ODS</span><div class="k-ticket-inner" contenteditable="true">Definir persona do projeto</div><button class="k-del" onclick="delTicket(this)"><svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button></div><div class="k-ticket"><span class="k-ticket-tag tag-p">Web</span><div class="k-ticket-inner" contenteditable="true">Criar estrutura HTML da home</div><button class="k-del" onclick="delTicket(this)"><svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button></div></div></div>
+          <div class="k-col col-todo"><div class="k-col-head"><div class="hd-left"><div class="dot"></div>A Fazer</div><button class="add-btn" onclick="addTicket('todo','ODS')"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button></div><div class="k-cards" id="col-todo"><div class="k-ticket"><span class="k-ticket-tag tag-r">ODS</span><div class="k-ticket-inner" contenteditable="true">Entrevista com usuário real</div><button class="k-del" onclick="delTicket(this)"><svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button></div><div class="k-ticket"><span class="k-ticket-tag tag-r">Web</span><div class="k-ticket-inner" contenteditable="true">Configurar repositório GitHub</div><button class="k-del" onclick="delTicket(this)"><svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button></div></div></div>
+          <div class="k-col col-doing"><div class="k-col-head"><div class="hd-left"><div class="dot"></div>Em Andamento</div><button class="add-btn" onclick="addTicket('doing','ODS')"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button></div><div class="k-cards" id="col-doing"><div class="k-ticket"><span class="k-ticket-tag tag-a">ODS</span><div class="k-ticket-inner" contenteditable="true">Mapa de empatia em grupo</div><button class="k-del" onclick="delTicket(this)"><svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button></div></div></div>
+          <div class="k-col col-done"><div class="k-col-head"><div class="hd-left"><div class="dot"></div>Concluído</div><button class="add-btn" onclick="addTicket('done','ODS')"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button></div><div class="k-cards" id="col-done"><div class="k-ticket"><span class="k-ticket-tag tag-g">ODS</span><div class="k-ticket-inner" contenteditable="true">Escolha do ODS da equipe</div><button class="k-del" onclick="delTicket(this)"><svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button></div><div class="k-ticket"><span class="k-ticket-tag tag-g">Web</span><div class="k-ticket-inner" contenteditable="true">Aula de HTML5 semântico</div><button class="k-del" onclick="delTicket(this)"><svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button></div></div></div>
+        </div>
+      </div>
+    </div>
+    <div class="cards-grid-4 reveal" style="margin-top:2rem;">
+      <div class="comp-card"><div class="comp-card-top"><div class="comp-card-icon"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 16 12 14 15 10 15 8 12 2 12"/><path d="M5.45 5.11 2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"/></svg></div><div class="comp-card-badge">Coluna 01</div><div class="comp-card-title"><em>Backlog</em></div></div><div class="comp-card-body"><p contenteditable="true">Todas as tarefas identificadas que ainda não foram iniciadas. Lista completa de tudo que precisa ser feito.</p></div></div>
+      <div class="comp-card"><div class="comp-card-top"><div class="comp-card-icon"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></div><div class="comp-card-badge">Coluna 02</div><div class="comp-card-title">A <em>Fazer</em></div></div><div class="comp-card-body"><p contenteditable="true">Tarefas priorizadas que o time decidiu trabalhar em breve.</p></div></div>
+      <div class="comp-card"><div class="comp-card-top"><div class="comp-card-icon"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></div><div class="comp-card-badge">Coluna 03</div><div class="comp-card-title">Em <em>Andamento</em></div></div><div class="comp-card-body"><p contenteditable="true">O que está sendo executado agora. Limite a quantidade — concluir antes de começar novas coisas.</p></div></div>
+      <div class="comp-card"><div class="comp-card-top"><div class="comp-card-icon"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg></div><div class="comp-card-badge">Coluna 04</div><div class="comp-card-title"><em>Concluído</em></div></div><div class="comp-card-body"><p contenteditable="true">Tarefas entregues. Manter visível ajuda o time a enxergar o progresso real do projeto.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- BACKLOG -->
+<section class="section alt-bg" id="backlog">
+  <div class="section-inner">
+    <div class="section-header reveal">
+      <div class="section-label">08 · Organização</div>
+      <h2 class="section-title">Product <em>Backlog</em></h2>
+      <p class="section-sub" contenteditable="true">A espinha dorsal do desenvolvimento ágil. Lista viva e priorizada de tudo que o produto precisa ter.</p>
+    </div>
+    <div class="concept-grid reveal" style="margin-bottom:3.5rem;">
+      <div class="prose">
+        <p contenteditable="true">Quem mantém o backlog é o <span class="highlight">Product Owner</span>, mas o time inteiro contribui para refiná-lo. Diferente de uma lista de tarefas comum, o backlog é priorizado — o item com mais valor para o usuário ou negócio fica sempre no topo.</p>
+        <p contenteditable="true">O backlog nunca está "pronto" — ele <span class="highlight">evolui com o produto</span>. Novos itens entram, outros saem, prioridades mudam conforme o time aprende mais sobre o problema que está resolvendo.</p>
+      </div>
+      <div class="stack-wrap">
+        <div class="stack">
+          <div class="stack-card"><div class="stack-bkg-w">bkl</div><div class="kw">product backlog</div><div class="ct">Lista <span>viva e priorizada</span>. O mais importante fica no topo. <span class="rose">Nunca está pronto</span> — evolui com o produto.</div><div class="sig">Backlog...</div></div>
+          <div class="stack-card"></div><div class="stack-card"></div>
+        </div>
+      </div>
+    </div>
+    <div class="concept-grid reveal" style="margin-top:8rem;margin-bottom:3.5rem;align-items:start;">
+      <div class="bl-priority-list">
+        <div class="bl-priority-header"><span class="bl-priority-label">↑ Topo — maior prioridade</span></div>
+        <div class="bl-priority-item bl-p1"><div class="bl-p-rank">1º</div><div><div class="bl-p-tag">Crítico</div><div class="bl-p-text" contenteditable="true">Criar fluxo de cadastro de usuário</div></div></div>
+        <div class="bl-priority-item bl-p2"><div class="bl-p-rank">2º</div><div><div class="bl-p-tag">Alto</div><div class="bl-p-text" contenteditable="true">Integrar login com autenticação</div></div></div>
+        <div class="bl-priority-item bl-p3"><div class="bl-p-rank">3º</div><div><div class="bl-p-tag">Médio</div><div class="bl-p-text" contenteditable="true">Página de perfil do usuário</div></div></div>
+        <div class="bl-priority-item bl-p4"><div class="bl-p-rank">4º</div><div><div class="bl-p-tag">Médio</div><div class="bl-p-text" contenteditable="true">Notificações por e-mail</div></div></div>
+        <div class="bl-priority-item bl-p5"><div class="bl-p-rank">5º</div><div><div class="bl-p-tag">Baixo</div><div class="bl-p-text" contenteditable="true">Tema escuro na interface</div></div></div>
+        <div class="bl-priority-item bl-p5"><div class="bl-p-rank">6º</div><div><div class="bl-p-tag">Baixo</div><div class="bl-p-text" contenteditable="true">Exportar relatórios em PDF</div></div></div>
+        <div class="bl-priority-footer"><span class="bl-priority-label">↓ Base — pode esperar</span></div>
+      </div>
+      <div>
+        <div class="section-label" style="margin-bottom:1.2rem;">Ordem de Prioridade</div>
+        <div class="prose">
+          <p contenteditable="true">O backlog não é uma lista aleatória — cada item tem um lugar. O Product Owner ordena tudo de acordo com o <span class="highlight">valor que entrega ao usuário</span>. No topo ficam as coisas mais importantes e urgentes. Lá embaixo, o que pode esperar.</p>
+          <p contenteditable="true">Durante a Sprint Planning, o time pega os itens do <span class="highlight">topo do backlog</span> — os mais prioritários — para trabalhar na Sprint. Por isso manter a ordem certa é fundamental.</p>
+        </div>
+      </div>
+    </div>
+    <div class="reveal" style="margin-bottom:1.5rem;"><div class="section-label">Hierarquia do Backlog</div></div>
+    <div class="bl-tree reveal">
+      <div class="bl-item"><div class="bl-num">01</div><div><div class="bl-subtitle">Nível 1</div><div class="bl-title-t"><em>Épico</em></div><div class="bl-desc-t" contenteditable="true">Grandes funcionalidades ainda pouco detalhadas. Representam partes significativas do produto, amplos demais para caber em uma Sprint.</div><div class="bl-example">Ex: "Sistema de Cadastro" · "Módulo de Relatórios"</div></div></div>
+      <div class="bl-item"><div class="bl-num">02</div><div><div class="bl-subtitle">Nível 2</div><div class="bl-title-t">História de <em>Usuário</em></div><div class="bl-desc-t" contenteditable="true">Descreve uma funcionalidade do ponto de vista de quem vai usar o sistema. Formato: "Como [usuário], eu quero [ação] para [benefício]".</div><div class="bl-example">Ex: "Como visitante, eu quero me cadastrar com e-mail para acessar o sistema"</div></div></div>
+      <div class="bl-item"><div class="bl-num">03</div><div><div class="bl-subtitle">Nível 3</div><div class="bl-title-t"><em>Tarefa</em></div><div class="bl-desc-t" contenteditable="true">Ações concretas e técnicas para implementar cada história. Específicas, atribuídas a pessoas e estimadas em horas ou pontos.</div><div class="bl-example">Ex: "Criar formulário HTML" · "Configurar rota" · "Escrever teste"</div></div></div>
+    </div>
+    <div class="reveal" style="margin-top:4rem;">
+      <div class="cta-box">
+        <div class="section-label" style="justify-content:center;">Prática</div>
+        <h3 style="font-family:var(--font-h);font-size:2.2rem;font-weight:300;letter-spacing:-.02em;margin-bottom:.75rem;">Agora é a sua <em>vez</em></h3>
+        <p style="color:var(--text-2);font-size:1rem;max-width:520px;margin:0 auto 2rem;line-height:1.7;" contenteditable="true">Abra o Trello, crie o quadro do seu grupo com as 4 colunas e liste pelo menos 5 entregas do projeto ODS. Vamos priorizar juntos.</p>
+        <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;">
+          <a href="https://trello.com" target="_blank" class="btn-primary"><svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/></svg>Abrir Trello</a>
+          <a href="https://ete-cicerodias.github.io/app-plano-mod1/" target="_blank" class="btn-ghost"><svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>Ver Plano do Módulo</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div>
+    <div class="footer-logo">ETE <em>Cícero Dias</em></div>
+    <div class="footer-sub">Desenvolvimento de Sistemas · Módulo 1 · 2026</div>
+  </div>
+  <div class="footer-text">Projeto Integrador I · Prof.ª Samara Sabino</div>
+</footer>
+
+<script is:inline>
+const prog=document.getElementById('prog'),nav=document.getElementById('nav'),btt=document.getElementById('btt');
+window.addEventListener('scroll',()=>{prog.style.width=(scrollY/(document.body.scrollHeight-innerHeight)*100)+'%';nav.classList.toggle('scrolled',scrollY>60);btt.classList.toggle('show',scrollY>400);});
+const sections=document.querySelectorAll('section[id]'),navLinks=document.querySelectorAll('.nav-links a[data-section]');
+const sObs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting)navLinks.forEach(a=>a.classList.toggle('active',a.dataset.section===e.target.id));});},{rootMargin:'-40% 0px -55% 0px'});
+sections.forEach(s=>sObs.observe(s));
+const revObs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('vis');});},{threshold:.1});
+document.querySelectorAll('.reveal').forEach(el=>revObs.observe(el));
+function activatePerson(el){document.querySelectorAll('.person-panel').forEach(p=>p.classList.remove('active'));el.classList.add('active');}
+function toggleMobile(){document.getElementById('mobileMenu').classList.toggle('open');}
+function addTicket(colId,tagLabel){const col=document.getElementById('col-'+colId);const tagClasses={backlog:'tag-p',todo:'tag-r',doing:'tag-a',done:'tag-g'};const div=document.createElement('div');div.className='k-ticket';div.innerHTML='<span class="k-ticket-tag '+tagClasses[colId]+'">'+tagLabel+'</span><div class="k-ticket-inner" contenteditable="true">Nova tarefa</div><button class="k-del" onclick="delTicket(this)"><svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>';col.appendChild(div);const inner=div.querySelector('.k-ticket-inner');inner.focus();const r=document.createRange();r.selectNodeContents(inner);window.getSelection().removeAllRanges();window.getSelection().addRange(r);}
+function delTicket(btn){btn.closest('.k-ticket').remove();}
+const toolbar=document.getElementById('toolbar');let lastRange=null;
+document.addEventListener('mouseup',e=>{if(toolbar.contains(e.target))return;const sel=window.getSelection();if(!sel||sel.isCollapsed){toolbar.classList.remove('show');return;}const range=sel.getRangeAt(0);const container=range.commonAncestorContainer;const el=container.nodeType===3?container.parentElement:container;if(!el.closest('[contenteditable]')){toolbar.classList.remove('show');return;}lastRange=range.cloneRange();const rect=range.getBoundingClientRect();toolbar.style.top=(rect.top+window.scrollY-48)+'px';toolbar.style.left=(rect.left+rect.width/2-toolbar.offsetWidth/2)+'px';toolbar.classList.add('show');});
+document.addEventListener('mousedown',e=>{if(!toolbar.contains(e.target))toolbar.classList.remove('show');});
+function restoreAndExec(cmd,val){const sel=window.getSelection();if(lastRange){sel.removeAllRanges();sel.addRange(lastRange);}document.execCommand(cmd,false,val||null);}
+document.getElementById('tb-b').addEventListener('mousedown',e=>{e.preventDefault();restoreAndExec('bold');});
+document.getElementById('tb-i').addEventListener('mousedown',e=>{e.preventDefault();restoreAndExec('italic');});
+document.getElementById('tb-u').addEventListener('mousedown',e=>{e.preventDefault();restoreAndExec('underline');});
+document.getElementById('tb-clr').addEventListener('mousedown',e=>{e.preventDefault();restoreAndExec('removeFormat');});
+document.querySelectorAll('.tb-color').forEach(btn=>{btn.addEventListener('mousedown',e=>{e.preventDefault();restoreAndExec('foreColor',btn.dataset.color);});});
+const STORAGE_KEY='ete-aula01-v1';
+function saveEdits(){const data={};document.querySelectorAll('[contenteditable]').forEach((el,i)=>{data['ce-'+i]=el.innerHTML;});['backlog','todo','doing','done'].forEach(col=>{const cards=[];document.querySelectorAll('#col-'+col+' .k-ticket').forEach(t=>{cards.push({tag:t.querySelector('.k-ticket-tag')?.textContent||'',tagClass:t.querySelector('.k-ticket-tag')?.className.replace('k-ticket-tag ','')|| 'tag-p',text:t.querySelector('.k-ticket-inner')?.innerHTML||''});});data['kanban-'+col]=JSON.stringify(cards);});localStorage.setItem(STORAGE_KEY,JSON.stringify(data));}
+function loadEdits(){const saved=localStorage.getItem(STORAGE_KEY);if(!saved)return;const data=JSON.parse(saved);document.querySelectorAll('[contenteditable]').forEach((el,i)=>{if(data['ce-'+i])el.innerHTML=data['ce-'+i];});['backlog','todo','doing','done'].forEach(col=>{if(!data['kanban-'+col])return;const cards=JSON.parse(data['kanban-'+col]);const container=document.getElementById('col-'+col);if(!container)return;container.innerHTML='';cards.forEach(c=>{const div=document.createElement('div');div.className='k-ticket';div.innerHTML=`<span class="k-ticket-tag ${c.tagClass}">${c.tag}</span><div class="k-ticket-inner" contenteditable="true">${c.text}</div><button class="k-del" onclick="delTicket(this)"><svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>`;container.appendChild(div);});});}
+document.addEventListener('input',saveEdits);loadEdits();
+function toggleFase(headEl){const item=headEl.closest('.sdlc-item');const isActive=item.classList.contains('active');document.querySelectorAll('.sdlc-item').forEach(i=>i.classList.remove('active'));if(!isActive)item.classList.add('active');}
+const eventsData={planning:{title:'Sprint Planning',desc:'Time e PO se reúnem no início da Sprint. Decidem quais itens do Backlog serão trabalhados e como. Define o objetivo da Sprint — o que vamos entregar?'},daily:{title:'Daily Scrum · 15 min',desc:'Reunião diária de pé. Três perguntas: O que fiz ontem? O que farei hoje? Tem algum impedimento? Foco total em manter o time alinhado.'},review:{title:'Sprint Review',desc:'Time apresenta o Incremento ao cliente ou stakeholders. Feedback real, não relatório. O que foi feito? O que muda para a próxima Sprint?'},retro:{title:'Retrospectiva',desc:'Reunião interna do time. O que foi bem? O que pode melhorar? Como melhorar? O time aprende sobre o próprio processo antes de iniciar o próximo ciclo.'}};
+function showEvent(key){const panel=document.getElementById('sprintInfo');const data=eventsData[key];document.getElementById('sprintInfoTitle').textContent=data.title;document.getElementById('sprintInfoDesc').textContent=data.desc;document.getElementById('sprintInfoIcon').innerHTML='<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></svg>';panel.classList.add('open');}
+</script>
+</body>
+</html>
