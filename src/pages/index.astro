@@ -86,6 +86,28 @@ const publicadas = aulasFiltradas.filter(a => a.data.status === 'publicada').len
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17 17 7M17 7H7M17 7v10"/></svg>
           </div>
         </a>
+        <!-- VS CODE — azul ciano React -->
+        <a href="/universo-vscode" class="trilha-card trilha-vscode reveal reveal-d2">
+          <div class="trilha-card-body">
+            <div class="trilha-icon trilha-icon-vscode">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M23.15 2.587L18.21.21a1.494 1.494 0 0 0-1.705.29l-9.46 8.63-4.12-3.128a.999.999 0 0 0-1.276.057L.327 7.261A1 1 0 0 0 .326 8.74L3.899 12 .326 15.26a1 1 0 0 0 .001 1.479L1.65 17.94a.999.999 0 0 0 1.276.057l4.12-3.128 9.46 8.63a1.492 1.492 0 0 0 1.704.29l4.942-2.377A1.5 1.5 0 0 0 24 20.06V3.939a1.5 1.5 0 0 0-.85-1.352zm-5.146 14.861L10.826 12l7.178-5.448v10.896z"/></svg>
+            </div>
+            <div>
+              <div class="trilha-label">Universo VS Code</div>
+              <div class="trilha-desc">Do zero ao editor configurado — instalação, extensões e personalização para frontend.</div>
+            </div>
+          </div>
+          <div class="trilha-tags">
+            <span class="trilha-tag">Instalação</span>
+            <span class="trilha-tag">Extensões</span>
+            <span class="trilha-tag">Temas</span>
+            <span class="trilha-tag">Atalhos</span>
+          </div>
+          <div class="trilha-footer">
+            <span class="trilha-badge">Trilha · 4 aulas</span>
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17 17 7M17 7H7M17 7v10"/></svg>
+          </div>
+        </a>
 
 
       </div>
@@ -147,7 +169,7 @@ const publicadas = aulasFiltradas.filter(a => a.data.status === 'publicada').len
 
 <style>
   /* TRILHAS GRID */
-  .trilhas-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1.2rem;}
+  .trilhas-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.2rem;}
   .trilha-card{border-radius:18px;overflow:hidden;display:flex;flex-direction:column;text-decoration:none;color:inherit;transition:transform var(--t),box-shadow var(--t),border-color var(--t);border:1.5px solid;}
   .trilha-card-body{display:flex;align-items:flex-start;gap:1rem;padding:1.4rem 1.4rem .9rem;}
   .trilha-icon{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
@@ -169,6 +191,17 @@ const publicadas = aulasFiltradas.filter(a => a.data.status === 'publicada').len
   .trilha-git .trilha-badge{color:#b89aff;}
   .trilha-git svg:last-child{color:rgba(184,154,255,.3);}
   .trilha-git:hover svg:last-child{color:#b89aff;}
+
+  .trilha-vscode{background:linear-gradient(160deg,#06080f 0%,#0d1117 100%);border-color:rgba(97,218,251,.15);}
+  .trilha-vscode:hover{transform:translateY(-5px);box-shadow:0 16px 40px rgba(97,218,251,.15);border-color:rgba(97,218,251,.4);}
+  .trilha-icon-vscode{background:rgba(97,218,251,.1);color:#61dafb;}
+  .trilha-vscode .trilha-label{color:#e8edf5;}
+  .trilha-vscode .trilha-desc{color:rgba(232,237,245,.5);}
+  .trilha-vscode .trilha-tag{background:rgba(97,218,251,.07);border:1px solid rgba(97,218,251,.18);color:rgba(97,218,251,.7);font-family:var(--font-mono);}
+  .trilha-vscode .trilha-footer{border-color:rgba(97,218,251,.08);}
+  .trilha-vscode .trilha-badge{color:#61dafb;}
+  .trilha-vscode svg:last-child{color:rgba(97,218,251,.3);}
+  .trilha-vscode:hover svg:last-child{color:#61dafb;}
 
   /* TERMINAL — noir */
   .trilha-terminal{background:linear-gradient(160deg,#080808 0%,#111 100%);border-color:rgba(255,255,255,.09);}
@@ -192,5 +225,6 @@ const publicadas = aulasFiltradas.filter(a => a.data.status === 'publicada').len
   .trilha-ex .trilha-badge{color:rgba(97,218,251,.5);}
   .trilha-ex svg:last-child{color:rgba(97,218,251,.3);}
 
-  @media(max-width:900px){.trilhas-grid{grid-template-columns:1fr;}}
+  @media(max-width:900px){.trilhas-grid{grid-template-columns:1fr 1fr;}}
+  @media(max-width:600px){.trilhas-grid{grid-template-columns:1fr;}}
 </style>
