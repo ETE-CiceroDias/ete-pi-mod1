@@ -1,0 +1,93 @@
+---
+import Base from './Base.astro'
+const { aula } = Astro.props
+const { numero, titulo, tituloEm, subtitulo, dataA, duracao, topicos = [], disciplina = 'PI I', coverUrl } = aula
+---
+<Base title={`${titulo} ${tituloEm} · ETE Cícero Dias`} description={subtitulo}>
+
+  <!-- HERO com cover ou sem -->
+  {coverUrl ? (
+    <div class="hero-aula-cover" style="margin-top:3.5rem;">
+      <img src={coverUrl} alt={`${titulo} ${tituloEm}`} loading="eager"/>
+    </div>
+  ) : (
+    <div class="hero-aula-nocov" style="margin-top:3.5rem;">
+      <div class="blob blob-1"></div>
+      <div class="blob blob-2"></div>
+    </div>
+  )}
+
+  <div class="hero-aula-content">
+    <div style="margin-bottom:1.2rem;">
+      <a href="/" class="nav-back" style="display:inline-flex;margin-bottom:1.2rem;">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><path d="m15 18-6-6 6-6"/></svg>
+        Todas as aulas
+      </a>
+    </div>
+    <div class="hero-aula-badge">
+      <span class="bdot"></span>
+      {disciplina} · Aula {numero}
+    </div>
+    <h1 class="hero-aula-title">{titulo} <em>{tituloEm}</em></h1>
+    <p class="hero-aula-sub">{subtitulo}</p>
+    <div class="hero-aula-meta">
+      <span class="ham-tag">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12,6 12,12 16,14"/></svg>
+        {duracao}
+      </span>
+      {dataA && <><span class="ham-dot">·</span><span class="ham-tag">{dataA}</span></>}
+    </div>
+  </div>
+
+  <div class="aula-layout" id="aulaLayout">
+    <!-- SIDEBAR -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-title">Nesta aula</div>
+      <nav class="sidebar-nav" id="sidebarNav"></nav>
+      <div class="sidebar-sep"></div>
+      <a href="/" class="sidebar-item">
+        <span class="si-dot"></span>
+        Todas as aulas
+      </a>
+    </aside>
+
+    <!-- CONTEÚDO -->
+    <div class="aula-prose prose" id="aulaConteudo">
+      <slot/>
+    </div>
+  </div>
+
+</Base>
+
+<script is:inline>
+  // Sidebar — lê os h2 da prose e monta links
+  (function(){
+    const nav = document.getElementById('sidebarNav');
+    const prose = document.getElementById('aulaConteudo');
+    if (!nav || !prose) return;
+    const headings = prose.querySelectorAll('h2');
+    headings.forEach((h, i) => {
+      if (!h.id) h.id = 'sec-' + i;
+      const a = document.createElement('a');
+      a.className = 'sidebar-item';
+      a.href = '#' + h.id;
+      a.innerHTML = '<span class="si-dot"></span>' + h.textContent;
+      a.addEventListener('click', e => {
+        e.preventDefault();
+        document.getElementById(h.id)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+      nav.appendChild(a);
+    });
+    // Highlight ativo no scroll
+    const obs = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          nav.querySelectorAll('.sidebar-item').forEach(a => a.classList.remove('active'));
+          const active = nav.querySelector(`[href="#${entry.target.id}"]`);
+          if (active) active.classList.add('active');
+        }
+      });
+    }, { rootMargin: '-10% 0px -80% 0px' });
+    headings.forEach(h => obs.observe(h));
+  })();
+</script>

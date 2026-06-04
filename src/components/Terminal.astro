@@ -1,0 +1,14 @@
+---
+const { title = 'bash' } = Astro.props
+---
+<div class="terminal">
+  <div class="terminal-header">
+    <span class="term-dot term-dot-r"></span>
+    <span class="term-dot term-dot-y"></span>
+    <span class="term-dot term-dot-g"></span>
+    <span style="font-family:var(--font-mono);font-size:.7rem;color:var(--text-3);margin-left:.5rem;">{title}</span>
+  </div>
+  <div class="terminal-body">
+    <slot />
+  </div>
+</div>

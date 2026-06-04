@@ -1,0 +1,368 @@
+---
+import '../../styles/global.css'
+---
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Git 01 · Introdução ao Git & GitHub · ETE Cícero Dias</title>
+  <meta name="description" content="O que é versionamento, por que usar, diferença entre Git e GitHub, e os primeiros comandos no terminal."/>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg"/>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap');
+    *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+    html{scroll-behavior:smooth;}
+    :root{
+      --git-bg:#07050f;--git-surface:#0f0b1f;--git-card:#130e26;
+      --git-border:rgba(124,74,224,.18);--git-border-h:rgba(124,74,224,.55);
+      --git-acc:#7c4ae0;--git-acc-dim:rgba(124,74,224,.12);
+      --git-text:#eae6ff;--git-text-sub:rgba(234,230,255,.6);--git-text-dim:rgba(234,230,255,.35);
+      --git-mono:'JetBrains Mono','Courier New',monospace;
+      --font-h:'Cormorant Garamond',Georgia,serif;
+      --font-b:'Plus Jakarta Sans',sans-serif;
+      --grad-btn:linear-gradient(135deg,#7c4ae0,#532d9f);
+    }
+    body{background:var(--git-bg);color:var(--git-text);font-family:var(--font-b);overflow-x:hidden;line-height:1.65;}
+    a{text-decoration:none;color:inherit;}
+    ::selection{background:var(--git-acc);color:#fff;}
+    ::-webkit-scrollbar{width:4px;}::-webkit-scrollbar-track{background:var(--git-bg);}::-webkit-scrollbar-thumb{background:var(--git-acc);border-radius:99px;}
+
+    #prog{position:fixed;top:0;left:0;height:2px;z-index:600;background:var(--grad-btn);width:0;transition:width .1s;}
+    #btt{position:fixed;bottom:2rem;right:2rem;z-index:500;width:44px;height:44px;border-radius:50%;background:var(--grad-btn);color:#fff;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 8px 30px rgba(0,0,0,.6);opacity:0;transform:translateY(16px) scale(.85);transition:opacity .3s,transform .3s;pointer-events:none;}
+    #btt.show{opacity:1;transform:translateY(0) scale(1);pointer-events:all;}
+    #btt:hover{transform:translateY(-3px) scale(1.08);}
+
+    .nav{position:fixed;top:0;left:0;right:0;z-index:400;display:flex;align-items:center;justify-content:space-between;padding:.85rem 2.5rem;background:rgba(7,5,15,.92);backdrop-filter:blur(18px);border-bottom:1px solid var(--git-border);transition:box-shadow .22s;}
+    .nav.scrolled{box-shadow:0 6px 20px rgba(0,0,0,.4);}
+    .nav-back{display:inline-flex;align-items:center;gap:.5rem;font-size:.8rem;font-weight:600;color:rgba(234,230,255,.5);transition:color .2s;}
+    .nav-back:hover{color:var(--git-text);}
+    .nav-back svg{width:15px;height:15px;}
+    .nav-center{display:flex;align-items:center;}
+    .nav-tag-git{display:inline-flex;align-items:center;gap:.4rem;padding:.3rem .8rem;border:1px solid var(--git-border);border-radius:99px;font-size:.7rem;font-weight:700;color:rgba(184,154,255,.8);letter-spacing:.06em;text-transform:uppercase;}
+    .nav-info{font-size:.75rem;color:var(--git-text-dim);font-weight:500;}
+
+    .git-blob{position:absolute;pointer-events:none;filter:blur(90px);z-index:0;border-radius:50%;}
+    .git-blob-1{width:500px;height:350px;background:radial-gradient(circle,rgba(124,74,224,.22) 0%,transparent 70%);top:-5%;left:0%;animation:gbd1 22s ease-in-out infinite;}
+    .git-blob-2{width:380px;height:480px;background:radial-gradient(circle,rgba(193,77,216,.15) 0%,transparent 70%);top:20%;right:-5%;animation:gbd2 28s ease-in-out infinite;}
+    @keyframes gbd1{0%,100%{transform:translate(0,0) scale(1);}50%{transform:translate(30px,-20px) scale(1.05);}}
+    @keyframes gbd2{0%,100%{transform:translate(0,0);}50%{transform:translate(-25px,30px) scale(.95);}}
+
+    .hero-git-aula{min-height:60vh;display:flex;flex-direction:column;align-items:flex-start;justify-content:flex-end;padding:8rem 2.5rem 4rem;position:relative;overflow:hidden;}
+    .hero-git-aula-inner{position:relative;z-index:2;max-width:760px;}
+    .hero-git-badge{display:inline-flex;align-items:center;gap:.5rem;padding:.3rem .9rem;background:rgba(124,74,224,.12);border:1px solid rgba(124,74,224,.3);border-radius:99px;font-size:.68rem;font-weight:700;color:#b89aff;margin-bottom:1rem;letter-spacing:.08em;text-transform:uppercase;}
+    .bdot{width:6px;height:6px;border-radius:50%;background:#b89aff;animation:pulse 2s ease-in-out infinite;}
+    @keyframes pulse{0%,100%{opacity:1;transform:scale(1);}50%{opacity:.5;transform:scale(1.5);}}
+    .hero-git-aula-title{font-family:var(--font-h);font-size:clamp(2.2rem,5vw,4rem);font-weight:300;line-height:1.05;letter-spacing:-.04em;margin-bottom:.6rem;}
+    .hero-git-aula-title em{font-style:italic;color:#b89aff;font-weight:200;}
+    .hero-git-aula-sub{font-size:1rem;color:var(--git-text-sub);line-height:1.75;max-width:600px;margin-bottom:1.4rem;}
+    .hero-git-aula-meta{display:flex;align-items:center;flex-wrap:wrap;gap:.7rem;}
+    .ham-tag{display:inline-flex;align-items:center;gap:.3rem;font-size:.72rem;font-weight:600;color:var(--git-text-dim);}
+    .ham-tag svg{width:12px;height:12px;color:#b89aff;}
+    .ham-dot{color:rgba(124,74,224,.3);}
+
+    /* LAYOUT COM SIDEBAR */
+    .aula-wrap{display:flex;align-items:flex-start;max-width:1200px;margin:0 auto;padding:3rem 2rem 6rem;gap:3rem;}
+    .sidebar{width:240px;flex-shrink:0;position:sticky;top:5.5rem;max-height:calc(100vh - 7rem);overflow-y:auto;}
+    .sidebar::-webkit-scrollbar{width:3px;}
+    .sidebar::-webkit-scrollbar-thumb{background:var(--git-border);border-radius:99px;}
+    .sidebar-title{font-size:.62rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--git-text-dim);margin-bottom:.9rem;padding-left:.2rem;}
+    .sidebar-nav{display:flex;flex-direction:column;gap:.15rem;}
+    .sidebar-item{display:flex;align-items:center;gap:.6rem;padding:.45rem .7rem;border-radius:8px;font-size:.78rem;color:var(--git-text-sub);cursor:pointer;transition:background .2s,color .2s;border:none;background:none;text-align:left;width:100%;text-decoration:none;}
+    .sidebar-item:hover{background:rgba(124,74,224,.08);color:var(--git-text);}
+    .sidebar-item.active{background:rgba(124,74,224,.1);color:#b89aff;font-weight:600;}
+    .si-dot{width:5px;height:5px;border-radius:50%;background:var(--git-border);flex-shrink:0;transition:background .2s;}
+    .sidebar-item.active .si-dot{background:#b89aff;}
+    .sidebar-sep{height:1px;background:var(--git-border);margin:.6rem 0;}
+    .prose-wrap{flex:1;min-width:0;}
+
+    /* PROSE */
+    .prose h2{font-family:var(--font-h);font-size:clamp(1.6rem,3.5vw,2.2rem);font-weight:300;letter-spacing:-.03em;line-height:1.1;margin:3.5rem 0 1rem;padding-bottom:.6rem;border-bottom:1px solid var(--git-border);color:var(--git-text);}
+    .prose h2 em{font-style:italic;color:#b89aff;}
+    .prose h3{font-family:var(--font-h);font-size:1.35rem;font-weight:400;margin:2.2rem 0 .7rem;color:var(--git-text);}
+    .prose h4{font-size:.78rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:#b89aff;margin:1.8rem 0 .5rem;}
+    .prose p{font-size:.97rem;color:var(--git-text-sub);line-height:1.85;margin-bottom:1.1rem;}
+    .prose strong{font-weight:700;color:var(--git-text);}
+    .prose em{font-style:italic;color:#b89aff;}
+    .prose a{color:#b89aff;text-decoration:underline;text-underline-offset:3px;}
+    .prose ul,.prose ol{padding-left:1.4rem;margin-bottom:1.2rem;display:flex;flex-direction:column;gap:.4rem;}
+    .prose li{font-size:.93rem;color:var(--git-text-sub);line-height:1.65;}
+    .prose blockquote{margin:1.5rem 0;padding:1rem 1.4rem;border-left:3px solid var(--git-acc);background:rgba(124,74,224,.06);border-radius:0 12px 12px 0;font-size:.9rem;color:var(--git-text-sub);line-height:1.75;}
+    .prose blockquote p{margin:0;}
+    .prose hr{border:none;border-top:1px solid var(--git-border);margin:3rem 0;}
+    .prose pre{background:#050309;border-radius:14px;padding:1.4rem 1.6rem;overflow-x:auto;margin:1.5rem 0;border:1px solid rgba(124,74,224,.25);}
+    .prose pre code{font-family:var(--git-mono);font-size:.82rem;color:#eae6ff;line-height:1.75;background:none;padding:0;border:none;}
+    .prose :not(pre)>code{font-family:var(--git-mono);font-size:.82em;background:rgba(124,74,224,.12);border:1px solid rgba(124,74,224,.22);color:#b89aff;padding:.15em .4em;border-radius:5px;}
+    .prose table{width:100%;border-collapse:collapse;font-size:.85rem;margin:1.5rem 0;border-radius:12px;overflow:hidden;border:1px solid var(--git-border);}
+    .prose thead{background:rgba(124,74,224,.08);}
+    .prose th{padding:.7rem 1rem;text-align:left;font-size:.72rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#b89aff;border-bottom:1px solid var(--git-border);}
+    .prose td{padding:.65rem 1rem;color:var(--git-text-sub);border-bottom:1px solid var(--git-border);vertical-align:top;}
+    .prose tr:last-child td{border-bottom:none;}
+    .prose tr:hover td{background:rgba(124,74,224,.04);}
+    .prose td code,.prose th code{font-family:var(--git-mono);font-size:.8em;background:rgba(124,74,224,.12);border:1px solid rgba(124,74,224,.2);color:#b89aff;padding:.1em .35em;border-radius:4px;}
+
+    /* CALLOUT */
+    .callout{border-radius:14px;padding:1.2rem 1.4rem;margin:1.5rem 0;display:flex;gap:.9rem;align-items:flex-start;}
+    .callout-tip   {background:rgba(16,185,129,.06);border:1.5px solid rgba(16,185,129,.2);}
+    .callout-info  {background:rgba(124,74,224,.07);border:1.5px solid rgba(124,74,224,.2);}
+    .callout-warn  {background:rgba(245,158,11,.06);border:1.5px solid rgba(245,158,11,.2);}
+    .callout-icon{width:34px;height:34px;border-radius:9px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:.95rem;}
+    .callout-tip  .callout-icon{background:rgba(16,185,129,.12);}
+    .callout-info .callout-icon{background:rgba(124,74,224,.12);}
+    .callout-warn .callout-icon{background:rgba(245,158,11,.12);}
+    .callout-title{font-weight:700;font-size:.82rem;margin-bottom:.3rem;}
+    .callout-tip  .callout-title{color:#34d399;}
+    .callout-info .callout-title{color:#b89aff;}
+    .callout-warn .callout-title{color:#fbbf24;}
+    .callout-text{font-size:.85rem;color:var(--git-text-sub);line-height:1.7;}
+    .callout-text code{font-family:var(--git-mono);font-size:.82em;background:rgba(124,74,224,.12);color:#b89aff;padding:.1em .35em;border-radius:4px;border:1px solid rgba(124,74,224,.2);}
+
+    /* CMD REF */
+    .cmd-grid{display:flex;flex-direction:column;gap:.5rem;margin:1.5rem 0;}
+    .cmd-item{display:flex;align-items:flex-start;gap:1rem;padding:.85rem 1.1rem;background:var(--git-card);border:1px solid var(--git-border);border-radius:12px;}
+    .cmd-code{font-family:var(--git-mono);font-size:.82rem;color:#b89aff;background:rgba(124,74,224,.12);padding:.25rem .7rem;border-radius:6px;flex-shrink:0;border:1px solid rgba(124,74,224,.22);}
+    .cmd-desc{font-size:.83rem;color:var(--git-text-sub);line-height:1.55;}
+
+    /* FOOTER */
+    .footer-git{padding:2rem 2.5rem;border-top:1px solid var(--git-border);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem;}
+    .footer-logo{font-family:var(--font-h);font-size:1.2rem;font-weight:300;letter-spacing:-.02em;color:var(--git-text);}
+    .footer-logo em{font-style:italic;color:#b89aff;}
+    .footer-sub{font-size:.7rem;color:var(--git-text-dim);margin-top:.1rem;}
+    .footer-right{font-size:.78rem;color:var(--git-text-dim);}
+
+    .reveal{opacity:0;transform:translateY(22px);transition:opacity .6s ease,transform .6s ease;}
+    .reveal.vis{opacity:1;transform:translateY(0);}
+    @media(max-width:768px){.sidebar{display:none;}.aula-wrap{padding:2rem 1.25rem 5rem;gap:0;}}
+    @media(max-width:600px){.nav{padding:.85rem 1.25rem;}.nav-info{display:none;}.hero-git-aula{padding:6rem 1.25rem 3rem;}}
+  </style>
+</head>
+<body>
+  <div id="prog"></div>
+
+  <nav class="nav" id="nav">
+    <a href="/universo-git" class="nav-back">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m15 18-6-6 6-6"/></svg>
+      Universo Git
+    </a>
+    <div class="nav-center">
+      <span class="nav-tag-git">Git 01</span>
+    </div>
+    <div><span class="nav-info">PI I · Mod. 1 · 2026</span></div>
+  </nav>
+
+  <button id="btt" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m18 15-6-6-6 6"/></svg>
+  </button>
+
+  <section class="hero-git-aula">
+    <div class="git-blob git-blob-1"></div>
+    <div class="git-blob git-blob-2"></div>
+    <div class="hero-git-aula-inner">
+      <div class="hero-git-badge"><span class="bdot"></span>Git &amp; GitHub · Aula 01</div>
+      <h1 class="hero-git-aula-title">Introdução ao <em>Git &amp; GitHub</em></h1>
+      <p class="hero-git-aula-sub">entenda onde você está salvando — o que é versionamento, por que usar, diferença entre Git e GitHub, e os primeiros comandos no terminal.</p>
+      <div class="hero-git-aula-meta">
+        <span class="ham-tag">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12,6 12,12 16,14"/></svg>
+          1h20
+        </span>
+        <span class="ham-dot">·</span>
+        <span class="ham-tag">abr 2026</span>
+        <span class="ham-dot">·</span>
+        <span class="ham-tag">git init · git status · git add · git commit</span>
+      </div>
+    </div>
+  </section>
+
+  <div class="aula-wrap">
+    <aside class="sidebar">
+      <div class="sidebar-title">Nesta aula</div>
+      <nav class="sidebar-nav" id="sidebarNav"></nav>
+      <div class="sidebar-sep"></div>
+      <a href="/universo-git" class="sidebar-item">
+        <span class="si-dot"></span>
+        Voltar para Universo Git
+      </a>
+    </aside>
+
+    <div class="prose-wrap prose" id="proseContent">
+
+      <h2 id="problema">O problema que o Git resolve</h2>
+
+      <p>Imagina que você está fazendo um trabalho escolar no Word. Você salva o arquivo, faz mais alterações, salva de novo. Aí você percebe que errou — mas não tem como voltar pra versão de ontem. A maioria das pessoas resolve isso assim:</p>
+
+      <div class="callout callout-warn">
+        <div class="callout-icon"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg></div>
+        <div>
+          <div class="callout-title">Caos. Qual é o arquivo certo? Quem mexeu o quê?</div>
+          <div class="callout-text">trabalho_final.docx · trabalho_final2.docx · trabalho_AGORA.docx · trabalho_esse_mesmo.docx</div>
+        </div>
+      </div>
+
+      <p>Com código, esse problema é ainda maior. Você pode ter dezenas de arquivos, alterações que quebram funcionalidades que estavam funcionando, e várias pessoas mexendo no mesmo projeto ao mesmo tempo. É aí que entra o <strong>Git</strong>.</p>
+
+      <div class="callout callout-tip">
+        <div class="callout-icon"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg></div>
+        <div>
+          <div class="callout-title">Histórico organizado. Cada mudança registrada com motivo.</div>
+          <div class="callout-text">Nenhum arquivo duplicado. Você sabe exatamente o que mudou, quando mudou e por quê.</div>
+        </div>
+      </div>
+
+      <h2 id="git-vs-github">Git vs GitHub — não é a mesma coisa</h2>
+
+      <table>
+        <thead><tr><th>Ferramenta</th><th>O que é</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Git</strong></td><td>Sistema de controle de versão. Ele registra o histórico de alterações dos seus arquivos <strong>localmente</strong>. Funciona mesmo sem internet.</td></tr>
+          <tr><td><strong>GitHub</strong></td><td>Plataforma online onde você hospeda seu repositório Git. Permite colaboração, backup remoto e portfólio para o mercado.</td></tr>
+        </tbody>
+      </table>
+
+      <blockquote><p>Git é como o "histórico" do seu navegador — só que para código. GitHub é como o Google Drive — só que para repositórios Git.</p></blockquote>
+
+      <h2 id="por-que-aprender">Por que aprender Git agora?</h2>
+
+      <p>Git não é uma ferramenta opcional. Qualquer vaga de desenvolvimento — frontend, backend, mobile ou dados — exige que você saiba usar Git. Não é diferencial, é <strong>requisito básico</strong>.</p>
+
+      <ul>
+        <li><strong>Mercado de trabalho:</strong> de startups a grandes empresas como Nubank, iFood e Mercado Livre — todas usam Git no dia a dia. Sem Git, você não passa pela entrevista técnica.</li>
+        <li><strong>Trabalho em equipe:</strong> em um time, várias pessoas mexem no mesmo código ao mesmo tempo. O Git é o que evita que o trabalho de uma pessoa sobrescreva o da outra.</li>
+        <li><strong>Segurança:</strong> com Git, nada se perde. Se um bug surgir em produção, você identifica qual commit causou e reverte para a versão anterior com um comando.</li>
+        <li><strong>Portfólio:</strong> o GitHub é o seu currículo como dev. Recrutadores olham seu perfil para ver o que você construiu, como você escreve commits e com que frequência você contribui.</li>
+      </ul>
+
+      <div class="callout callout-info">
+        <div class="callout-icon"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg></div>
+        <div>
+          <div class="callout-title">Git aparece em mais de 90% das vagas</div>
+          <div class="callout-text">Dominar Git é uma das habilidades com melhor custo-benefício para quem está começando na área.</div>
+        </div>
+      </div>
+
+      <h2 id="instalacao">Instalação</h2>
+
+      <p>Antes de qualquer coisa, o Git precisa estar instalado no seu computador.</p>
+
+      <h3>Windows</h3>
+      <p>Baixe em <a href="https://git-scm.com" target="_blank" rel="noopener">git-scm.com</a>. Execute o instalador e clique em <strong>Next</strong> em todas as telas — as opções padrão já estão corretas. Em "Adjusting your PATH environment", selecione <code>"Git from the command line and also from 3rd-party software"</code>. Conclua e abra o <strong>Git Bash</strong>.</p>
+
+      <h3>Mac</h3>
+      <p>Abra o Terminal e execute: <code>xcode-select --install</code>. Uma janela vai aparecer — clique em Instalar.</p>
+
+      <h3>Linux (Ubuntu/Debian)</h3>
+      <pre><code>sudo apt update && sudo apt install git</code></pre>
+
+      <h3>Verificar a instalação</h3>
+      <pre><code>git --version
+# git version 2.x.x</code></pre>
+
+      <h2 id="configuracao">Configuração inicial</h2>
+
+      <p>Configure seu nome e e-mail — o Git vai usar esses dados em todos os seus commits. Faça isso uma vez, funciona para todos os projetos:</p>
+
+      <pre><code>git config --global user.name "Seu Nome"
+git config --global user.email "seu@email.com"</code></pre>
+
+      <h2 id="primeiros-comandos">Primeiros comandos</h2>
+
+      <p>Vamos criar um repositório do zero juntos. Esses são os comandos que você vai usar todo dia.</p>
+
+      <div class="cmd-grid">
+        <div class="cmd-item">
+          <span class="cmd-code">git init</span>
+          <span class="cmd-desc">Inicia um repositório Git na pasta atual. Cria uma pasta oculta <code>.git/</code> que guarda todo o histórico.</span>
+        </div>
+        <div class="cmd-item">
+          <span class="cmd-code">git status</span>
+          <span class="cmd-desc">Mostra o estado atual — o que mudou, o que está preparado para commit. Seu melhor amigo.</span>
+        </div>
+        <div class="cmd-item">
+          <span class="cmd-code">git add .</span>
+          <span class="cmd-desc">Prepara todos os arquivos modificados para o commit.</span>
+        </div>
+        <div class="cmd-item">
+          <span class="cmd-code">git add arquivo.html</span>
+          <span class="cmd-desc">Prepara só um arquivo específico para o commit.</span>
+        </div>
+        <div class="cmd-item">
+          <span class="cmd-code">git commit -m "mensagem"</span>
+          <span class="cmd-desc">Salva um snapshot do projeto com uma descrição. Cada commit é uma foto do projeto naquele momento, com um código único (hash).</span>
+        </div>
+        <div class="cmd-item">
+          <span class="cmd-code">git log --oneline</span>
+          <span class="cmd-desc">Lista o histórico de commits de forma resumida.</span>
+        </div>
+        <div class="cmd-item">
+          <span class="cmd-code">git diff</span>
+          <span class="cmd-desc">Mostra exatamente o que mudou desde o último commit.</span>
+        </div>
+      </div>
+
+      <div class="callout callout-tip">
+        <div class="callout-icon"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4"/><path d="M12 16h.01"/></svg></div>
+        <div>
+          <div class="callout-title">Como escrever mensagens de commit</div>
+          <div class="callout-text">Sempre escreva no imperativo e seja descritivo. Exemplos bons: <code>adiciona formulário de contato</code>, <code>corrige bug no menu mobile</code>, <code>atualiza estilos do header</code>. Evite: <code>ajustes</code>, <code>update</code>, <code>aaa</code>.</div>
+        </div>
+      </div>
+
+      <h2 id="fluxo">Fluxo básico — como tudo se conecta</h2>
+
+      <pre><code># 1. Entra na pasta do projeto
+cd meu-projeto
+
+# 2. Inicia o repositório (só na primeira vez)
+git init
+
+# 3. Faz alterações nos arquivos...
+
+# 4. Verifica o que mudou
+git status
+
+# 5. Prepara tudo para salvar
+git add .
+
+# 6. Salva o snapshot
+git commit -m "cria estrutura inicial do projeto"
+
+# 7. Veja o histórico
+git log --oneline</code></pre>
+
+      <hr/>
+
+      <a href="/universo-git" style="display:inline-flex;align-items:center;gap:.4rem;font-size:.82rem;font-weight:600;color:rgba(234,230,255,.5);transition:color .2s;margin-top:1rem;" onmouseover="this.style.color='#eae6ff'" onmouseout="this.style.color='rgba(234,230,255,.5)'">
+        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m15 18-6-6 6-6"/></svg>
+        Voltar para Universo Git
+      </a>
+
+    </div>
+  </div>
+
+  <footer class="footer-git">
+    <div>
+      <div class="footer-logo">ETE <em>Cícero Dias</em></div>
+      <div class="footer-sub">Desenvolvimento de Sistemas · Módulo 1 · 2026</div>
+    </div>
+    <div class="footer-right">Git 01 · Prof.ª Samara Sabino</div>
+  </footer>
+
+  <script is:inline>
+    const prog=document.getElementById('prog'),nav=document.getElementById('nav'),btt=document.getElementById('btt');
+    window.addEventListener('scroll',()=>{prog.style.width=(scrollY/(document.body.scrollHeight-innerHeight)*100)+'%';nav.classList.toggle('scrolled',scrollY>60);btt.classList.toggle('show',scrollY>300);});
+
+    // Sidebar
+    (function(){
+      const sNav=document.getElementById('sidebarNav'),prose=document.getElementById('proseContent');
+      if(!sNav||!prose)return;
+      const hs=prose.querySelectorAll('h2');
+      hs.forEach(h=>{const a=document.createElement('a');a.className='sidebar-item';a.href='#'+h.id;a.innerHTML='<span class="si-dot"></span>'+h.textContent;a.addEventListener('click',e=>{e.preventDefault();document.getElementById(h.id)?.scrollIntoView({behavior:'smooth',block:'start'});});sNav.appendChild(a);});
+      const obs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){sNav.querySelectorAll('.sidebar-item').forEach(a=>a.classList.remove('active'));const act=sNav.querySelector('[href="#'+e.target.id+'"]');if(act)act.classList.add('active');}});},{rootMargin:'-10% 0px -80% 0px'});
+      hs.forEach(h=>obs.observe(h));
+    })();
+
+    const obs2=new IntersectionObserver(e=>e.forEach(x=>{if(x.isIntersecting)x.target.classList.add('vis');}),{threshold:.08});
+    document.querySelectorAll('.reveal').forEach(el=>obs2.observe(el));
+  </script>
+</body>
+</html>
