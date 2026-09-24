@@ -1,4 +1,13 @@
+<img width="1568" height="392" alt="classroom-pi" src="https://github.com/user-attachments/assets/1ebcb758-b3d3-4042-b05a-0ca2f9201162" />
+
 # PI I — Material de Aula
+
+![DISCIPLINA](https://img.shields.io/static/v1?label=DISCIPLINA&message=Projeto%20Integrador%20I&color=7c3aed&style=for-the-badge)
+![TIPO](https://img.shields.io/static/v1?label=TIPO&message=Material%20de%20Aula&color=231f20&style=for-the-badge)
+![STATUS](https://img.shields.io/static/v1?label=STATUS&message=Encerrado&color=6b7280&style=for-the-badge)
+![AULAS](https://img.shields.io/static/v1?label=AULAS&message=7%20publicadas&color=0ea5e9&style=for-the-badge)
+![STACK](https://img.shields.io/static/v1?label=STACK&message=Astro%206%20%2B%20MDX&color=ff5d01&style=for-the-badge)
+![ETE Cícero Dias](https://img.shields.io/static/v1?label=ETE%20C%C3%ADcero%20Dias&message=2026&color=db1e2f&style=for-the-badge)
 
 Site de documentação da disciplina **Projeto Integrador I** do curso técnico em Desenvolvimento de Sistemas da ETE Cícero Dias (Recife, PE), turma de 2026.
 
