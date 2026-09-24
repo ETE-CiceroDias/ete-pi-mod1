@@ -1,0 +1,228 @@
+---
+numero: "05"
+titulo: "HTML —"
+tituloEm: "Links"
+subtitulo: "href, target, rel, âncoras, links internos, externos, de email e telefone — tudo sobre a tag <a> na prática."
+dataA: "07 mai 2026"
+data: "07 mai 2026"
+duracao: "1h20"
+status: "publicada"
+disciplina: "PI I"
+topicos: ["<a>", "href", "target", "âncoras", "links internos", "links externos"]
+coverUrl: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=1400&q=80"
+---
+
+import Callout from '../../components/Callout.astro'
+import VideosRecomendados from '../../components/VideosRecomendados.astro'
+
+## Objetivos da Aula
+
+- Entender o que é um hiperlink e por que ele é o elemento central da web
+- Criar links externos, internos (âncoras), para arquivos e entre páginas
+- Usar `target="_blank"` e `rel="noopener noreferrer"` com segurança
+- Navegar dentro da própria página usando `id` como destino
+- Construir uma página com navegação real funcionando
+
+---
+
+## 1. A Tag `<a>` — O Elemento que Criou a Web
+
+`<a>` vem de *anchor* (âncora). É a tag que transforma texto em hiperlink — o conceito que Tim Berners-Lee inventou quando criou a Web em 1991. Sem `<a>`, páginas seriam ilhas isoladas.
+
+```html
+<a href="https://developer.mozilla.org">MDN Web Docs</a>
+```
+
+| Parte | Descrição |
+|---|---|
+| `<a>` | Tag de abertura |
+| `href="..."` | Atributo obrigatório — define o destino |
+| `MDN Web Docs` | Conteúdo clicável — pode ser texto, imagem, qualquer coisa |
+| `</a>` | Tag de fechamento |
+
+---
+
+## 2. Tipos de Link
+
+### 2.1 Link Externo — outro site
+
+```html
+<a href="https://playvalorant.com/pt-br/" target="_blank" rel="noopener noreferrer">
+  Valorant
+</a>
+```
+
+`target="_blank"` abre em nova aba. Sempre acompanhe com `rel="noopener noreferrer"` em links externos — é segurança obrigatória.
+
+<Callout type="info" title="Por que rel='noopener noreferrer'?">
+  Quando você abre um link com `target="_blank"`, a nova página pode acessar a sua via `window.opener` — potencialmente redirecionando o usuário para outro lugar. `rel="noopener noreferrer"` bloqueia esse acesso. Em links internos (seus próprios arquivos) não é necessário.
+</Callout>
+
+### 2.2 Link para outra página do seu projeto
+
+```html
+<!-- De qualquer página, indo para outra do mesmo projeto -->
+<a href="./exe.html">Site do Avatar</a>
+<a href="./outro-site.html" target="_blank">Outro site</a>
+<a href="./origem-pokemon.html" target="_blank">História e Origem</a>
+```
+
+O `./` significa "na mesma pasta que este arquivo". Sem ele, o navegador pode buscar o arquivo no lugar errado.
+
+### 2.3 Âncoras — navegação dentro da própria página
+
+Em sala construímos isso na aula da Vespa e na página da Gwen Stacy. O mecanismo tem duas partes:
+
+**Parte 1 — criar o destino** com um `id` em qualquer elemento:
+```html
+<h1 id="title">ALERTA: VESPA ROSA ROUBA A CENA NAS RUAS</h1>
+
+<p id="paragraph">Enquanto alguns motoristas mais tradicionais...</p>
+```
+
+**Parte 2 — criar o link** com `href="#id"`:
+```html
+<!-- Vai para o elemento com id="paragraph" -->
+<a href="#paragraph">Ir para o final</a>
+
+<!-- Volta para o topo -->
+<a href="#title">Voltar ao início</a>
+```
+
+**Âncora para outra página:**
+```html
+<!-- Vai para a página exe.html e rola até o elemento id="tag" -->
+<a href="./exe.html#tag">Ir para Avatar — tag</a>
+```
+
+<Callout type="warn" title="id deve ser único">
+  O `id` de um elemento deve ser único dentro da página — não pode repetir. Se você tiver dois elementos com o mesmo `id`, o link vai para o primeiro que encontrar, e o W3C Validator vai apontar erro.
+</Callout>
+
+### 2.4 Imagem como link
+
+Qualquer elemento dentro de `<a>` vira clicável — inclusive imagens:
+
+```html
+<a href="https://br.pinterest.com/pin/317081630014150744/">
+  <img src="./vespa-rosa.webp"
+       alt="Vespa rosa estacionada na rua"
+       width="400">
+</a>
+```
+
+---
+
+## 3. Exemplo completo — Página da Gwen Stacy
+
+Em sala construímos uma página com navegação real: imagem no topo, menu de âncoras, seções identificadas por `id`, links externos e link para outro arquivo.
+
+```html
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gwen Stacy: A heroína por trás da máscara</title>
+</head>
+<body>
+
+  <img src="./thumb-1920-984246.png"
+       alt="Wallpaper rosa com arte da Gwen Stacy / Spider-Gwen"
+       height="500" width="650" id="cima">
+
+  <br><br>
+
+  <!-- Link de âncora: vai para #baixo na mesma página -->
+  <a href="#baixo">Ir para o final</a>
+
+  <!-- Menu de navegação com âncoras -->
+  <ul>
+    <li><a href="#sobre">Sobre</a></li>
+    <li><a href="#poderes">Características</a></li>
+  </ul>
+
+  <h1>Gwen Stacy: A heroína por trás da máscara</h1>
+  <h2>A jornada de Spider-Gwen, que transforma a clássica Gwen Stacy
+  em uma das versões mais fortes do universo do Homem-Aranha.</h2>
+
+  <h3 id="sobre">Sobre Gwen Stacy</h3>
+
+  <p>A <strong>Gwen Stacy</strong> é uma personagem importante do universo
+  da Marvel Comics. Criada na década de 1960, Gwen era uma estudante
+  inteligente e gentil, colega de
+  <a href="https://marvel.fandom.com/pt-br/wiki/Peter_Parker_(Terra-616)"
+     target="_blank">Peter Parker</a> na universidade.</p>
+
+  <p>A história de Gwen ficou eternamente marcada por
+  <em>sua morte trágica nas mãos do Duende Verde.</em></p>
+
+  <img src="./spider-gwen-collage-wallpaper-v0-38mkfxw8znmb1.webp"
+       alt="Collage da Spider-Gwen em fundo rosa"
+       height="450" width="auto">
+
+  <!-- id="baixo" é o destino do link lá em cima -->
+  <p id="baixo">Com o passar do tempo, novas versões da personagem surgiram,
+  como a Spider-Gwen — uma versão de outro universo onde Gwen é quem
+  ganha poderes de aranha.</p>
+
+  <h3 id="poderes">Características da Gwen</h3>
+
+  <ol type="i">
+    <li><strong>Força sobre-humana:</strong> consegue levantar várias toneladas.</li>
+    <li><strong>Agilidade e reflexos aprimorados:</strong> movimentos extremamente rápidos.</li>
+    <li><strong>Sentido-Aranha:</strong> instinto que a alerta sobre perigos iminentes.</li>
+    <li><strong>Aderência a superfícies:</strong> pode escalar paredes e grudar em materiais.</li>
+    <li><strong>Velocidade aumentada:</strong> muito mais rápida que humanos normais.</li>
+    <li><strong>Resistência elevada:</strong> aguenta impactos fortes e se recupera rápido.</li>
+  </ol>
+
+  <!-- Âncora voltando ao topo -->
+  <a href="#cima">Voltar para cima</a><br>
+
+  <!-- Link para outro arquivo do projeto -->
+  <a href="./outro-site.html" target="_blank">Outro site</a>
+
+</body>
+</html>
+```
+
+---
+
+## 4. O que `id` também faz
+
+Além de destino de âncora, o `id` foi o primeiro atributo de **identificação** que vimos em sala — junto com `class`. No exemplo do `exe.html`:
+
+```html
+<samara cpf="00000000" mbti="INFJ" hp="corvinal">Estou dando aula de HTML</samara>
+```
+
+Essa demonstração foi proposital: qualquer palavra pode ser uma tag e qualquer palavra pode ser um atributo — o browser tenta renderizar. Mas **tags inventadas não têm significado semântico** — o browser ignora o que não conhece. O HTML válido usa apenas as tags da especificação W3C.
+
+---
+
+## 5. Referência Rápida — Atributos de `<a>`
+
+| Atributo | Valores | Quando usar |
+|---|---|---|
+| `href` | URL, `#id`, `./arquivo.html` | Sempre — é obrigatório |
+| `target` | `_blank`, `_self` | `_blank` para links externos |
+| `rel` | `noopener noreferrer` | Sempre que usar `target="_blank"` |
+| `download` | (sem valor ou nome do arquivo) | Quando quiser forçar download |
+
+---
+
+## Vídeos recomendados
+
+<VideosRecomendados videos={[
+  { id: "LeOVXQDsAIY", titulo: "Links e Âncoras", canal: "Curso em Vídeo HTML5", descricao: "href, target, rel — tudo sobre a tag <a> e navegação." },
+  { id: "LeLnlT-ZKw8", titulo: "Links Internos", canal: "Curso em Vídeo HTML5", descricao: "Como criar navegação entre páginas do mesmo projeto." },
+  { id: "Jszz7M676y8", titulo: "Links para Download", canal: "Curso em Vídeo HTML5", descricao: "O atributo download e como forçar o download de arquivos." },
+  { id: "eb5tPfOeexI", titulo: "Links — HTML Completo Aula 07", canal: "Programação Web", descricao: "Todos os tipos de link em HTML numa aula só." },
+]} />
+
+## Referências
+
+- [MDN — `<a>`: O Elemento Âncora](https://developer.mozilla.org/pt-BR/docs/Web/HTML/Element/a)
+- [W3Schools — HTML Links](https://www.w3schools.com/html/html_links.asp)
+- [W3C Markup Validation Service](https://validator.w3.org/)

@@ -1,0 +1,304 @@
+---
+import '../../styles/global.css'
+---
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Universo Terminal · ETE Cícero Dias</title>
+<meta name="description" content="Linha de comando do zero — pwd, ls, mkdir, cd, touch, code . — para todo dev."/>
+<link rel="icon" type="image/svg+xml" href="/favicon.svg"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<style>
+:root{
+  --term-bg:#080808;--term-surface:#111;--term-card:#141414;
+  --term-border:rgba(255,255,255,.09);--term-border-h:rgba(255,255,255,.28);
+  --term-acc:#e8e8e8;--term-acc-dim:rgba(232,232,232,.06);
+  --term-text:#f0f0f0;--term-text-sub:rgba(240,240,240,.55);--term-text-dim:rgba(240,240,240,.3);
+  --term-mono:'JetBrains Mono','Courier New',monospace;
+  --font-h:'Cormorant Garamond',Georgia,serif;
+  --font-b:'Plus Jakarta Sans',sans-serif;
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{background:var(--term-bg);color:var(--term-text);font-family:var(--font-b);overflow-x:hidden;line-height:1.65;}
+a{text-decoration:none;color:inherit;}
+::selection{background:#fff;color:#000;}
+::-webkit-scrollbar{width:4px;}::-webkit-scrollbar-track{background:var(--term-bg);}::-webkit-scrollbar-thumb{background:rgba(255,255,255,.2);border-radius:99px;}
+
+#prog{position:fixed;top:0;left:0;height:2px;z-index:600;background:#fff;width:0;transition:width .1s;}
+#btt{position:fixed;bottom:2rem;right:2rem;z-index:500;width:44px;height:44px;border-radius:50%;background:#1a1a1a;color:#fff;border:1px solid rgba(255,255,255,.15);cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 8px 30px rgba(0,0,0,.6);opacity:0;transform:translateY(16px) scale(.85);transition:opacity .3s,transform .3s;pointer-events:none;}
+#btt.show{opacity:1;transform:translateY(0) scale(1);pointer-events:all;}
+#btt:hover{transform:translateY(-3px) scale(1.08);}
+
+/* NAV */
+.nav{position:fixed;top:0;left:0;right:0;z-index:400;display:flex;align-items:center;justify-content:space-between;padding:.85rem 2.5rem;background:rgba(8,8,8,.95);backdrop-filter:blur(18px);border-bottom:1px solid var(--term-border);transition:box-shadow .22s;}
+.nav.scrolled{box-shadow:0 6px 20px rgba(0,0,0,.5);}
+.nav-back{display:inline-flex;align-items:center;gap:.5rem;font-size:.8rem;font-weight:600;color:var(--term-text-dim);transition:color .2s;}
+.nav-back:hover{color:var(--term-text);}
+.nav-back svg{width:15px;height:15px;}
+.nav-center{display:flex;align-items:center;}
+.nav-tag{display:inline-flex;align-items:center;gap:.4rem;padding:.3rem .8rem;border:1px solid var(--term-border);border-radius:99px;font-size:.7rem;font-weight:700;color:rgba(240,240,240,.55);letter-spacing:.06em;text-transform:uppercase;font-family:var(--term-mono);}
+.nav-tag svg{width:12px;height:12px;}
+.nav-info{font-size:.75rem;color:var(--term-text-dim);font-weight:500;}
+
+/* BLOBS VERDES */
+.noise-bg{position:absolute;inset:0;z-index:0;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.65' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='.035'/%3E%3C/svg%3E");background-size:200px;opacity:.8;}
+
+
+/* HERO */
+.hero-term{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:7rem 2rem 4rem;position:relative;overflow:hidden;text-align:center;}
+.hero-term-inner{position:relative;z-index:2;max-width:680px;display:flex;flex-direction:column;align-items:center;gap:1.2rem;}
+.hero-badge{display:inline-flex;align-items:center;gap:.5rem;padding:.38rem 1rem;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:99px;font-size:.7rem;font-weight:700;color:rgba(240,240,240,.7);letter-spacing:.08em;text-transform:uppercase;}
+.bdot{width:6px;height:6px;border-radius:50%;background:#fff;animation:pulse 2s ease-in-out infinite;}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1);}50%{opacity:.5;transform:scale(1.5);}}
+.hero-title{font-family:var(--font-h);font-size:clamp(2.8rem,7vw,5rem);font-weight:300;letter-spacing:-.04em;line-height:1;color:var(--term-text);}
+.hero-title em{font-style:italic;color:var(--term-acc);font-weight:200;}
+.hero-sub{font-size:clamp(.88rem,2vw,1rem);color:var(--term-text-sub);line-height:1.75;max-width:480px;}
+.hero-scroll{position:absolute;bottom:1.5rem;left:50%;transform:translateX(-50%);color:var(--term-text-dim);animation:bounce 2s ease-in-out infinite;z-index:3;}
+@keyframes bounce{0%,100%{transform:translateX(-50%) translateY(0);}50%{transform:translateX(-50%) translateY(8px);}}
+
+/* TERMINAL HERO */
+.hero-terminal{width:100%;max-width:520px;background:#010904;border:1px solid rgba(40,200,80,.3);border-radius:12px;overflow:hidden;box-shadow:0 8px 40px rgba(0,0,0,.6),0 0 0 1px rgba(40,200,80,.08);font-family:var(--term-mono);text-align:left;}
+.term-bar{display:flex;align-items:center;gap:6px;padding:10px 14px;background:rgba(255,255,255,.03);border-bottom:1px solid rgba(40,200,80,.12);}
+.term-dot{width:10px;height:10px;border-radius:50%;}
+.term-red{background:#ff5f57;}.term-yellow{background:#febc2e;}.term-green{background:#28c840;}
+.term-title-label{margin-left:6px;font-size:11px;color:rgba(228,255,232,.3);letter-spacing:.04em;}
+.term-body{padding:16px 18px;display:flex;flex-direction:column;gap:3px;min-height:140px;}
+.term-line{display:flex;align-items:center;font-size:13px;line-height:1.6;}
+.term-prompt{color:var(--term-acc);font-weight:500;user-select:none;margin-right:6px;}
+.term-cmd{color:var(--term-text);font-size:13px;}
+.term-out{font-size:12px;color:rgba(228,255,232,.45);padding-left:16px;line-height:1.6;margin-bottom:3px;}
+.term-out-acc{color:var(--term-acc);}
+.term-cursor{display:inline-block;width:8px;height:14px;background:var(--term-acc);margin-left:1px;animation:blink 1.1s step-end infinite;vertical-align:middle;}
+@keyframes blink{0%,100%{opacity:0}50%{opacity:1}}
+
+/* SECTION */
+.section{padding:5rem 0;}
+.section-inner{max-width:1100px;margin:0 auto;padding:0 2rem;}
+.section-label{font-size:.68rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.5);margin-bottom:.7rem;display:flex;align-items:center;gap:.5rem;}
+.section-label::before{content:'';width:18px;height:2px;background:#fff;border-radius:99px;}
+.section-title{font-family:var(--font-h);font-size:clamp(2rem,4vw,3rem);font-weight:300;letter-spacing:-.02em;margin-bottom:.9rem;line-height:1.1;color:var(--term-text);}
+.section-title em{font-style:italic;color:rgba(255,255,255,.5);font-weight:200;}
+.section-header{margin-bottom:3rem;}
+
+/* GRID AULAS */
+.aulas-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1.2rem;}
+.aula-card{background:var(--term-card);border:1px solid var(--term-border);border-radius:16px;overflow:hidden;display:flex;flex-direction:column;text-decoration:none;color:inherit;transition:transform .22s,box-shadow .22s,border-color .22s;position:relative;}
+.aula-card:not(.em-breve):hover{transform:translateY(-5px);box-shadow:0 16px 40px rgba(0,0,0,.8);border-color:rgba(255,255,255,.25);}
+.aula-card.em-breve{opacity:.4;pointer-events:none;}
+.agc-num{position:absolute;top:12px;right:16px;font-family:var(--font-h);font-size:5rem;font-weight:700;color:rgba(40,200,80,.06);line-height:1;user-select:none;pointer-events:none;}
+.agc-body{padding:1.4rem 1.4rem 1rem;flex:1;position:relative;z-index:1;}
+.agc-header{margin-bottom:.8rem;}
+.badge-ok{display:inline-flex;align-items:center;gap:.35rem;padding:.2rem .65rem;border-radius:99px;font-size:.6rem;font-weight:700;text-transform:uppercase;letter-spacing:.07em;background:rgba(255,255,255,.07);color:rgba(240,240,240,.8);border:1px solid rgba(255,255,255,.12);}
+.badge-ok .sdot{background:#fff;width:5px;height:5px;border-radius:50%;animation:pulse 2s ease-in-out infinite;}
+.badge-soon{display:inline-flex;align-items:center;gap:.35rem;padding:.2rem .65rem;border-radius:99px;font-size:.6rem;font-weight:700;text-transform:uppercase;letter-spacing:.07em;background:rgba(255,255,255,.03);color:rgba(240,240,240,.35);border:1px solid rgba(255,255,255,.07);}
+.badge-soon .sdot{background:rgba(125,255,170,.5);width:5px;height:5px;border-radius:50%;}
+.agc-title{font-family:var(--font-h);font-size:1.35rem;font-weight:300;line-height:1.2;margin-bottom:.5rem;color:var(--term-text);}
+.agc-title em{font-style:italic;color:rgba(255,255,255,.45);}
+.agc-desc{font-size:.8rem;color:var(--term-text-sub);line-height:1.6;margin-bottom:.9rem;}
+.agc-topics{display:flex;flex-wrap:wrap;gap:.35rem;}
+.agc-tag{font-family:var(--term-mono);padding:.15rem .5rem;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:4px;font-size:.65rem;color:rgba(240,240,240,.4);}
+.agc-footer{padding:.8rem 1.4rem;border-top:1px solid rgba(255,255,255,.07);display:flex;align-items:center;justify-content:space-between;}
+.agc-meta{display:flex;align-items:center;gap:.35rem;font-size:.72rem;color:var(--term-text-dim);font-weight:500;}
+.agc-meta svg{width:13px;height:13px;}
+.agc-arrow{color:var(--term-text-dim);transition:transform .22s,color .22s;display:flex;}
+.aula-card:hover .agc-arrow{transform:translate(3px,-3px);color:#fff;}
+
+/* VIDEOS */
+.videos-section{padding:5rem 0;border-top:1px solid rgba(255,255,255,.07);}
+.videos-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1.2rem;margin-top:2rem;}
+.video-card{background:var(--term-card);border:1px solid var(--term-border);border-radius:14px;overflow:hidden;text-decoration:none;color:inherit;transition:transform .22s,border-color .22s,box-shadow .22s;display:block;}
+.video-card:hover{transform:translateY(-4px);border-color:rgba(255,255,255,.2);box-shadow:0 10px 30px rgba(0,0,0,.6);}
+.video-thumb{width:100%;aspect-ratio:16/9;background:#010904;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;}
+.video-thumb img{width:100%;height:100%;object-fit:cover;opacity:.8;transition:opacity .22s;}
+.video-card:hover .video-thumb img{opacity:1;}
+.video-play{position:absolute;width:40px;height:40px;background:rgba(255,255,255,.12);border:1.5px solid rgba(255,255,255,.35);border-radius:50%;display:flex;align-items:center;justify-content:center;backdrop-filter:blur(4px);}
+.video-play svg{width:16px;height:16px;color:#fff;margin-left:2px;}
+.video-body{padding:1rem;}
+.video-canal{font-size:.62rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.4);margin-bottom:.35rem;}
+.video-titulo{font-size:.88rem;font-weight:600;color:var(--term-text);line-height:1.4;margin-bottom:.3rem;}
+.video-desc{font-size:.78rem;color:var(--term-text-sub);line-height:1.5;}
+
+/* FOOTER */
+.footer{padding:2rem 2.5rem;border-top:1px solid var(--term-border);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem;}
+.footer-logo{font-family:var(--font-h);font-size:1.2rem;font-weight:300;letter-spacing:-.02em;}
+.footer-logo em{font-style:italic;color:rgba(255,255,255,.35);}
+.footer-sub{font-size:.7rem;color:var(--term-text-dim);margin-top:.1rem;}
+.footer-right{font-size:.78rem;color:var(--term-text-dim);}
+
+/* REVEAL */
+.reveal{opacity:0;transform:translateY(22px);transition:opacity .6s ease,transform .6s ease;}
+.reveal.vis{opacity:1;transform:translateY(0);}
+.reveal-d1{transition-delay:.1s;}.reveal-d2{transition-delay:.2s;}.reveal-d3{transition-delay:.3s;}
+
+@media(max-width:600px){.nav{padding:.85rem 1.25rem;}.nav-info{display:none;}.hero-term{padding:6rem 1.25rem 3rem;}.aulas-grid{grid-template-columns:1fr;}.videos-grid{grid-template-columns:1fr;}}
+</style>
+</head>
+<body>
+<div id="prog"></div>
+
+<nav class="nav" id="nav">
+  <a href="/" class="nav-back">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m15 18-6-6 6-6"/></svg>
+    Todas as aulas
+  </a>
+  <div class="nav-center">
+    <span class="nav-tag">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/></svg>
+      Universo Terminal
+    </span>
+  </div>
+  <span class="nav-info">PI I · Mod. 1 · 2026</span>
+</nav>
+
+<button id="btt" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m18 15-6-6-6 6"/></svg>
+</button>
+
+<!-- HERO -->
+<section class="hero-term" id="hero">
+  <div class="noise-bg"></div>
+
+  <div class="hero-term-inner">
+    <div class="hero-badge">
+      <span class="bdot"></span>
+      Trilha de aulas · Terminal &amp; Linha de Comando
+    </div>
+
+    <h1 class="hero-title">Universo <em>Terminal</em></h1>
+    <p class="hero-sub">pwd, ls, mkdir, cd, touch, code . — linha de comando do zero para todo dev. Sem depender de clique nenhum.</p>
+
+    <div class="hero-terminal">
+      <div class="term-bar">
+        <span class="term-dot term-red"></span>
+        <span class="term-dot term-yellow"></span>
+        <span class="term-dot term-green"></span>
+        <span class="term-title-label">bash — ~/meu-projeto</span>
+      </div>
+      <div class="term-body">
+        <div class="term-line"><span class="term-prompt">$</span><span class="term-cmd" id="t1"></span></div>
+        <div class="term-out" id="out1" style="display:none"><span class="term-out-acc">meu-projeto/</span></div>
+        <div class="term-line" id="line2" style="display:none"><span class="term-prompt">$</span><span class="term-cmd" id="t2"></span></div>
+        <div class="term-out" id="out2" style="display:none">index.html&nbsp;&nbsp;style.css&nbsp;&nbsp;<span class="term-out-acc">assets/</span></div>
+        <div class="term-line" id="line3" style="display:none"><span class="term-prompt">$</span><span class="term-cmd" id="t3"></span></div>
+        <div class="term-line" id="line4" style="display:none"><span class="term-prompt">$</span><span style="display:inline-flex;align-items:center;"><span class="term-cursor"></span></span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="hero-scroll">
+    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
+  </div>
+</section>
+
+<!-- TRILHA -->
+<section class="section" id="trilha">
+  <div class="section-inner">
+    <div class="section-header reveal">
+      <div class="section-label">Conteúdo</div>
+      <h2 class="section-title">Aulas da <em>trilha</em></h2>
+    </div>
+    <div class="aulas-grid">
+
+      <a href="/universo-terminal/term-01" class="aula-card reveal">
+        <div class="agc-num">01</div>
+        <div class="agc-body">
+          <div class="agc-header"><span class="badge-ok"><span class="sdot"></span>Publicada</span></div>
+          <div class="agc-title">Navegando pelo <em>sistema de arquivos</em></div>
+          <div class="agc-desc">pwd, ls, cd, mkdir, touch, rm — os comandos que você vai usar todo dia, sem exceção.</div>
+          <div class="agc-topics">
+            <span class="agc-tag">pwd</span><span class="agc-tag">ls</span><span class="agc-tag">cd</span><span class="agc-tag">mkdir</span><span class="agc-tag">touch</span>
+          </div>
+        </div>
+        <div class="agc-footer">
+          <div class="agc-meta">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+            abr 2026
+          </div>
+          <div class="agc-arrow"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17 17 7M17 7H7M17 7v10"/></svg></div>
+        </div>
+      </a>
+
+      <div class="aula-card em-breve reveal reveal-d1">
+        <div class="agc-num">02</div>
+        <div class="agc-body">
+          <div class="agc-header"><span class="badge-soon"><span class="sdot"></span>Em breve</span></div>
+          <div class="agc-title">Abrindo o <em>VS Code</em> pelo terminal</div>
+          <div class="agc-desc">code . e atalhos essenciais — como abrir projetos, navegar entre arquivos e usar o terminal integrado.</div>
+          <div class="agc-topics"><span class="agc-tag">code .</span><span class="agc-tag">Ctrl+`</span><span class="agc-tag">Ctrl+P</span><span class="agc-tag">Extensões</span></div>
+        </div>
+        <div class="agc-footer"><div class="agc-meta">Em breve</div></div>
+      </div>
+
+      <div class="aula-card em-breve reveal reveal-d2">
+        <div class="agc-num">03</div>
+        <div class="agc-body">
+          <div class="agc-header"><span class="badge-soon"><span class="sdot"></span>Em breve</span></div>
+          <div class="agc-title">Variáveis de ambiente e <em>configuração</em></div>
+          <div class="agc-desc">PATH, variáveis de ambiente, .bashrc, .zshrc — personalizando o terminal e entendendo como o sistema resolve comandos.</div>
+          <div class="agc-topics"><span class="agc-tag">PATH</span><span class="agc-tag">export</span><span class="agc-tag">.bashrc</span><span class="agc-tag">which</span></div>
+        </div>
+        <div class="agc-footer"><div class="agc-meta">Em breve</div></div>
+      </div>
+
+      <div class="aula-card em-breve reveal reveal-d3">
+        <div class="agc-num">04</div>
+        <div class="agc-body">
+          <div class="agc-header"><span class="badge-soon"><span class="sdot"></span>Em breve</span></div>
+          <div class="agc-title">Terminal no <em>Windows</em> — PowerShell e Git Bash</div>
+          <div class="agc-desc">Diferenças entre cmd, PowerShell e Git Bash. Por que o Git Bash é o mais próximo do Linux/Mac para quem está começando.</div>
+          <div class="agc-topics"><span class="agc-tag">PowerShell</span><span class="agc-tag">Git Bash</span><span class="agc-tag">WSL</span></div>
+        </div>
+        <div class="agc-footer"><div class="agc-meta">Em breve</div></div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<footer class="footer">
+  <div>
+    <div class="footer-logo">ETE <em>Cícero Dias</em></div>
+    <div class="footer-sub">Desenvolvimento de Sistemas · Módulo 1 · 2026</div>
+  </div>
+  <div class="footer-right">Universo Terminal · Prof.ª Samara Sabino</div>
+</footer>
+
+<script is:inline>
+  const prog=document.getElementById('prog'),nav=document.getElementById('nav'),btt=document.getElementById('btt');
+  window.addEventListener('scroll',()=>{prog.style.width=(scrollY/(document.body.scrollHeight-innerHeight)*100)+'%';nav.classList.toggle('scrolled',scrollY>60);btt.classList.toggle('show',scrollY>400);});
+  const obs=new IntersectionObserver(e=>e.forEach(x=>{if(x.isIntersecting)x.target.classList.add('vis');}),{threshold:.08});
+  document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+
+  function typeText(el,text,delay,cb){
+    el.textContent='';let i=0;
+    setTimeout(()=>{
+      const t=setInterval(()=>{
+        el.textContent+=text[i++];
+        if(i>=text.length){clearInterval(t);if(cb)cb();}
+      },55);
+    },delay);
+  }
+  window.addEventListener('load',()=>{
+    const t1=document.getElementById('t1'),out1=document.getElementById('out1');
+    const line2=document.getElementById('line2'),t2=document.getElementById('t2'),out2=document.getElementById('out2');
+    const line3=document.getElementById('line3'),t3=document.getElementById('t3'),line4=document.getElementById('line4');
+    typeText(t1,'mkdir meu-projeto && cd meu-projeto',400,()=>{
+      out1.style.display='';
+      line2.style.display='';
+      typeText(t2,'ls',1400,()=>{
+        out2.style.display='';
+        line3.style.display='';
+        typeText(t3,'code .',2200,()=>{
+          line4.style.display='';
+        });
+      });
+    });
+  });
+</script>
+</body>
+</html>

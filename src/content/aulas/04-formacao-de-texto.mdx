@@ -1,0 +1,202 @@
+---
+numero: "04"
+titulo: "HTML — Formação de Texto"
+tituloEm: ""
+subtitulo: "Hierarquia de títulos, formatação semântica, br, hr, pre, mark, del, sub, sup e como construir um texto rico em HTML."
+dataA: "30 abr 2026"
+duracao: "1h20"
+status: "publicada"
+disciplina: "PI I"
+topicos: ["h1–h6", "strong", "em", "mark", "del", "sub", "sup", "br", "hr", "pre"]
+coverUrl: "https://images.unsplash.com/photo-1455390582262-044cdead277a?w=1400&q=80"
+---
+
+import Callout from '../../components/Callout.astro'
+import VideosRecomendados from '../../components/VideosRecomendados.astro'
+
+## Objetivos da Aula
+
+- Entender como funciona a hierarquia de títulos do `<h1>` ao `<h6>`
+- Usar `<strong>` e `<em>` com intenção semântica, não só visual
+- Conhecer as tags de formatação inline: `<mark>`, `<del>`, `<sub>`, `<sup>`
+- Entender quando usar `<br>`, `<hr>` e `<pre>`
+- Construir um texto rico que conta uma história usando só HTML
+
+---
+
+## 1. Hierarquia de Títulos — h1 a h6
+
+Títulos em HTML não existem apenas para deixar o texto grande ou pequeno — eles criam uma **estrutura de leitura** que navegadores, leitores de tela e mecanismos de busca usam para entender o conteúdo.
+
+```html
+<h1>ALERTA: VESPA ROSA ROUBA A CENA NAS RUAS</h1>
+<h2>O fenômeno nas redes</h2>
+<h3>A reação dos motoristas</h3>
+<h4>O que dizem os especialistas</h4>
+<h5>Edições especiais da Piaggio</h5>
+<h6>Fontes consultadas</h6>
+```
+
+Em sala construímos exatamente isso — o mesmo título em todos os seis níveis, para você enxergar a diferença de peso visual e entender que **`<h1>` é o título da página inteira**, e deve aparecer uma única vez.
+
+<Callout type="warn" title="h1 único por página">
+  Nunca repita o `<h1>`. Cada página tem um único assunto principal — esse assunto vai no `<h1>`. Subtópicos vão em `<h2>`, seções dentro deles em `<h3>`, e assim por diante. Pular níveis (ir de `<h2>` direto para `<h4>`) é considerado má prática de acessibilidade.
+</Callout>
+
+---
+
+## 2. Formatação Semântica de Texto
+
+Em HTML, formatação não é só sobre aparência — cada tag carrega um **significado**. O navegador pode mudar o visual padrão com CSS, mas o significado da tag continua lá.
+
+| Tag | Significado | Visual padrão |
+|---|---|---|
+| `<strong>` | Forte importância — algo que o leitor precisa notar | **Negrito** |
+| `<em>` | Ênfase — muda a entonação ao ler em voz alta | *Itálico* |
+| `<mark>` | Destaque / relevância em contexto | Fundo amarelo |
+| `<del>` | Texto removido ou desatualizado | ~~Tachado~~ |
+| `<ins>` | Texto inserido / novo | Sublinhado |
+| `<sub>` | Subscrito — abaixo da linha base | H₂O |
+| `<sup>` | Sobrescrito — acima da linha base | x² |
+
+### Como ficou na prática — exemplo da Vespa
+
+```html
+<p>O modelo ganha destaque com a pintura vibrante, com seu
+<strong>design retrô e elegante</strong>, tornando-se
+praticamente impossível de ignorar no trânsito.</p>
+
+<p>Para alguns, <mark>é apenas uma
+<a href="https://dicionario.priberam.org/moto" target="_blank">moto</a></mark>;
+para outros, uma verdadeira peça de estilo sobre duas rodas.</p>
+
+<p>Seja chamando atenção nos semáforos, o veículo é um símbolo de
+<del>opressão</del> expressão urbana.</p>
+```
+
+### Exemplo da aula — notícia do Diabo Veste Prada
+
+```html
+<h1>NOTÍCIA: DIABO VESTE PRADA 2 DATA ANUNCIADA</h1>
+<h2>Notícia Urgente!!!!!</h2>
+
+<p>A aguardada sequência <em>"O Diabo Veste Prada 2"</em> chegou
+aos cinemas <del>,nesta terça-feira do dia 30.04,</del> com
+recepção positiva.</p>
+
+<p>Com mais de 100 avaliações contabilizadas, o filme registra
+<strong>79% de aprovação</strong> no <mark>Rotten Tomatoes</mark>,
+acima dos 75% do original de 2006.</p>
+
+<h3>NOTÍCIA: PROVA DE QUÍMICA NO ENEM CANCELADA!!!!</h3>
+
+<p>A questão dizia que a fórmula correta da água era H<sub>3</sub>0.</p>
+
+<p>A prof<sup>a</sup> do instituto publicou: <em>"Queremos Justiça!"</em></p>
+```
+
+<Callout type="tip" title="strong vs b — em vs i">
+  `<b>` e `<i>` existem, mas são **puramente visuais** — sem significado semântico. Em HTML5 moderno, use sempre `<strong>` e `<em>`. A diferença importa para leitores de tela: o `<em>` muda a entonação na leitura em voz alta; o `<i>` não.
+</Callout>
+
+---
+
+## 3. br, hr e pre — Espaço e Formatação
+
+### `<br>` — Quebra de linha forçada
+
+Void element. Força o texto a continuar na linha de baixo, dentro do mesmo parágrafo. Use com moderação — em geral, um `<p>` novo é mais semântico.
+
+```html
+<p>Uma Vespa rosa vibrante vem roubando olhares nas ruas.<br>
+O modelo ganha destaque com a pintura vibrante.</p>
+```
+
+### `<hr>` — Separador temático
+
+Void element. Desenha uma linha horizontal e sinaliza uma **mudança de assunto** — não é só decoração.
+
+```html
+<p>Primeiro assunto aqui.</p>
+
+<br><hr>
+
+<p>Segundo assunto começa aqui.</p>
+```
+
+### `<pre>` — Texto pré-formatado
+
+Preserva **todos** os espaços, tabs e quebras de linha exatamente como você digitou. Usa fonte monoespaçada por padrão. Bom para código, poesia, ASCII art — qualquer coisa onde o espaçamento importa.
+
+```html
+<pre>A imersão do site é         LE           GEN         DÁRIO</pre>
+```
+
+Vimos em sala o que acontece quando um `<pre>` fica dentro de um `<p>` com muito espaço interno — o resultado é meio caótico. Em projetos reais, `<pre>` vive fora de parágrafos.
+
+<Callout type="info" title="pre dentro de p — armadilha clássica">
+  Colocar `<pre>` dentro de `<p>` é tecnicamente inválido em HTML5 — `<pre>` é elemento de bloco, e blocos não podem ficar dentro de parágrafos. O navegador até renderiza, mas o validador do W3C vai reclamar.
+</Callout>
+
+---
+
+## 4. Construindo um Texto Rico — Exemplo Completo
+
+Juntando tudo da aula: hierarquia, formatação semântica, separadores e imagem.
+
+```html
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Notícia: Vespa Rosa</title>
+</head>
+<body>
+
+  <h1>ALERTA: VESPA ROSA ROUBA A CENA NAS RUAS</h1>
+
+  <p>Uma Vespa rosa vibrante vem roubando olhares e virando assunto.
+  O modelo, com seu <strong>design retrô e elegante</strong>, torna-se
+  impossível de ignorar no trânsito.</p>
+
+  <br><hr>
+
+  <p>Especialistas apontam que personalizações são cada vez mais comuns,
+  já que proprietários buscam expressar estilo e identidade própria.</p>
+
+  <p>Para alguns, <mark>é apenas uma moto</mark>; para outros, uma
+  verdadeira peça de estilo sobre duas rodas.</p>
+
+  <a href="https://br.pinterest.com/pin/317081630014150744/">
+    <img src="./vespa-rosa.webp"
+         alt="Vespa do tipo scooter na cor rosa, estacionada na rua"
+         width="400">
+  </a>
+
+  <p>Seja chamando atenção nos semáforos ou protagonizando cliques nas
+  redes, o fato é que o veículo transformou um simples trajeto cotidiano
+  em um verdadeiro desfile de estilo — símbolo de <del>opressão</del>
+  expressão urbana.</p>
+
+</body>
+</html>
+```
+
+---
+
+## Vídeos recomendados
+
+<VideosRecomendados videos={[
+  { id: "aiOEBhozEOg", titulo: "Hierarquia de Títulos", canal: "Curso em Vídeo HTML5", descricao: "h1 ao h6 — como estruturar o conteúdo de uma página com semântica." },
+  { id: "T-d_hsO3hUI", titulo: "Negrito e Itálico do Jeito Certo", canal: "Curso em Vídeo HTML5", descricao: "strong vs b, em vs i — a diferença semântica que importa." },
+  { id: "8TgKFYkcO5Y", titulo: "Formatações Adicionais", canal: "Curso em Vídeo HTML5", descricao: "mark, del, sub, sup, pre — as tags que completam o texto." },
+  { id: "RiGo7BN1Wps", titulo: "Formatação de Textos — HTML Completo Aula 04", canal: "Programação Web", descricao: "Tudo sobre formatação de texto em HTML na prática." },
+  { id: "Sl0edqPVrGg", titulo: "Comentários — HTML Completo Aula 06", canal: "Programação Web", descricao: "Como e quando usar comentários no código HTML." },
+]} />
+
+## Referências
+
+- [MDN — Elementos de texto HTML](https://developer.mozilla.org/pt-BR/docs/Web/HTML/Element#inline_text_semantics)
+- [W3Schools — HTML Text Formatting](https://www.w3schools.com/html/html_formatting.asp)
+- [W3C Markup Validation Service](https://validator.w3.org/)

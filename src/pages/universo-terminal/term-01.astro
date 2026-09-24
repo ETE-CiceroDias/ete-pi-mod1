@@ -1,0 +1,468 @@
+---
+---
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Terminal 01 · Navegando pelo Sistema de Arquivos · ETE Cícero Dias</title>
+<link rel="icon" type="image/svg+xml" href="/favicon.svg"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<style>
+:root{
+  --bg:#080808;--surface:#111;--card:#141414;
+  --border:rgba(255,255,255,.1);--border-h:rgba(255,255,255,.3);
+  --acc:#e8e8e8;--acc-dim:rgba(232,232,232,.08);
+  --text:#f0f0f0;--text-2:rgba(240,240,240,.6);--text-3:rgba(240,240,240,.3);
+  --mono:'JetBrains Mono','Courier New',monospace;
+  --font-h:'Cormorant Garamond',Georgia,serif;
+  --font-b:'Plus Jakarta Sans',sans-serif;
+  --grad-btn:linear-gradient(135deg,#fff 0%,#888 100%);
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--text);font-family:var(--font-b);overflow-x:hidden;line-height:1.65;}
+a{text-decoration:none;color:inherit;}
+::selection{background:#fff;color:#000;}
+::-webkit-scrollbar{width:3px;}::-webkit-scrollbar-track{background:var(--bg);}::-webkit-scrollbar-thumb{background:rgba(255,255,255,.2);border-radius:99px;}
+
+#prog{position:fixed;top:0;left:0;height:1px;z-index:600;background:#fff;width:0;transition:width .1s;}
+#btt{position:fixed;bottom:2rem;right:2rem;z-index:500;width:40px;height:40px;border-radius:50%;background:#1a1a1a;color:#fff;border:1px solid var(--border);cursor:pointer;display:flex;align-items:center;justify-content:center;opacity:0;transform:translateY(16px) scale(.85);transition:opacity .3s,transform .3s;pointer-events:none;}
+#btt.show{opacity:1;transform:translateY(0) scale(1);pointer-events:all;}
+#btt:hover{border-color:rgba(255,255,255,.4);}
+
+.nav{position:fixed;top:0;left:0;right:0;z-index:400;display:flex;align-items:center;justify-content:space-between;padding:.85rem 2.5rem;background:rgba(8,8,8,.95);backdrop-filter:blur(18px);border-bottom:1px solid var(--border);transition:box-shadow .22s;}
+.nav.scrolled{box-shadow:0 4px 20px rgba(0,0,0,.8);}
+.nav-back{display:inline-flex;align-items:center;gap:.5rem;font-size:.8rem;font-weight:600;color:var(--text-3);transition:color .2s;}
+.nav-back:hover{color:var(--text);}
+.nav-back svg{width:15px;height:15px;}
+.nav-tag{display:inline-flex;align-items:center;gap:.4rem;padding:.3rem .8rem;border:1px solid var(--border);border-radius:99px;font-size:.7rem;font-weight:700;color:rgba(240,240,240,.5);letter-spacing:.06em;text-transform:uppercase;font-family:var(--mono);}
+.nav-info{font-size:.75rem;color:var(--text-3);}
+
+/* HERO */
+.hero-aula{min-height:60vh;display:flex;flex-direction:column;align-items:flex-start;justify-content:flex-end;padding:8rem 2.5rem 4rem;position:relative;overflow:hidden;}
+.noise-overlay{position:absolute;inset:0;z-index:0;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.65' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='.035'/%3E%3C/svg%3E");background-size:200px;opacity:.8;}
+.hero-aula-inner{position:relative;z-index:2;max-width:780px;}
+.hero-badge{display:inline-flex;align-items:center;gap:.5rem;padding:.3rem .9rem;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:99px;font-size:.68rem;font-weight:700;color:rgba(240,240,240,.7);margin-bottom:1rem;letter-spacing:.08em;text-transform:uppercase;}
+.bdot{width:5px;height:5px;border-radius:50%;background:#fff;animation:pulse 2s ease-in-out infinite;}
+@keyframes pulse{0%,100%{opacity:1;}50%{opacity:.3;}}
+.hero-title{font-family:var(--font-h);font-size:clamp(2.2rem,5vw,4rem);font-weight:300;line-height:1.05;letter-spacing:-.04em;margin-bottom:.6rem;color:#fff;}
+.hero-title em{font-style:italic;color:rgba(255,255,255,.55);font-weight:200;}
+.hero-sub{font-size:1rem;color:var(--text-2);line-height:1.75;max-width:600px;margin-bottom:1.4rem;}
+.hero-meta{display:flex;align-items:center;flex-wrap:wrap;gap:.7rem;}
+.ham-tag{display:inline-flex;align-items:center;gap:.3rem;font-size:.72rem;font-weight:600;color:var(--text-3);}
+.ham-tag svg{width:12px;height:12px;color:rgba(255,255,255,.4);}
+.ham-dot{color:rgba(255,255,255,.15);}
+
+/* LAYOUT */
+.aula-wrap{display:flex;align-items:flex-start;max-width:1200px;margin:0 auto;padding:3rem 2rem 6rem;gap:3rem;}
+.sidebar{width:230px;flex-shrink:0;position:sticky;top:5.5rem;max-height:calc(100vh - 7rem);overflow-y:auto;}
+.sidebar::-webkit-scrollbar{width:2px;}
+.sidebar::-webkit-scrollbar-thumb{background:var(--border);}
+.sidebar-title{font-size:.62rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--text-3);margin-bottom:.9rem;}
+.sidebar-nav{display:flex;flex-direction:column;gap:.15rem;}
+.sidebar-item{display:flex;align-items:center;gap:.6rem;padding:.45rem .7rem;border-radius:6px;font-size:.78rem;color:var(--text-3);cursor:pointer;transition:background .2s,color .2s;border:none;background:none;text-align:left;width:100%;text-decoration:none;}
+.sidebar-item:hover{background:rgba(255,255,255,.04);color:var(--text-2);}
+.sidebar-item.active{background:rgba(255,255,255,.06);color:var(--text);font-weight:600;}
+.si-dot{width:4px;height:4px;border-radius:50%;background:rgba(255,255,255,.2);flex-shrink:0;transition:background .2s;}
+.sidebar-item.active .si-dot{background:#fff;}
+.sidebar-sep{height:1px;background:var(--border);margin:.6rem 0;}
+
+/* PROSE */
+.prose-wrap{flex:1;min-width:0;}
+.prose h2{font-family:var(--font-h);font-size:clamp(1.6rem,3.5vw,2.2rem);font-weight:300;letter-spacing:-.03em;line-height:1.1;margin:3.5rem 0 1rem;padding-bottom:.6rem;border-bottom:1px solid var(--border);color:#fff;}
+.prose h2 em{font-style:italic;color:rgba(255,255,255,.45);}
+.prose h3{font-family:var(--font-h);font-size:1.35rem;font-weight:400;margin:2.2rem 0 .7rem;color:#fff;}
+.prose h4{font-size:.78rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:rgba(255,255,255,.5);margin:1.8rem 0 .5rem;}
+.prose p{font-size:.97rem;color:var(--text-2);line-height:1.85;margin-bottom:1.1rem;}
+.prose strong{font-weight:700;color:var(--text);}
+.prose em{font-style:italic;color:rgba(255,255,255,.55);}
+.prose a{color:rgba(255,255,255,.7);text-decoration:underline;text-underline-offset:3px;}
+.prose ul,.prose ol{padding-left:1.4rem;margin-bottom:1.2rem;display:flex;flex-direction:column;gap:.4rem;}
+.prose li{font-size:.93rem;color:var(--text-2);line-height:1.65;}
+.prose li code,.prose p code{font-family:var(--mono);font-size:.82em;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:4px;padding:.1em .4em;color:rgba(255,255,255,.8);}
+.prose blockquote{margin:1.5rem 0;padding:1rem 1.4rem;border-left:2px solid rgba(255,255,255,.2);background:rgba(255,255,255,.03);border-radius:0 10px 10px 0;font-size:.9rem;color:var(--text-2);}
+.prose blockquote p{margin:0;}
+.prose hr{border:none;border-top:1px solid var(--border);margin:3rem 0;}
+.prose pre{background:#0d0d0d;border-radius:12px;padding:1.4rem 1.6rem;overflow-x:auto;margin:1.5rem 0;border:1px solid rgba(255,255,255,.08);}
+.prose pre code{font-family:var(--mono);font-size:.82rem;color:#d4d4d4;line-height:1.75;background:none;padding:0;border:none;}
+.prose table{width:100%;border-collapse:collapse;font-size:.85rem;margin:1.5rem 0;border-radius:10px;overflow:hidden;border:1px solid var(--border);}
+.prose thead{background:rgba(255,255,255,.04);}
+.prose th{padding:.7rem 1rem;text-align:left;font-size:.7rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:rgba(255,255,255,.5);border-bottom:1px solid var(--border);}
+.prose td{padding:.65rem 1rem;color:var(--text-2);border-bottom:1px solid rgba(255,255,255,.05);vertical-align:top;}
+.prose tr:last-child td{border-bottom:none;}
+.prose td code{font-family:var(--mono);font-size:.8em;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);color:rgba(255,255,255,.7);padding:.1em .35em;border-radius:4px;}
+
+/* CALLOUT */
+.callout{border-radius:12px;padding:1.1rem 1.3rem;margin:1.5rem 0;display:flex;gap:.85rem;align-items:flex-start;}
+.callout-tip   {background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.1);}
+.callout-info  {background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.1);}
+.callout-warn  {background:rgba(255,200,0,.04);border:1px solid rgba(255,200,0,.15);}
+.callout-danger{background:rgba(255,80,80,.04);border:1px solid rgba(255,80,80,.15);}
+.callout-icon{width:30px;height:30px;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;background:rgba(255,255,255,.06);}
+.callout-icon svg{width:14px;height:14px;color:rgba(255,255,255,.5);}
+.callout-warn .callout-icon svg{color:#fbbf24;}
+.callout-danger .callout-icon svg{color:#f87171;}
+.callout-title{font-weight:700;font-size:.8rem;margin-bottom:.3rem;color:rgba(255,255,255,.8);}
+.callout-warn .callout-title{color:#fbbf24;}
+.callout-danger .callout-title{color:#f87171;}
+.callout-text{font-size:.83rem;color:var(--text-2);line-height:1.7;}
+.callout-text code{font-family:var(--mono);font-size:.82em;background:rgba(255,255,255,.06);color:rgba(255,255,255,.7);padding:.1em .35em;border-radius:4px;border:1px solid rgba(255,255,255,.1);}
+
+/* TERMINAL */
+.terminal{margin:1.5rem 0;border-radius:12px;overflow:hidden;border:1px solid var(--border);}
+.terminal-header{display:flex;align-items:center;gap:.5rem;padding:.6rem 1rem;background:rgba(255,255,255,.03);border-bottom:1px solid var(--border);}
+.term-dot-r{background:#ff5f57;}.term-dot-y{background:#febc2e;}.term-dot-g{background:#28c840;}
+.tdot{width:10px;height:10px;border-radius:50%;}
+.term-label{font-family:var(--mono);font-size:.68rem;color:var(--text-3);margin-left:.3rem;}
+.terminal-body{padding:1.2rem 1.4rem;background:#050505;font-family:var(--mono);font-size:.82rem;line-height:1.8;color:#d4d4d4;overflow-x:auto;display:flex;flex-direction:column;gap:.1rem;}
+.term-prompt{color:rgba(255,255,255,.35);user-select:none;}
+.term-comment{color:rgba(255,255,255,.25);font-style:italic;}
+.term-out{color:rgba(255,255,255,.4);padding-left:1.1rem;}
+
+/* EX CARD */
+.ex-card{background:var(--card);border:1px solid var(--border);border-radius:14px;overflow:hidden;margin-bottom:1.5rem;}
+.ex-header{padding:.85rem 1.4rem;background:rgba(255,255,255,.03);border-bottom:1px solid var(--border);display:flex;align-items:center;gap:.7rem;}
+.ex-num{width:26px;height:26px;border-radius:6px;background:rgba(255,255,255,.1);display:flex;align-items:center;justify-content:center;font-size:.7rem;font-weight:800;color:#fff;flex-shrink:0;}
+.ex-title{font-weight:700;font-size:.85rem;color:var(--text);}
+.ex-body{padding:1.3rem;}
+
+/* FOOTER */
+.footer{padding:2rem 2.5rem;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem;}
+.footer-logo{font-family:var(--font-h);font-size:1.2rem;font-weight:300;letter-spacing:-.02em;color:#fff;}
+.footer-logo em{font-style:italic;color:rgba(255,255,255,.4);}
+.footer-sub{font-size:.7rem;color:var(--text-3);margin-top:.1rem;}
+.footer-right{font-size:.78rem;color:var(--text-3);}
+
+.reveal{opacity:0;transform:translateY(20px);transition:opacity .6s ease,transform .6s ease;}
+.reveal.vis{opacity:1;transform:translateY(0);}
+
+@media(max-width:768px){.sidebar{display:none;}.aula-wrap{padding:2rem 1.25rem 5rem;gap:0;}}
+@media(max-width:600px){.nav{padding:.85rem 1.25rem;}.nav-info{display:none;}.hero-aula{padding:6rem 1.25rem 3rem;}}
+
+/* VÍDEOS */
+.videos-section{padding:5rem 0;border-top:1px solid rgba(255,255,255,.07);}
+.video-card{background:var(--term-card);border:1px solid var(--term-border);border-radius:14px;overflow:hidden;text-decoration:none;color:inherit;transition:transform .22s,border-color .22s,box-shadow .22s;display:block;}
+.video-card:hover{transform:translateY(-4px);border-color:rgba(255,255,255,.2);box-shadow:0 10px 30px rgba(0,0,0,.6);}
+.video-thumb{width:100%;aspect-ratio:16/9;background:#010904;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;}
+.video-thumb img{width:100%;height:100%;object-fit:cover;opacity:.8;transition:opacity .22s;}
+.video-card:hover .video-thumb img{opacity:1;}
+.video-play{position:absolute;width:40px;height:40px;background:rgba(255,255,255,.12);border:1.5px solid rgba(255,255,255,.35);border-radius:50%;display:flex;align-items:center;justify-content:center;backdrop-filter:blur(4px);}
+.video-play svg{width:16px;height:16px;color:#fff;margin-left:2px;}
+.video-body{padding:1rem;}
+.video-canal{font-size:.62rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.4);margin-bottom:.35rem;}
+.video-titulo{font-size:.88rem;font-weight:600;color:var(--term-text);line-height:1.4;margin-bottom:.3rem;}
+.video-desc{font-size:.78rem;color:var(--term-text-sub);line-height:1.5;}
+</style>
+</head>
+<body>
+<div id="prog"></div>
+<nav class="nav" id="nav">
+  <a href="/universo-terminal" class="nav-back">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m15 18-6-6 6-6"/></svg>
+    Universo Terminal
+  </a>
+  <span class="nav-tag">Terminal 01</span>
+  <span class="nav-info">PI I · Mod. 1 · 2026</span>
+</nav>
+<button id="btt" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m18 15-6-6-6 6"/></svg>
+</button>
+
+<section class="hero-aula">
+  <div class="noise-overlay"></div>
+  <div class="hero-aula-inner">
+    <div class="hero-badge"><span class="bdot"></span>Terminal · Aula 01</div>
+    <h1 class="hero-title">Terminal e <em>VS Code</em></h1>
+    <p class="hero-sub">Antes de escrever HTML: como navegar pastas no terminal, criar projetos e abrir o editor com um comando.</p>
+    <div class="hero-meta">
+      <span class="ham-tag">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12,6 12,12 16,14"/></svg>
+        1h20
+      </span>
+      <span class="ham-dot">·</span>
+      <span class="ham-tag">23 abr 2026</span>
+      <span class="ham-dot">·</span>
+      <span class="ham-tag">pwd · ls · mkdir · cd · touch · code .</span>
+    </div>
+  </div>
+</section>
+
+<div class="aula-wrap">
+  <aside class="sidebar">
+    <div class="sidebar-title">Nesta aula</div>
+    <nav class="sidebar-nav" id="sidebarNav"></nav>
+    <div class="sidebar-sep"></div>
+    <a href="/universo-terminal" class="sidebar-item">
+      <span class="si-dot"></span>Voltar para Universo Terminal
+    </a>
+  </aside>
+  <div class="prose-wrap prose" id="proseContent">
+
+    <h2 id="por-que">Por que o Terminal?</h2>
+    <p>Antes de escrever a primeira linha de HTML, você precisa saber <strong>onde</strong> está trabalhando. O terminal é a forma mais direta de criar pastas, navegar entre elas e abrir o editor — sem depender de cliques e janelas gráficas.</p>
+    <p>Profissionais de desenvolvimento vivem no terminal. Aprender o básico agora vai eliminar muita confusão futura.</p>
+    <div class="callout callout-info">
+      <div class="callout-icon"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg></div>
+      <div><div class="callout-title">Terminal no Windows, Mac e Linux</div><div class="callout-text">No <strong>Windows</strong>, use o <strong>PowerShell</strong> ou o <strong>Git Bash</strong> (instalado junto com o Git). No <strong>Mac</strong>, use o <strong>Terminal</strong> nativo. No <strong>Linux</strong>, qualquer terminal. Os comandos desta aula funcionam em todos eles.</div></div>
+    </div>
+
+    <hr/>
+
+    <h2 id="navegando">Navegando pelo Sistema de Arquivos</h2>
+    <p>O terminal sempre está "dentro" de uma pasta — chamada de <strong>diretório atual</strong>. Os comandos abaixo são os mais usados:</p>
+    <table>
+      <thead><tr><th>Comando</th><th>O que faz</th><th>Exemplo</th></tr></thead>
+      <tbody>
+        <tr><td><code>pwd</code></td><td>Mostra em qual pasta você está</td><td><code>pwd</code></td></tr>
+        <tr><td><code>ls</code></td><td>Lista o conteúdo da pasta atual</td><td><code>ls</code></td></tr>
+        <tr><td><code>cd nome</code></td><td>Entra em uma pasta</td><td><code>cd Documentos</code></td></tr>
+        <tr><td><code>cd ..</code></td><td>Volta uma pasta acima</td><td><code>cd ..</code></td></tr>
+        <tr><td><code>cd ~</code></td><td>Vai direto para a pasta home</td><td><code>cd ~</code></td></tr>
+        <tr><td><code>mkdir nome</code></td><td>Cria uma nova pasta</td><td><code>mkdir meu-projeto</code></td></tr>
+        <tr><td><code>touch arquivo</code></td><td>Cria um arquivo vazio</td><td><code>touch index.html</code></td></tr>
+        <tr><td><code>clear</code></td><td>Limpa a tela do terminal</td><td><code>clear</code></td></tr>
+      </tbody>
+    </table>
+    <div class="callout callout-tip">
+      <div class="callout-icon"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4"/><path d="M12 16h.01"/></svg></div>
+      <div><div class="callout-title">Tab para autocompletar</div><div class="callout-text">Você não precisa digitar o nome inteiro. Digite as primeiras letras e pressione <strong>Tab</strong> — o terminal completa automaticamente. Se houver mais de uma opção, pressione Tab duas vezes para listar todas.</div></div>
+    </div>
+
+    <hr/>
+
+    <h2 id="projeto">Criando o Projeto da Página Pessoal</h2>
+    <p>Vamos criar a estrutura de pastas do projeto que vamos desenvolver ao longo das aulas. Em sala, fazemos isso juntos no terminal:</p>
+    <div class="terminal">
+      <div class="terminal-header">
+        <span class="tdot term-dot-r"></span><span class="tdot term-dot-y"></span><span class="tdot term-dot-g"></span>
+        <span class="term-label">bash — ~/Documentos</span>
+      </div>
+      <div class="terminal-body">
+        <div><span class="term-comment"># 1. Vai para a pasta de documentos</span></div>
+        <div><span class="term-prompt">$ </span>cd ~/Documentos</div>
+        <div><span class="term-comment"># 2. Cria a pasta do projeto</span></div>
+        <div><span class="term-prompt">$ </span>mkdir minha-pagina</div>
+        <div><span class="term-comment"># 3. Entra na pasta criada</span></div>
+        <div><span class="term-prompt">$ </span>cd minha-pagina</div>
+        <div><span class="term-comment"># 4. Cria o arquivo HTML principal</span></div>
+        <div><span class="term-prompt">$ </span>touch index.html</div>
+        <div><span class="term-comment"># 5. Confirma o que foi criado</span></div>
+        <div><span class="term-prompt">$ </span>ls</div>
+        <div><span class="term-out">index.html</span></div>
+      </div>
+    </div>
+    <div class="callout callout-warn">
+      <div class="callout-icon"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg></div>
+      <div><div class="callout-title">Nomes de pasta — sem espaços, sem acento</div><div class="callout-text">Use sempre letras minúsculas, hífens no lugar de espaços, sem acentos. <code>minha-pagina</code> é válido. <code>Minha Página</code> vai causar problemas no terminal e em URLs.</div></div>
+    </div>
+
+    <hr/>
+
+    <h2 id="vscode">Abrindo o VS Code pelo Terminal</h2>
+    <p>Com o VS Code instalado e configurado corretamente, um único comando abre o editor já na pasta certa:</p>
+    <div class="terminal">
+      <div class="terminal-header">
+        <span class="tdot term-dot-r"></span><span class="tdot term-dot-y"></span><span class="tdot term-dot-g"></span>
+        <span class="term-label">bash — ~/Documentos/minha-pagina</span>
+      </div>
+      <div class="terminal-body">
+        <div><span class="term-comment"># Abre o VS Code na pasta atual</span></div>
+        <div><span class="term-prompt">$ </span>code .</div>
+      </div>
+    </div>
+    <p>O ponto (<code>.</code>) significa "pasta atual". O VS Code abre mostrando exatamente os arquivos do seu projeto na barra lateral.</p>
+    <div class="callout callout-info">
+      <div class="callout-icon"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg></div>
+      <div><div class="callout-title">Se "code ." não funcionar</div><div class="callout-text">No VS Code, abra a paleta de comandos com <code>Ctrl+Shift+P</code>, pesquise por <strong>"Shell Command: Install 'code' command in PATH"</strong> e execute. Depois feche e reabra o terminal.</div></div>
+    </div>
+
+    <hr/>
+
+    <h2 id="atalhos">Atalhos Essenciais do VS Code</h2>
+    <p>Aprender os atalhos certos elimina metade da fricção do trabalho diário:</p>
+    <table>
+      <thead><tr><th>Atalho</th><th>O que faz</th></tr></thead>
+      <tbody>
+        <tr><td><code>Ctrl + S</code></td><td>Salva o arquivo atual</td></tr>
+        <tr><td><code>Ctrl + Z</code></td><td>Desfaz a última ação</td></tr>
+        <tr><td><code>Ctrl + Shift + Z</code></td><td>Refaz</td></tr>
+        <tr><td><code>Ctrl + /</code></td><td>Comenta / descomenta a linha selecionada</td></tr>
+        <tr><td><code>Ctrl + D</code></td><td>Seleciona a próxima ocorrência da palavra atual</td></tr>
+        <tr><td><code>Alt + ↑ / ↓</code></td><td>Move a linha selecionada para cima ou para baixo</td></tr>
+        <tr><td><code>Ctrl + P</code></td><td>Abre um arquivo pelo nome (busca rápida)</td></tr>
+        <tr><td><code>Ctrl + Shift + P</code></td><td>Paleta de comandos</td></tr>
+        <tr><td><code>Ctrl + `</code></td><td>Abre o terminal integrado do VS Code</td></tr>
+        <tr><td><code>Ctrl + B</code></td><td>Mostra / esconde a barra lateral</td></tr>
+      </tbody>
+    </table>
+
+    <hr/>
+
+    <h2 id="extensoes">Extensões Recomendadas</h2>
+    <table>
+      <thead><tr><th>Extensão</th><th>Por que instalar</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Prettier</strong></td><td>Formata o código automaticamente ao salvar</td></tr>
+        <tr><td><strong>Live Server</strong></td><td>Abre o HTML no navegador e atualiza em tempo real</td></tr>
+        <tr><td><strong>Auto Rename Tag</strong></td><td>Renomeia a tag de fechamento junto com a de abertura</td></tr>
+        <tr><td><strong>HTML CSS Support</strong></td><td>Autocomplete de classes CSS dentro do HTML</td></tr>
+      </tbody>
+    </table>
+
+    <hr/>
+
+    <h2 id="live-server">Live Server — Vendo as mudanças em tempo real</h2>
+    <p>Com o Live Server instalado:</p>
+    <ol>
+      <li>Abra seu <code>index.html</code> no VS Code</li>
+      <li>Clique com o botão direito no arquivo</li>
+      <li>Selecione <strong>"Open with Live Server"</strong></li>
+      <li>O navegador abre automaticamente em <code>localhost:5500</code></li>
+      <li>Cada vez que você salvar (<code>Ctrl+S</code>), o navegador atualiza sozinho</li>
+    </ol>
+
+    <hr/>
+
+    <h2 id="exercicios">Exercícios</h2>
+
+    <div class="ex-card">
+      <div class="ex-header"><div class="ex-num">01</div><div class="ex-title">Crie a estrutura do projeto</div></div>
+      <div class="ex-body">
+        <p style="font-size:.88rem;color:var(--text-2);line-height:1.7;">No terminal, execute a sequência:</p>
+        <ol style="font-size:.87rem;color:var(--text-2);line-height:1.7;padding-left:1.2rem;margin-top:.5rem;display:flex;flex-direction:column;gap:.3rem;">
+          <li>Navegue até onde quer criar o projeto (<code>cd ~/Documentos</code>)</li>
+          <li>Crie uma pasta chamada <code>minha-pagina</code></li>
+          <li>Entre nela com <code>cd minha-pagina</code></li>
+          <li>Crie o arquivo <code>index.html</code> com <code>touch index.html</code></li>
+          <li>Abra o VS Code com <code>code .</code></li>
+          <li>Confirme que o <code>index.html</code> aparece na barra lateral</li>
+        </ol>
+      </div>
+    </div>
+
+    <div class="ex-card">
+      <div class="ex-header"><div class="ex-num">02</div><div class="ex-title">Explore os atalhos</div></div>
+      <div class="ex-body">
+        <ol style="font-size:.87rem;color:var(--text-2);line-height:1.7;padding-left:1.2rem;display:flex;flex-direction:column;gap:.3rem;">
+          <li>Abra o terminal integrado com <code>Ctrl+`</code></li>
+          <li>Confirme em qual pasta você está com <code>pwd</code></li>
+          <li>Crie uma pasta <code>assets</code> com <code>mkdir assets</code></li>
+          <li>Volte para o editor e confirme que ela apareceu na barra lateral</li>
+          <li>Feche a barra lateral com <code>Ctrl+B</code> e reabra</li>
+        </ol>
+      </div>
+    </div>
+
+    <div class="ex-card">
+      <div class="ex-header"><div class="ex-num">03</div><div class="ex-title">Instale as extensões e use o Live Server</div></div>
+      <div class="ex-body">
+        <ol style="font-size:.87rem;color:var(--text-2);line-height:1.7;padding-left:1.2rem;display:flex;flex-direction:column;gap:.3rem;">
+          <li>Abra a aba de extensões com <code>Ctrl+Shift+X</code></li>
+          <li>Instale: <strong>Prettier</strong>, <strong>Live Server</strong>, <strong>Auto Rename Tag</strong></li>
+          <li>Crie um arquivo <code>teste.html</code> com conteúdo qualquer</li>
+          <li>Clique com botão direito → <strong>Open with Live Server</strong></li>
+          <li>Faça uma edição e salve — observe o navegador atualizar</li>
+        </ol>
+      </div>
+    </div>
+
+    <hr style="margin-top:3rem;"/>
+    <a href="/universo-terminal" style="display:inline-flex;align-items:center;gap:.4rem;font-size:.82rem;font-weight:600;color:var(--text-3);transition:color .2s;margin-top:1rem;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='var(--text-3)'">
+      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m15 18-6-6 6-6"/></svg>
+      Voltar para Universo Terminal
+    </a>
+
+  </div>
+</div>
+
+<!-- VÍDEOS RECOMENDADOS -->
+<section class="videos-section" id="videos">
+  <div class="section-inner" style="max-width:1100px;margin:0 auto;padding:0 2rem;">
+    <div class="section-header reveal" style="margin-bottom:2rem;">
+      <div class="section-label" style="font-size:.68rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.4);margin-bottom:.7rem;display:flex;align-items:center;gap:.5rem;">
+        <span style="display:inline-block;width:18px;height:2px;background:rgba(255,255,255,.2);border-radius:99px;"></span>
+        03 · Antes da aula
+      </div>
+      <h2 style="font-family:'Cormorant Garamond',Georgia,serif;font-size:clamp(1.8rem,4vw,2.8rem);font-weight:300;letter-spacing:-.03em;color:#f0f0f0;">Assista <em style="font-style:italic;color:rgba(255,255,255,.4);">primeiro</em></h2>
+      <p style="font-size:.9rem;color:rgba(240,240,240,.5);margin-top:.7rem;line-height:1.7;max-width:500px;">Esses vídeos cobrem o contexto que a gente vai praticar juntos. Não precisa entender tudo — só ter uma ideia geral antes de colocar a mão no terminal.</p>
+    </div>
+    <div class="videos-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1.2rem;">
+
+      <a href="https://youtu.be/QZ2nyxzZXPY" target="_blank" rel="noopener noreferrer" class="video-card reveal">
+        <div class="video-thumb">
+          <img src="https://img.youtube.com/vi/QZ2nyxzZXPY/mqdefault.jpg" alt="Terminal para iniciantes" loading="lazy"/>
+          <div class="video-play"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>
+        </div>
+        <div class="video-body">
+          <div class="video-canal">Vídeo 1 · YouTube</div>
+          <div class="video-titulo">Terminal para iniciantes</div>
+          <div class="video-desc">Introdução à linha de comando — os primeiros comandos que todo dev precisa saber.</div>
+        </div>
+      </a>
+
+      <a href="https://youtu.be/Jfvg3CS1X3A" target="_blank" rel="noopener noreferrer" class="video-card reveal reveal-d1">
+        <div class="video-thumb">
+          <img src="https://img.youtube.com/vi/Jfvg3CS1X3A/mqdefault.jpg" alt="Linha de comando — navegação básica" loading="lazy"/>
+          <div class="video-play"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>
+        </div>
+        <div class="video-body">
+          <div class="video-canal">Vídeo 2 · YouTube</div>
+          <div class="video-titulo">Linha de comando — navegação básica</div>
+          <div class="video-desc">pwd, ls, cd e mkdir na prática — construindo o entendimento de como o sistema de arquivos funciona.</div>
+        </div>
+      </a>
+
+      <a href="https://youtu.be/ijkjljSToiI" target="_blank" rel="noopener noreferrer" class="video-card reveal reveal-d2">
+        <div class="video-thumb">
+          <img src="https://img.youtube.com/vi/ijkjljSToiI/mqdefault.jpg" alt="Terminal no Windows" loading="lazy"/>
+          <div class="video-play"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>
+        </div>
+        <div class="video-body">
+          <div class="video-canal">Vídeo 3 · YouTube</div>
+          <div class="video-titulo">Terminal no Windows</div>
+          <div class="video-desc">Como usar o terminal no Windows — Git Bash, PowerShell e as diferenças que importam.</div>
+        </div>
+      </a>
+
+      <a href="https://youtu.be/-G6GbXGo4wo" target="_blank" rel="noopener noreferrer" class="video-card reveal reveal-d3">
+        <div class="video-thumb">
+          <img src="https://img.youtube.com/vi/-G6GbXGo4wo/mqdefault.jpg" alt="VS Code pelo terminal" loading="lazy"/>
+          <div class="video-play"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>
+        </div>
+        <div class="video-body">
+          <div class="video-canal">Vídeo 4 · YouTube</div>
+          <div class="video-titulo">Abrindo projetos com code .</div>
+          <div class="video-desc">Como usar o VS Code direto pelo terminal — code . e o terminal integrado do editor.</div>
+        </div>
+      </a>
+
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div>
+    <div class="footer-logo">ETE <em>Cícero Dias</em></div>
+    <div class="footer-sub">Desenvolvimento de Sistemas · Módulo 1 · 2026</div>
+  </div>
+  <div class="footer-right">Terminal 01 · Prof.ª Samara Sabino</div>
+</footer>
+
+<script is:inline>
+  const prog=document.getElementById('prog'),nav=document.getElementById('nav'),btt=document.getElementById('btt');
+  window.addEventListener('scroll',()=>{prog.style.width=(scrollY/(document.body.scrollHeight-innerHeight)*100)+'%';nav.classList.toggle('scrolled',scrollY>60);btt.classList.toggle('show',scrollY>300);});
+  (function(){
+    const sNav=document.getElementById('sidebarNav'),prose=document.getElementById('proseContent');
+    if(!sNav||!prose)return;
+    const hs=prose.querySelectorAll('h2');
+    hs.forEach(h=>{const a=document.createElement('a');a.className='sidebar-item';a.href='#'+h.id;a.innerHTML='<span class="si-dot"></span>'+h.textContent;a.addEventListener('click',e=>{e.preventDefault();document.getElementById(h.id)?.scrollIntoView({behavior:'smooth',block:'start'});});sNav.appendChild(a);});
+    const obs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){sNav.querySelectorAll('.sidebar-item').forEach(a=>a.classList.remove('active'));const act=sNav.querySelector('[href="#'+e.target.id+'"]');if(act)act.classList.add('active');}});},{rootMargin:'-10% 0px -80% 0px'});
+    hs.forEach(h=>obs.observe(h));
+  })();
+  const obs2=new IntersectionObserver(e=>e.forEach(x=>{if(x.isIntersecting)x.target.classList.add('vis');}),{threshold:.08});
+  document.querySelectorAll('.reveal').forEach(el=>obs2.observe(el));
+</script>
+</body>
+</html>

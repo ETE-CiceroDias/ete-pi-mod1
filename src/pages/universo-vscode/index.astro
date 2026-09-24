@@ -1,0 +1,349 @@
+---
+import '../../styles/global.css'
+---
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Universo VS Code · ETE Cícero Dias</title>
+<meta name="description" content="Do zero ao VS Code configurado — instalação, extensões essenciais e personalização para desenvolvimento frontend."/>
+<link rel="icon" type="image/svg+xml" href="/favicon.svg"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<style>
+:root{
+  --primary:#61dafb;--primary-h:#21a8c8;--secondary:#7c5cbf;
+  --bg:#06080f;--bg-surface:#0d1117;--bg-card:#111827;
+  --glass:rgba(97,218,251,.06);--glass-b:rgba(97,218,251,.14);
+  --text:#e8edf5;--text-2:#8892a4;--text-3:#4a5568;
+  --border:rgba(97,218,251,.10);--border-s:rgba(97,218,251,.20);
+  --shadow-md:0 6px 24px rgba(0,0,0,.5);--shadow-lg:0 18px 60px rgba(0,0,0,.6);
+  --grad:linear-gradient(135deg,#61dafb 0%,#7c5cbf 60%,#0a0e1a 100%);
+  --grad-btn:linear-gradient(135deg,#21a8c8 0%,#7c5cbf 100%);
+  --font-h:'Cormorant Garamond',Georgia,serif;
+  --font-b:'Plus Jakarta Sans',sans-serif;
+  --font-code:'JetBrains Mono',monospace;
+  --t:220ms cubic-bezier(.4,0,.2,1);
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{font-family:var(--font-b);background:var(--bg);color:var(--text);line-height:1.65;overflow-x:hidden;}
+a{text-decoration:none;color:inherit;}
+img{display:block;max-width:100%;}
+::selection{background:var(--primary);color:#0a0e1a;}
+::-webkit-scrollbar{width:4px;}::-webkit-scrollbar-track{background:var(--bg);}::-webkit-scrollbar-thumb{background:var(--primary);border-radius:99px;}
+
+body::before{content:'';position:fixed;inset:0;z-index:-1;pointer-events:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='250' height='250'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='250' height='250' filter='url(%23n)' opacity='0.025'/%3E%3C/svg%3E");background-repeat:repeat;background-size:250px;opacity:.6;}
+
+#prog{position:fixed;top:0;left:0;height:2px;z-index:500;background:var(--grad-btn);width:0;transition:width .1s;}
+#btt{position:fixed;bottom:2rem;right:2rem;z-index:400;width:44px;height:44px;border-radius:50%;background:var(--grad-btn);color:#fff;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:var(--shadow-lg);opacity:0;transform:translateY(16px) scale(.85);transition:opacity .3s,transform .3s;pointer-events:none;}
+#btt.show{opacity:1;transform:translateY(0) scale(1);pointer-events:all;}
+#btt:hover{transform:translateY(-3px) scale(1.08);}
+
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .6s ease,transform .6s ease;}
+.reveal.vis{opacity:1;transform:translateY(0);}
+.reveal-d1{transition-delay:.1s;}.reveal-d2{transition-delay:.2s;}.reveal-d3{transition-delay:.3s;}.reveal-d4{transition-delay:.4s;}
+
+.blob{position:absolute;pointer-events:none;filter:blur(90px);z-index:0;}
+.blob-1{width:500px;height:350px;border-radius:60% 40% 55% 45%/50% 60% 40% 50%;background:radial-gradient(circle at 40%,rgba(97,218,251,.15),rgba(124,92,191,.10) 60%,transparent);top:-5%;left:0%;animation:bd1 22s ease-in-out infinite;}
+.blob-2{width:380px;height:480px;border-radius:40% 60% 45% 55%/65% 35% 65% 35%;background:radial-gradient(circle at 60%,rgba(124,92,191,.15),rgba(97,218,251,.08) 55%,transparent);top:20%;right:-5%;animation:bd2 28s ease-in-out infinite;}
+@keyframes bd1{0%,100%{transform:translate(0,0) scale(1);}33%{transform:translate(40px,-30px) scale(1.06);}66%{transform:translate(-25px,20px) scale(.95);}}
+@keyframes bd2{0%,100%{transform:translate(0,0);}40%{transform:translate(-30px,40px) scale(.93);}75%{transform:translate(20px,-25px) scale(1.04);}}
+
+/* NAV */
+.nav{position:fixed;top:0;left:0;right:0;z-index:300;display:flex;align-items:center;justify-content:space-between;padding:.85rem 2.5rem;background:rgba(6,8,15,0.85);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);transition:box-shadow var(--t);}
+.nav.scrolled{box-shadow:0 4px 30px rgba(97,218,251,.08);}
+.nav-back{display:inline-flex;align-items:center;gap:.4rem;font-size:.82rem;font-weight:600;color:var(--text-2);transition:color var(--t);}
+.nav-back:hover{color:var(--primary);}
+.nav-tag{padding:.32rem .85rem;border:1px solid var(--border);border-radius:99px;font-size:.7rem;font-weight:700;color:var(--text-2);letter-spacing:.06em;text-transform:uppercase;}
+
+/* HERO */
+.hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:7rem 2rem 5rem;overflow:hidden;position:relative;text-align:center;}
+.hero-inner{position:relative;z-index:2;max-width:760px;}
+.hero-badge{display:inline-flex;align-items:center;gap:.5rem;padding:.38rem 1rem;background:var(--glass);border:1px solid var(--glass-b);border-radius:99px;backdrop-filter:blur(16px);font-size:.68rem;font-weight:700;color:var(--primary);margin-bottom:1.5rem;letter-spacing:.08em;text-transform:uppercase;}
+.bdot{width:6px;height:6px;border-radius:50%;background:var(--primary);animation:pulse 2s ease-in-out infinite;}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1);}50%{opacity:.4;transform:scale(1.6);}}
+.hero-title{font-family:var(--font-h);font-size:clamp(2.8rem,7vw,5.5rem);font-weight:300;line-height:1;letter-spacing:-.04em;margin-bottom:.7rem;}
+.hero-title em{font-style:italic;color:var(--primary);font-weight:200;}
+.hero-sub{font-size:clamp(.9rem,2vw,1.05rem);color:var(--text-2);max-width:500px;margin:0 auto 2.5rem;line-height:1.8;}
+.hero-scroll{position:absolute;bottom:1.5rem;left:50%;transform:translateX(-50%);color:var(--text-3);animation:bounce 2s ease-in-out infinite;z-index:3;}
+@keyframes bounce{0%,100%{transform:translateX(-50%) translateY(0);}50%{transform:translateX(-50%) translateY(8px);}}
+
+/* EDITOR MOCKUP */
+.editor-wrap{margin:2.5rem auto 0;max-width:600px;}
+.editor{background:#0d1117;border:1px solid var(--border-s);border-radius:14px;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.6);text-align:left;}
+.editor-bar{display:flex;align-items:center;gap:.5rem;padding:.75rem 1.1rem;background:#161b22;border-bottom:1px solid var(--border);}
+.e-dot{width:12px;height:12px;border-radius:50%;}
+.e-dot-r{background:#ff5f57;}.e-dot-y{background:#febc2e;}.e-dot-g{background:#28c840;}
+.editor-tabs{display:flex;gap:0;margin-left:.75rem;}
+.e-tab{font-family:var(--font-code);font-size:.72rem;color:var(--text-3);padding:.2rem .9rem;border-right:1px solid var(--border);}
+.e-tab.active{color:var(--text);background:rgba(97,218,251,.04);border-bottom:1px solid var(--primary);}
+.editor-body{padding:1.25rem 1.4rem;font-family:var(--font-code);font-size:.84rem;line-height:1.9;}
+.e-line{display:flex;gap:1rem;opacity:0;transform:translateY(4px);transition:opacity .3s ease,transform .3s ease;}
+.e-line.show{opacity:1;transform:translateY(0);}
+.e-ln{color:var(--text-3);user-select:none;min-width:16px;text-align:right;}
+.e-kw{color:#61dafb;}.e-fn{color:#7c5cbf;}.e-str{color:#a8d8a8;}.e-cm{color:#4a5568;font-style:italic;}.e-txt{color:#e8edf5;}
+.e-cursor{display:inline-block;width:8px;height:1em;background:var(--primary);animation:blink .9s step-end infinite;vertical-align:text-bottom;margin-left:2px;}
+@keyframes blink{0%,100%{opacity:1;}50%{opacity:0;}}
+
+/* SECTION */
+.section{padding:5rem 0;display:block;width:100%;}
+.section.alt-bg{background:rgba(97,218,251,.025);}
+.section-inner{max-width:1100px;margin:0 auto;padding:0 2rem;}
+.section-label{font-size:.66rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--primary);margin-bottom:.7rem;display:flex;align-items:center;gap:.5rem;}
+.section-label::before{content:'';width:18px;height:2px;background:var(--grad-btn);border-radius:99px;}
+.section-title{font-family:var(--font-h);font-size:clamp(2rem,4vw,3rem);font-weight:300;letter-spacing:-.02em;margin-bottom:.9rem;line-height:1.1;}
+.section-title em{font-style:italic;color:var(--primary);font-weight:200;}
+.section-header{margin-bottom:3rem;}
+
+/* AULAS GRID */
+.aulas-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1.5rem;}
+.aula-card{background:var(--bg-card);border:1.5px solid var(--border);border-radius:20px;overflow:hidden;transition:transform var(--t),box-shadow var(--t),border-color var(--t);text-decoration:none;color:inherit;display:block;}
+.aula-card:hover{transform:translateY(-6px);box-shadow:var(--shadow-lg);border-color:var(--primary);}
+.aula-card.em-breve{opacity:.45;pointer-events:none;}
+.aula-card-top{padding:1.6rem 1.6rem 1.2rem;position:relative;overflow:hidden;}
+.aula-card-top::before{content:'';position:absolute;inset:0;background:var(--grad);opacity:.04;}
+.aula-num-bg{position:absolute;right:-10px;top:-12px;font-family:var(--font-h);font-size:7rem;font-weight:700;color:rgba(97,218,251,.05);line-height:1;user-select:none;pointer-events:none;}
+.aula-header{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:1rem;position:relative;z-index:1;}
+.aula-num-badge{width:48px;height:48px;border-radius:14px;background:var(--grad-btn);display:flex;align-items:center;justify-content:center;font-family:var(--font-h);font-size:1.4rem;font-weight:600;color:#fff;box-shadow:var(--shadow-md);flex-shrink:0;}
+.aula-status{display:inline-flex;align-items:center;gap:.35rem;padding:.22rem .7rem;border-radius:99px;font-size:.6rem;font-weight:700;text-transform:uppercase;letter-spacing:.07em;}
+.status-ok{background:rgba(97,218,251,.12);color:var(--primary);}
+.status-soon{background:rgba(124,92,191,.12);color:#9b7bd0;}
+.status-dot{width:5px;height:5px;border-radius:50%;background:currentColor;}
+.status-ok .status-dot{animation:pulse 2s ease-in-out infinite;}
+.aula-title{font-family:var(--font-h);font-size:1.5rem;font-weight:300;line-height:1.15;margin-bottom:.3rem;position:relative;z-index:1;}
+.aula-title em{font-style:italic;color:var(--primary);}
+.aula-desc{font-size:.82rem;color:var(--text-2);line-height:1.65;position:relative;z-index:1;}
+.aula-card-bottom{padding:.9rem 1.6rem;background:rgba(97,218,251,.02);border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;}
+.aula-meta-row{display:flex;align-items:center;gap:1rem;}
+.aula-meta-item{display:flex;align-items:center;gap:.35rem;font-size:.73rem;color:var(--text-3);font-weight:500;}
+.aula-meta-item svg{width:13px;height:13px;color:var(--primary);opacity:.7;}
+.aula-arrow{color:var(--text-3);transition:transform var(--t),color var(--t);}
+.aula-arrow svg{width:18px;height:18px;}
+.aula-card:hover .aula-arrow{transform:translate(3px,-3px);color:var(--primary);}
+.aula-topics{display:flex;flex-wrap:wrap;gap:.4rem;padding:0 1.6rem 1.4rem;}
+.topic-tag{padding:.18rem .6rem;background:var(--glass);border:1px solid var(--glass-b);border-radius:99px;font-size:.6rem;font-weight:700;color:var(--text-3);text-transform:uppercase;letter-spacing:.06em;}
+
+/* FOOTER */
+.footer{padding:2rem 2.5rem;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem;}
+.footer-logo{font-family:var(--font-h);font-size:1.2rem;font-weight:300;letter-spacing:-.02em;}
+.footer-logo em{font-style:italic;color:var(--primary);}
+.footer-sub{font-size:.7rem;color:var(--text-3);margin-top:.1rem;}
+.footer-right{font-size:.76rem;color:var(--text-3);}
+
+@media(max-width:768px){
+  .nav{padding:.85rem 1.25rem;}
+  .hero{padding:6rem 1.25rem 3rem;}
+  .aulas-grid{grid-template-columns:1fr;}
+  .section-inner{padding:0 1.25rem;}
+}
+</style>
+</head>
+<body>
+<div id="prog"></div>
+
+<nav class="nav" id="nav">
+  <a href="/" class="nav-back">
+    <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m15 18-6-6 6-6"/></svg>
+    Início
+  </a>
+  <span class="nav-tag">Universo VS Code</span>
+</nav>
+
+<section class="hero">
+  <div class="blob blob-1"></div>
+  <div class="blob blob-2"></div>
+  <div class="hero-inner reveal">
+    <div class="hero-badge"><span class="bdot"></span> Ferramentas do Dev</div>
+    <h1 class="hero-title">Universo <em>VS Code</em></h1>
+    <p class="hero-sub">Do zero ao editor configurado — instalação, extensões essenciais e personalização para desenvolvimento frontend.</p>
+
+    <div class="editor-wrap reveal reveal-d2">
+      <div class="editor">
+        <div class="editor-bar">
+          <span class="e-dot e-dot-r"></span>
+          <span class="e-dot e-dot-y"></span>
+          <span class="e-dot e-dot-g"></span>
+          <div class="editor-tabs">
+            <span class="e-tab active">index.html</span>
+            <span class="e-tab">style.css</span>
+          </div>
+        </div>
+        <div class="editor-body" id="edLines">
+          <div class="e-line"><span class="e-ln">1</span><span class="e-cm">&lt;!-- meu primeiro arquivo --&gt;</span></div>
+          <div class="e-line"><span class="e-ln">2</span><span class="e-kw">&lt;!DOCTYPE </span><span class="e-txt">html</span><span class="e-kw">&gt;</span></div>
+          <div class="e-line"><span class="e-ln">3</span><span class="e-kw">&lt;html </span><span class="e-fn">lang</span><span class="e-txt">=</span><span class="e-str">"pt-BR"</span><span class="e-kw">&gt;</span></div>
+          <div class="e-line"><span class="e-ln">4</span><span class="e-kw">&lt;head&gt;</span></div>
+          <div class="e-line"><span class="e-ln">5</span><span class="e-txt">&nbsp;&nbsp;</span><span class="e-kw">&lt;title&gt;</span><span class="e-str">Meu Site</span><span class="e-kw">&lt;/title&gt;</span></div>
+          <div class="e-line"><span class="e-ln">6</span><span class="e-kw">&lt;/head&gt;</span></div>
+          <div class="e-line"><span class="e-ln">7</span><span class="e-kw">&lt;body&gt;</span></div>
+          <div class="e-line"><span class="e-ln">8</span><span class="e-txt">&nbsp;&nbsp;</span><span class="e-kw">&lt;h1&gt;</span><span class="e-str">Olá, mundo!</span><span class="e-kw">&lt;/h1&gt;</span><span class="e-cursor"></span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="hero-scroll">
+    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
+  </div>
+</section>
+
+<section class="section">
+  <div class="section-inner">
+    <div class="section-header reveal">
+      <p class="section-label">Aulas</p>
+      <h2 class="section-title">O que você vai <em>aprender</em></h2>
+    </div>
+    <div class="aulas-grid">
+
+      <!-- Aula 00 -->
+      <a href="/universo-vscode/vscode-00" class="aula-card reveal reveal-d1">
+        <div class="aula-card-top">
+          <div class="aula-num-bg">00</div>
+          <div class="aula-header">
+            <div class="aula-num-badge">00</div>
+            <span class="aula-status status-ok"><span class="status-dot"></span> Disponível</span>
+          </div>
+          <div class="aula-title">O que é o VS Code e como <em>instalar</em></div>
+          <div class="aula-desc">Conheça o editor mais usado no mundo, entenda por que todo dev usa e instale na sua máquina do zero.</div>
+        </div>
+        <div class="aula-topics">
+          <span class="topic-tag">Download</span>
+          <span class="topic-tag">Instalação</span>
+          <span class="topic-tag">Interface</span>
+          <span class="topic-tag">Live Server</span>
+        </div>
+        <div class="aula-card-bottom">
+          <div class="aula-meta-row">
+            <span class="aula-meta-item">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+              30 min
+            </span>
+          </div>
+          <div class="aula-arrow"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17 17 7M17 7H7M17 7v10"/></svg></div>
+        </div>
+      </a>
+
+      <!-- Aula 01 -->
+      <a href="/universo-vscode/vscode-01" class="aula-card reveal reveal-d2">
+        <div class="aula-card-top">
+          <div class="aula-num-bg">01</div>
+          <div class="aula-header">
+            <div class="aula-num-badge">01</div>
+            <span class="aula-status status-ok"><span class="status-dot"></span> Disponível</span>
+          </div>
+          <div class="aula-title">Extensões para <em>Frontend</em></div>
+          <div class="aula-desc">As extensões que todo dev frontend precisa ter instaladas — produtividade, formatação e preview em tempo real.</div>
+        </div>
+        <div class="aula-topics">
+          <span class="topic-tag">Prettier</span>
+          <span class="topic-tag">Live Server</span>
+          <span class="topic-tag">Auto Rename</span>
+          <span class="topic-tag">Emmet</span>
+        </div>
+        <div class="aula-card-bottom">
+          <div class="aula-meta-row">
+            <span class="aula-meta-item">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+              25 min
+            </span>
+          </div>
+          <div class="aula-arrow"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17 17 7M17 7H7M17 7v10"/></svg></div>
+        </div>
+      </a>
+
+      <!-- Aula 02 -->
+      <a href="/universo-vscode/vscode-02" class="aula-card reveal reveal-d3">
+        <div class="aula-card-top">
+          <div class="aula-num-bg">02</div>
+          <div class="aula-header">
+            <div class="aula-num-badge">02</div>
+            <span class="aula-status status-ok"><span class="status-dot"></span> Disponível</span>
+          </div>
+          <div class="aula-title">Mais <em>Extensões</em></div>
+          <div class="aula-desc">Outras extensões que aumentam ainda mais sua produtividade — snippets, ícones, suporte a Git e muito mais.</div>
+        </div>
+        <div class="aula-topics">
+          <span class="topic-tag">GitLens</span>
+          <span class="topic-tag">Icons</span>
+          <span class="topic-tag">Snippets</span>
+          <span class="topic-tag">IntelliSense</span>
+        </div>
+        <div class="aula-card-bottom">
+          <div class="aula-meta-row">
+            <span class="aula-meta-item">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+              25 min
+            </span>
+          </div>
+          <div class="aula-arrow"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17 17 7M17 7H7M17 7v10"/></svg></div>
+        </div>
+      </a>
+
+      <!-- Aula 03 -->
+      <a href="/universo-vscode/vscode-03" class="aula-card reveal reveal-d4">
+        <div class="aula-card-top">
+          <div class="aula-num-bg">03</div>
+          <div class="aula-header">
+            <div class="aula-num-badge">03</div>
+            <span class="aula-status status-ok"><span class="status-dot"></span> Disponível</span>
+          </div>
+          <div class="aula-title">Personalizando meu <em>VS Code</em></div>
+          <div class="aula-desc">Temas, fontes, ícones, atalhos e configurações — deixe o editor com a sua cara e trabalhe com mais conforto.</div>
+        </div>
+        <div class="aula-topics">
+          <span class="topic-tag">Temas</span>
+          <span class="topic-tag">Fontes</span>
+          <span class="topic-tag">Atalhos</span>
+          <span class="topic-tag">settings.json</span>
+        </div>
+        <div class="aula-card-bottom">
+          <div class="aula-meta-row">
+            <span class="aula-meta-item">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+              30 min
+            </span>
+          </div>
+          <div class="aula-arrow"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17 17 7M17 7H7M17 7v10"/></svg></div>
+        </div>
+      </a>
+
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div>
+    <div class="footer-logo">ETE <em>Cícero Dias</em></div>
+    <div class="footer-sub">Curso Técnico em Desenvolvimento de Sistemas</div>
+  </div>
+  <div class="footer-right">Universo VS Code · PI I · 2026</div>
+</footer>
+
+<button id="btt" aria-label="Voltar ao topo">
+  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+</button>
+
+<script>
+  // progress bar
+  const prog = document.getElementById('prog');
+  const nav = document.getElementById('nav');
+  const btt = document.getElementById('btt');
+  window.addEventListener('scroll', () => {
+    const p = window.scrollY / (document.body.scrollHeight - window.innerHeight);
+    if(prog) prog.style.width = (p*100)+'%';
+    if(nav) nav.classList.toggle('scrolled', window.scrollY > 40);
+    if(btt) btt.classList.toggle('show', window.scrollY > 400);
+  });
+  btt?.addEventListener('click', () => window.scrollTo({top:0,behavior:'smooth'}));
+
+  // reveal
+  const obs = new IntersectionObserver(entries => entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('vis'); }), {threshold:.12});
+  document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+
+  // editor lines animation
+  const lines = document.querySelectorAll('#edLines .e-line');
+  lines.forEach((l, i) => setTimeout(() => l.classList.add('show'), 300 + i * 180));
+</script>
+</body>
+</html>

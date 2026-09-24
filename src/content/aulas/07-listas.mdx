@@ -1,0 +1,245 @@
+---
+numero: "07"
+titulo: "HTML —"
+tituloEm: "Listas"
+subtitulo: "ul, ol, li, listas de links, listas aninhadas, atributos type e start — e como combinar listas com âncoras e imagens."
+dataA: "07 mai 2026"
+data: "07 mai 2026"
+duracao: "1h20"
+status: "publicada"
+disciplina: "PI I"
+topicos: ["ul", "ol", "li", "aninhamento", "type", "start", "listas de links"]
+coverUrl: "https://images.unsplash.com/photo-1484480974693-6ca0a78fb36b?w=1400&q=80"
+---
+
+import Callout from '../../components/Callout.astro'
+import VideosRecomendados from '../../components/VideosRecomendados.astro'
+
+## Objetivos da Aula
+
+- Criar listas não-ordenadas `<ul>` e ordenadas `<ol>` com `<li>`
+- Entender quando usar cada tipo
+- Usar os atributos `type` e `start` para customizar listas ordenadas
+- Criar listas de links — o padrão de menu mais comum na web
+- Aninhar listas dentro de listas
+
+---
+
+## 1. Lista Não-Ordenada — `<ul>`
+
+`<ul>` significa *unordered list*. Os itens não têm numeração — o navegador renderiza um marcador (bullet) por padrão. Use quando a **ordem não importa**.
+
+```html
+<h3>Tipos de Pokémon</h3>
+<ul>
+  <li>Elétrico</li>
+  <li>Fogo</li>
+  <li>Água</li>
+  <li>Planta</li>
+  <li>Psíquico</li>
+</ul>
+```
+
+---
+
+## 2. Lista Ordenada — `<ol>`
+
+`<ol>` significa *ordered list*. Os itens são numerados automaticamente pelo navegador. Use quando a **ordem importa** — passos de um processo, ranking, sequência.
+
+```html
+<h3>Nomes de Pokémon</h3>
+<ol>
+  <li>Pikachu</li>
+  <li>Charizard</li>
+  <li>Bulbasaur</li>
+  <li>Squirtle</li>
+  <li>Eevee</li>
+</ol>
+```
+
+### Atributos de `<ol>`
+
+| Atributo | Valores | O que faz |
+|---|---|---|
+| `type` | `1`, `A`, `a`, `I`, `i` | Estilo da numeração |
+| `start` | número | A partir de qual número começar |
+| `reversed` | (sem valor) | Conta de trás para frente |
+
+```html
+<!-- Numeração romana minúscula, começando do 1 -->
+<ol type="i" start="1">
+  <li>Força sobre-humana</li>
+  <li>Agilidade e reflexos aprimorados</li>
+  <li>Sentido-Aranha</li>
+</ol>
+
+<!-- Letras maiúsculas -->
+<ol type="A">
+  <li>Primeira opção</li>
+  <li>Segunda opção</li>
+</ol>
+
+<!-- Começando do zero -->
+<ol start="0">
+  <li>Pikachu</li>
+  <li>Charizard</li>
+</ol>
+```
+
+Em sala usamos exatamente `type="i"` na página da Gwen Stacy para listar os poderes dela, e `start="0"` na página do Pokémon para a lista de nomes.
+
+---
+
+## 3. Listas de Links
+
+O padrão de menu mais usado na web é simplesmente uma `<ul>` com `<a>` dentro de cada `<li>`. Isso é tão comum que praticamente todo menu de site começa assim, e depois CSS transforma em barra horizontal ou menu lateral.
+
+```html
+<ul>
+  <li>
+    <a href="./origem-pokemon.html" target="_blank">História e Origem</a>
+  </li>
+  <li>
+    <a href="">Categorias</a>
+  </li>
+  <li>
+    <a href="">Entretenimento</a>
+  </li>
+</ul>
+```
+
+E o menu de âncoras da Gwen Stacy — links que levam para seções da mesma página:
+
+```html
+<ul>
+  <li><a href="#sobre">Sobre</a></li>
+  <li><a href="#poderes">Características</a></li>
+</ul>
+```
+
+<Callout type="tip" title="href vazio — placeholder">
+  `href=""` cria um link que recarrega a página ao clicar. Em desenvolvimento, usamos como placeholder para links que ainda não têm destino. Em produção, todo `<a>` deve ter um `href` real.
+</Callout>
+
+---
+
+## 4. Aninhamento — Listas dentro de Listas
+
+O aninhamento em HTML é quando uma tag fica dentro de outra. Com listas, você cria hierarquias colocando uma `<ul>` ou `<ol>` dentro de um `<li>`.
+
+<Callout type="info" title="Cascata de tags">
+  Aninhamento também foi chamado em sala de "cascata de tags" — uma tag que contém outra que contém outra. A regra é sempre a mesma: quem abriu por último, fecha por primeiro.
+</Callout>
+
+```html
+<ul>
+  <li>
+    Pokémon de Fogo
+    <ul>
+      <li>Charmander</li>
+      <li>Charizard</li>
+      <li>Flareon</li>
+    </ul>
+  </li>
+  <li>
+    Pokémon de Água
+    <ul>
+      <li>Squirtle</li>
+      <li>Vaporeon</li>
+    </ul>
+  </li>
+</ul>
+```
+
+---
+
+## 5. Exemplo completo — Página do Pokémon
+
+Esse é o código que construímos em sala no dia 07/05, combinando listas, links, imagem, texto e âncoras:
+
+```html
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aula 07: Listas</title>
+</head>
+<body>
+
+  <img src="./pokemon.avif" alt="Banner do Pokémon" height="300">
+
+  <h2>Pokémon</h2>
+
+  <!-- Lista de links — menu de navegação -->
+  <ul>
+    <li>
+      <a href="./origem-pokemon.html" target="_blank">História e Origem</a>
+    </li>
+    <li>
+      <a href="">Categorias</a>
+    </li>
+    <li>
+      <a href="">Entretenimento</a>
+    </li>
+  </ul>
+
+  <p>Pokémon é uma das franquias mais populares do mundo, criada no Japão
+  nos anos 90. Cada Pokémon possui características únicas, como tipo,
+  evolução e ataques especiais.</p>
+
+  <p>Personagens famosos como <strong>Pikachu, Charizard e Bulbasaur</strong>
+  se tornaram ícones da cultura pop e continuam fazendo sucesso entre
+  crianças e adultos.</p>
+
+  <h3>Tipos de Pokémon</h3>
+
+  <!-- Lista não-ordenada -->
+  <ul>
+    <li>Elétrico</li>
+    <li>Fogo</li>
+    <li>Água</li>
+    <li>Planta</li>
+    <li>Psíquico</li>
+  </ul>
+
+  <h3>Pokémon mais famosos</h3>
+
+  <!-- Lista ordenada, começando do zero -->
+  <ol start="0">
+    <li>Pikachu</li>
+    <li>Charizard</li>
+    <li>Bulbasaur</li>
+    <li>Squirtle</li>
+    <li>Eevee</li>
+  </ol>
+
+</body>
+</html>
+```
+
+---
+
+## 6. Referência Rápida
+
+| Tag | Tipo | Quando usar |
+|---|---|---|
+| `<ul>` | Não-ordenada | Itens sem sequência: ingredientes, características, menu |
+| `<ol>` | Ordenada | Itens em sequência: passos, ranking, cronologia |
+| `<li>` | Item de lista | Filho direto de `<ul>` ou `<ol>` — sempre |
+
+---
+
+## Vídeos recomendados
+
+<VideosRecomendados videos={[
+  { id: "JlE0pzESf5g", titulo: "Listas OL e UL", canal: "Curso em Vídeo HTML5", descricao: "Listas ordenadas e não-ordenadas — quando e como usar cada uma." },
+  { id: "Ez1kgIyoGuE", titulo: "Listas Mistas e de Definição", canal: "Curso em Vídeo HTML5", descricao: "Aninhamento, listas mistas e a tag dl para definições." },
+  { id: "0pShBr4Qmt0", titulo: "Listas — HTML Completo Aula 10", canal: "Programação Web", descricao: "ul, ol, li na prática com exemplos reais." },
+]} />
+
+## Referências
+
+- [MDN — `<ul>`](https://developer.mozilla.org/pt-BR/docs/Web/HTML/Element/ul)
+- [MDN — `<ol>`](https://developer.mozilla.org/pt-BR/docs/Web/HTML/Element/ol)
+- [W3Schools — HTML Lists](https://www.w3schools.com/html/html_lists.asp)

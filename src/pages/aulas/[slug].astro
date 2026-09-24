@@ -1,0 +1,24 @@
+---
+import { getCollection, render } from 'astro:content'
+import AulaLayout from '../../layouts/AulaLayout.astro'
+
+export async function getStaticPaths() {
+  const aulas = await getCollection('aulas')
+  return aulas.map(aula => ({
+    params: { slug: aula.id },
+    props:  { aula },
+  }))
+}
+
+const { aula } = Astro.props
+
+// Se tiver paginaRica, redireciona direto
+if (aula.data.paginaRica) {
+  return Astro.redirect(aula.data.paginaRica)
+}
+
+const { Content } = await render(aula)
+---
+<AulaLayout aula={aula.data}>
+  <Content />
+</AulaLayout>

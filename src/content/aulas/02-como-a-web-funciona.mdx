@@ -1,0 +1,204 @@
+---
+numero: "02"
+titulo: "Como a"
+tituloEm: "Web Funciona"
+subtitulo: "Web vs. Internet, DNS, HTTP, navegadores, renderização e os três papéis — HTML, CSS e JavaScript."
+dataA: "abr 202"
+data: "abr 202"
+duracao: "1h20"
+status: "publicada"
+disciplina: "PI I"
+topicos: ["HTTP", "DNS", "Navegador", "HTML", "CSS", "JavaScript"]
+coverUrl: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=1400&q=80"
+---
+
+import Callout from '../../components/Callout.astro'
+import VideosRecomendados from '../../components/VideosRecomendados.astro'
+
+## A Web não é a Internet
+
+Antes de falar de HTML e CSS, vale desfazer um equívoco muito comum: **web e internet não são sinônimos**.
+
+A **internet** é a infraestrutura física e lógica que conecta computadores ao redor do mundo — cabos submarinos, roteadores, protocolos de transmissão de dados. Ela existe desde os anos 190 e suporta muitas coisas além da web: e-mail, VoIP, transferência de arquivos (FTP), streaming, jogos online.
+
+A **web (World Wide Web)** é apenas um dos serviços que roda sobre a internet. Foi criada em 1989 por Tim erners-Lee — é o sistema de documentos interligados por links que acessamos pelo navegador.
+
+> **Analogia simples:** a internet é a rede de estradas. A web é o sistema de correios que usa essas estradas para entregar cartas (páginas HTML). Você pode usar a estrada para muitas outras coisas além dos correios.
+
+Na prática, um serviço é caracterizado por três elementos: uma função específica que ele desempenha, um protocolo próprio que define as regras da comunicação, e uma relação cliente-servidor — há sempre uma parte que solicita e uma que responde.
+
+| Serviço | Protocolo | Para que serve |
+|---|---|---|
+| Web | HTTP / HTTPS | Páginas e aplicações web |
+| E-mail | SMTP / IMAP | Envio e recebimento de emails |
+| Transferência | FTP / SFTP | Arquivos entre computadores |
+| Acesso remoto | SSH | Terminal em máquinas remotas |
+
+## O que acontece quando você digita uma URL?
+
+Esta é uma das perguntas mais importantes que um desenvolvedor pode responder. Entender esse processo é saber onde o seu trabalho como dev se encaixa.
+
+### Os personagens da história
+
+| Personagem | O que é | Analogia |
+|---|---|---|
+| **Cliente** | Seu navegador (Chrome, Firefox…) | O cliente de uma loja |
+| **Servidor** | Computador que guarda os arquivos do site | A loja / depósito |
+| **URL** | O endereço que você digita | O endereço da loja |
+| **DNS** | Sistema que traduz nome em endereço IP | Uma agenda telefônica |
+| **HTTP/HTTPS** | O protocolo de comunicação | O idioma falado entre cliente e loja |
+| **IP** | Endereço numérico de cada máquina | CEP + número da casa |
+
+### A jornada passo a passo
+
+Imagine que você digita `wikipedia.org` e aperta Enter. Eis o que ocorre em milissegundos:
+
+**Passo 1 — Resolução DNS**
+O navegador não sabe o que é "wikipedia.org" — ele precisa de um endereço IP. Consulta um servidor DNS que devolve: "wikipedia.org = 208.80.154.224". Agora o navegador sabe onde bater.
+
+**Passo 2 — Conexão TCP**
+O navegador estabelece uma conexão com o servidor naquele IP. É como discar um número de telefone e esperar atender.
+
+**Passo 3 — Requisição HTTP**
+O navegador envia uma mensagem ao servidor: *"Me manda o arquivo principal desta página, por favor."* Essa mensagem segue o protocolo HTTP — ou HTTPS, que é a versão criptografada e segura.
+
+**Passo 4 — Resposta do servidor**
+O servidor localiza os arquivos e devolve uma resposta com um **código de status** e o HTML da página.
+
+| Código | Significado |
+|---|---|
+| `200 OK` | Tudo certo, aqui está o recurso |
+| `301 Moved` | O recurso mudou de endereço |
+| `404 Not Found` | A página não existe nesse caminho |
+| `500 Server Error` | Algo quebrou no servidor |
+
+**Passo 5 — O navegador renderiza**
+O navegador recebe o HTML e começa a ler. Ao encontrar referências a CSS, fontes e imagens, faz novas requisições para cada um. Com todos os arquivos, monta a página visualmente.
+
+> **O que é renderizar?** Renderização é o processo pelo qual o navegador transforma arquivos de código em uma página visual e interativa. O código é texto puro. A renderização é o que dá forma, cor, posição e comportamento a esse texto — convertendo instruções em pixels na tela.
+
+## O que é o navegador de verdade?
+
+O navegador é um dos softwares mais complexos que existem. Ele tem quatro responsabilidades principais:
+
+1. **Fazer requisições HTTP** ao servidor e receber os arquivos
+2. **Interpretar o HTML** e construir a árvore de elementos — o **DOM** (Document Object Model)
+3. **Interpretar o CSS** e calcular como cada elemento deve aparecer
+4. **Executar o JavaScript** e permitir que ele modifique a página em tempo real
+
+<Callout type="info" title="Diferentes engines de renderização">
+  O Chrome usa o **link**, o Firefox usa o **Gecko**, o Safari usa o **WebKit**. É por isso que, às vezes, uma página aparece diferente em navegadores diferentes — cada um interpreta o CSS de um jeito levemente distinto.
+</Callout>
+
+## Os três papéis: HTML, CSS e JavaScript
+
+### HTML — HyperText Markup Language
+
+**O HTML é a linguagem da estrutura e do conteúdo.** Ele responde: *o que existe nessa página e o que cada coisa é?*
+
+O HTML organiza o conteúdo em elementos com significado: um `<h1>` diz "isso é o título principal", um `<p>` diz "isso é um parágrafo", um `<img>` diz "aqui vai uma imagem".
+
+> **Analogia:** o HTML é a estrutura — os prédios, as ruas, os parques. Cinzentos, sem cor, sem enfeite — mas a cidade já existe e já tem forma.
+
+### CSS — Cascading Style Sheets
+
+**O CSS é a linguagem do estilo e da aparência.** Ele responde: *como cada elemento deve parecer?*
+
+O CSS funciona selecionando elementos HTML e aplicando propriedades visuais: cor de fundo, tamanho da fonte, margens, posicionamento, animações. A palavra "Cascading" (cascata) descreve como as regras são aplicadas — quando há conflito, regras mais específicas prevalecem sobre as mais genéricas.
+
+> **Voltando à analogia:** o CSS é a pintura, a decoração, os móveis, as luzes. Os prédios já existiam — agora ganham cor, textura e identidade visual.
+
+### JavaScript — a linguagem de programação da Web
+
+**O JavaScript é a linguagem do comportamento e da interatividade.** Ele responde: *o que acontece quando o usuário interage com a página?*
+
+O JS pode modificar o HTML e o CSS em tempo real, sem recarregar a página. Um menu que abre ao clicar, uma imagem que muda ao passar o mouse, um formulário que valida os dados — tudo isso é JavaScript.
+
+> **Completando a analogia:** o JavaScript é a fiação elétrica, os elevadores, as portas automáticas. A cidade ganhou vida.
+
+### Resumo comparativo
+
+| Linguagem | Papel | Pergunta que responde | Analogia |
+|---|---|---|---|
+| **HTML** | Estrutura e conteúdo | O que existe? | Esqueleto / estrutura |
+| **CSS** | Estilo e aparência | Como parece? | Pintura e decoração |
+| **JavaScript** | Comportamento | O que acontece? | Fiação elétrica |
+
+<Callout type="tip" title="Foco do semestre">
+  O foco de PI I é HTML e CSS. O JavaScript é mencionado aqui para dar contexto completo, mas não será aprofundado neste semestre.
+</Callout>
+
+## Dinâmica ao vivo — Quebrando sites no navegador
+
+Esta é a parte mais poderosa da aula. Em vez de ficar só na teoria, você vê ao vivo o que acontece quando cada camada é removida de um site real.
+
+**Como abrir o DevTools:** `F12` ou `Ctrl + Shift + I` (Windows/Linux) · `Cmd + Option + I` (Mac)
+
+### Dinâmica 1 — Removendo o CSS
+
+Cole no console do DevTools de qualquer site:
+
+```javascript
+document.querySelectorAll('link[rel="stylesheet"]').forEach(el => el.remove());
+document.querySelectorAll('style').forEach(el => el.remove());
+```
+
+O que você vai ver: o site continua funcionando (o conteúdo está todo lá), mas parece que voltou aos anos 90. Isso prova que HTML e CSS são camadas separadas.
+
+### Dinâmica 2 — Desabilitando o JavaScript
+
+No DevTools: `F1` → **Debugger** → marque "Disable JavaScript".
+
+O que você vai ver: a página ainda aparece bonita (o CSS continua lá), mas interações param de funcionar. Menus que não abrem, abas que não mudam, formulários que não validam.
+
+### Dinâmica 3 — Editando o HTML ao vivo
+
+No DevTools: aba **Elements** → clique duplo em qualquer texto → edite → Enter.
+
+Você pode "hackear" manchetes de notícias ao vivo. **Importante:** a mudança existe só no seu navegador. asta recarregar e tudo volta ao normal.
+
+### Dinâmica 4 — Lendo o código-fonte
+
+Em qualquer site: `Ctrl + U` (Windows/Linux) · `Cmd + U` (Mac).
+
+Todo o HTML de qualquer site é público e legível. O trabalho de um dev front-end não é escondido — é visível para qualquer pessoa curiosa o suficiente para apertar `Ctrl + U`.
+
+## Camadas da Web
+
+A web que você conhece — Google, Instagram, YouTube — é só a ponta do iceberg.
+
+**Surface web** — tudo que é indexado por mecanismos de busca e acessível por qualquer navegador. É onde você vai trabalhar como dev front-end.
+
+**Deep web** — conteúdo não indexado pelos buscadores. Não é necessariamente ilegal — inclui e-mails, internet banking, prontuários médicos, áreas logadas de sistemas. A maioria das pessoas acessa a deep web todo dia sem saber.
+
+**Dark web** — uma camada deliberadamente oculta, acessível apenas por softwares específicos como o Tor. Existe conteúdo legítimo lá (jornalistas, ativistas em países com censura), mas também circula conteúdo ilegal.
+
+## Checklist — o que você deve saber ao sair desta aula
+
+- Sabe diferenciar internet de web e consegue explicar com suas palavras
+- Consegue descrever o que acontece entre digitar uma URL e a página aparecer
+- Entende o papel do DNS, do servidor e do navegador nesse processo
+- Sabe o que cada linguagem faz: HTML (estrutura), CSS (estilo), JavaScript (comportamento)
+- Consegue abrir o DevTools e inspecionar elementos de uma página
+- Entende que o código HTML de qualquer site é público e acessível
+
+---
+
+## Vídeos recomendados
+
+<VideosRecomendados videos={[
+  { id: "F74GKCLXUWM", titulo: "Como a Internet chega na minha casa?", canal: "Curso em Vídeo HTML", descricao: "Entenda o percurso do dado desde o provedor até o seu dispositivo." },
+  { id: "nlO5hySqJFA", titulo: "Como a internet funciona?", canal: "Curso em Vídeo HTML", descricao: "A web por baixo dos panos — servidores, pacotes e protocolos." },
+  { id: "A-hNZjcaS-Q", titulo: "Como funcionam a INTERNET e a WEB?", canal: "YouTube", descricao: "A explicação mais didática sobre internet e web na prática." },
+  { id: "CXzbUwK6lc8", titulo: "Conceitos Essenciais: O Básico de HTTP", canal: "YouTube", descricao: "Request, response, status codes — o protocolo que move a web." },
+  { id: "hwttZtWkXTk", titulo: "HTTP // Dicionário do Programador", canal: "YouTube", descricao: "HTTP explicado de forma direta, do zero." },
+  { id: "shEoRtaB6dE", titulo: "DNS // Dicionário do Programador", canal: "YouTube", descricao: "Como um nome de domínio vira um endereço IP." },
+  { id: "O8DmpmBMUSw", titulo: "IP — IPv4 e IPv6", canal: "YouTube", descricao: "Endereçamento de rede explicado de vez." },
+]} />
+
+
+## Referências
+
+- [MDN — Como a Web funciona](https://developer.mozilla.org/pt-R/docs/Learn/Getting_started_with_the_web/How_the_Web_works)
+- [MDN — O que é uma URL?](https://developer.mozilla.org/pt-R/docs/Learn/Common_questions/Web_mechanics/What_is_a_URL)
+- [HTTP Status Codes](https://developer.mozilla.org/pt-R/docs/Web/HTTP/Status)
